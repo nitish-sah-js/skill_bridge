@@ -1,0 +1,148 @@
+{
+  "slug": "nodejs-backend",
+  "name": "Node.js Backend Development",
+  "description": "Building server-side applications and REST APIs with Node.js and Express, including async I/O, middleware and data persistence.",
+  "category": "Web Development",
+  "prerequisites": ["javascript", "web-apis"],
+  "resources": [
+    { "title": "Node.js Learn guides", "url": "https://nodejs.org/en/learn", "kind": "docs" },
+    { "title": "Node.js API documentation", "url": "https://nodejs.org/en/docs", "kind": "docs" },
+    { "title": "Express: Getting started", "url": "https://expressjs.com/en/starter/installing.html", "kind": "docs" },
+    { "title": "Node.js roadmap", "url": "https://roadmap.sh/nodejs", "kind": "interactive" }
+  ],
+  "questions": [
+    {
+      "key": "nodejs-backend-q1",
+      "difficulty": "beginner",
+      "question": "Which file lists a Node.js project's dependencies and npm scripts?",
+      "options": ["node_modules", "package.json", "index.js", ".env"],
+      "correct_index": 1,
+      "explanation": "package.json holds project metadata, dependencies and scripts; node_modules contains the installed packages.",
+      "points": 1
+    },
+    {
+      "key": "nodejs-backend-q2",
+      "difficulty": "beginner",
+      "question": "In Express, which method registers a handler for HTTP GET requests to /users?",
+      "options": ["app.use('/users')", "app.listen('/users', handler)", "app.route.get('/users')", "app.get('/users', handler)"],
+      "correct_index": 3,
+      "explanation": "app.get(path, handler) registers a route handler for GET requests on that path.",
+      "points": 1
+    },
+    {
+      "key": "nodejs-backend-q3",
+      "difficulty": "intermediate",
+      "question": "Why should you avoid long CPU-bound synchronous work (e.g. a huge loop) in a Node.js request handler?",
+      "options": [
+        "It blocks the single-threaded event loop, delaying every other request",
+        "Node.js cannot execute loops",
+        "It automatically crashes the server",
+        "It disables garbage collection"
+      ],
+      "correct_index": 0,
+      "explanation": "JavaScript runs on one event loop thread; blocking it stalls all concurrent requests. Offload with worker threads or a separate service.",
+      "points": 2
+    },
+    {
+      "key": "nodejs-backend-q4",
+      "difficulty": "intermediate",
+      "question": "What does calling next() inside an Express middleware do?",
+      "options": [
+        "Sends a 200 response to the client",
+        "Restarts the server",
+        "Passes control to the next matching middleware or route handler",
+        "Skips all remaining routes"
+      ],
+      "correct_index": 2,
+      "explanation": "Middleware either ends the request-response cycle or calls next() to hand off; next(err) jumps to error-handling middleware.",
+      "points": 2
+    },
+    {
+      "key": "nodejs-backend-q5",
+      "difficulty": "advanced",
+      "question": "What is printed by: setTimeout(() => console.log('A'), 0); Promise.resolve().then(() => console.log('B')); console.log('C');",
+      "options": ["A B C", "C A B", "B C A", "C B A"],
+      "correct_index": 3,
+      "explanation": "Synchronous code runs first (C), then microtasks such as promise callbacks (B), then timer macrotasks (A).",
+      "points": 3
+    },
+    {
+      "key": "nodejs-backend-q6",
+      "difficulty": "advanced",
+      "question": "What is the safest way to build a SQL query using a user-supplied id in Node.js?",
+      "options": [
+        "Concatenate the id into the query string after trimming whitespace",
+        "Use a parameterized query, e.g. db.query('SELECT * FROM users WHERE id = $1', [id])",
+        "Wrap the id in single quotes inside a template literal",
+        "Validate that the id is not empty and then interpolate it"
+      ],
+      "correct_index": 1,
+      "explanation": "Parameterized queries send data separately from SQL code, preventing SQL injection.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "nodejs-backend-p1",
+    "title": "Create an Express POST endpoint",
+    "difficulty": "intermediate",
+    "instructions": "Write an Express snippet that parses JSON request bodies and defines a POST /api/users route. If the body has no name, respond with status 400 and a JSON error; otherwise respond with status 201 and the created user as JSON.",
+    "expected_output": "app.use(express.json()); app.post('/api/users', (req, res) => { const { name } = req.body; if (!name) return res.status(400).json({ error: 'name is required' }); res.status(201).json({ id: 1, name }); });",
+    "rubric": [
+      { "key": "c1", "description": "Enables JSON body parsing", "points": 2,
+        "patterns": ["express\\.json\\s*\\(", "bodyParser\\.json\\s*\\(", "body-parser"],
+        "hint": "Add app.use(express.json()) so req.body is parsed." },
+      { "key": "c2", "description": "Defines POST /api/users", "points": 3,
+        "patterns": ["\\.post\\s*\\(\\s*['\"`]/api/users['\"`]"],
+        "hint": "Use app.post('/api/users', handler)." },
+      { "key": "c3", "description": "Returns 400 when name is missing", "points": 3,
+        "patterns": ["status\\s*\\(\\s*400\\s*\\)", "sendStatus\\s*\\(\\s*400\\s*\\)"],
+        "hint": "Validate req.body.name and respond with res.status(400).json({ error: ... })." },
+      { "key": "c4", "description": "Returns 201 with JSON on success", "points": 2,
+        "patterns": ["status\\s*\\(\\s*201\\s*\\)"],
+        "hint": "Respond with res.status(201).json(user) for a created resource." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "nodejs-backend-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn Node.js fundamentals",
+      "description": "Read the Node.js Learn guides on getting started, the event loop, modules and npm. Run each example locally.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Can explain the event loop, CommonJS versus ES modules, and how npm scripts work.",
+      "resource_url": "https://nodejs.org/en/learn"
+    },
+    {
+      "key": "nodejs-backend-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Build a hello-world Express API",
+      "description": "Install Express and create a server with GET and POST routes for an in-memory list of notes. Test the routes with curl or an API client.",
+      "estimated_minutes": 90,
+      "completion_criteria": "Server returns JSON for GET /notes and creates notes via POST /notes with correct status codes.",
+      "resource_url": "https://expressjs.com/en/starter/installing.html"
+    },
+    {
+      "key": "nodejs-backend-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Add a database, validation and error handling",
+      "description": "Persist the notes API in PostgreSQL or SQLite using parameterized queries. Add input validation, centralized error-handling middleware and environment-based configuration.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Full CRUD API backed by a database, with validation errors returning 400 and unexpected errors handled by middleware.",
+      "resource_url": "https://nodejs.org/en/docs"
+    },
+    {
+      "key": "nodejs-backend-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Ship a production-ready REST API",
+      "description": "Build an API with authentication, pagination, rate limiting, automated tests and logging. Containerize or deploy it and document the endpoints.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Deployed API with auth, at least 10 passing integration tests and published endpoint documentation.",
+      "resource_url": "https://roadmap.sh/nodejs"
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "slug": "data-visualization",
+  "name": "Data Visualization",
+  "description": "Choosing and building clear, honest and accessible charts that reveal patterns in data.",
+  "category": "Data Analysis",
+  "prerequisites": ["statistics"],
+  "resources": [
+    { "title": "From Data to Viz", "url": "https://www.data-to-viz.com/", "kind": "article" },
+    { "title": "Matplotlib documentation", "url": "https://matplotlib.org/stable/", "kind": "docs" },
+    { "title": "seaborn tutorial", "url": "https://seaborn.pydata.org/tutorial.html", "kind": "docs" },
+    { "title": "pandas: Chart visualization", "url": "https://pandas.pydata.org/docs/user_guide/visualization.html", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "data-visualization-q1",
+      "difficulty": "beginner",
+      "question": "Which chart type is usually best for showing how monthly revenue changes over two years?",
+      "options": ["Pie chart", "Scatter plot matrix", "Line chart", "Treemap"],
+      "correct_index": 2,
+      "explanation": "Line charts connect values along a continuous time axis, making trends and seasonality easy to see.",
+      "points": 1
+    },
+    {
+      "key": "data-visualization-q2",
+      "difficulty": "beginner",
+      "question": "Which chart best shows the distribution of a single continuous variable such as delivery times?",
+      "options": ["Histogram", "Pie chart", "Stacked bar chart of categories", "Gauge chart"],
+      "correct_index": 0,
+      "explanation": "A histogram bins a continuous variable and shows its shape, center, spread and skew.",
+      "points": 1
+    },
+    {
+      "key": "data-visualization-q3",
+      "difficulty": "intermediate",
+      "question": "Why should the value axis of a bar chart normally start at zero?",
+      "options": [
+        "Charting libraries cannot render other starting values",
+        "It makes the chart load faster",
+        "Zero is required for colorblind accessibility",
+        "Bar length encodes the value, so a truncated axis exaggerates differences between bars"
+      ],
+      "correct_index": 3,
+      "explanation": "Readers compare bar lengths; starting above zero distorts the ratios between them and can mislead.",
+      "points": 2
+    },
+    {
+      "key": "data-visualization-q4",
+      "difficulty": "intermediate",
+      "question": "Which practice best makes a chart accessible to readers with color vision deficiency?",
+      "options": [
+        "Use red and green as the only way to distinguish series",
+        "Use a colorblind-safe palette and add redundant encoding such as direct labels, markers or patterns",
+        "Use as many bright colors as possible",
+        "Remove the legend to reduce clutter"
+      ],
+      "correct_index": 1,
+      "explanation": "Red-green encoding is a common failure; palettes designed for CVD plus non-color cues ensure everyone can read the chart.",
+      "points": 2
+    },
+    {
+      "key": "data-visualization-q5",
+      "difficulty": "advanced",
+      "question": "A scatter plot of 200,000 points is a solid blob due to overplotting. What is the best fix?",
+      "options": [
+        "Convert it to a pie chart",
+        "Use a 3D bar chart",
+        "Use transparency (alpha), a hexbin plot or a 2D density plot to reveal where points concentrate",
+        "Randomly delete outliers until the blob disappears"
+      ],
+      "correct_index": 2,
+      "explanation": "Alpha blending, hexagonal binning or density contours show point concentration that overlapping opaque markers hide.",
+      "points": 3
+    },
+    {
+      "key": "data-visualization-q6",
+      "difficulty": "advanced",
+      "question": "You need readers to compare the market share of 12 companies precisely. Which visualization is most effective?",
+      "options": [
+        "A pie chart with 12 slices",
+        "A donut chart with a legend",
+        "A 3D exploded pie chart",
+        "A horizontal bar chart sorted by share"
+      ],
+      "correct_index": 3,
+      "explanation": "People judge aligned lengths far more accurately than angles or areas; sorting further eases ranking and comparison.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "data-visualization-p1",
+    "title": "Plot a revenue trend",
+    "difficulty": "beginner",
+    "instructions": "A pandas DataFrame df has columns 'month' and 'revenue'. Write Python code (matplotlib, pandas plotting, seaborn or plotly) that draws a line chart of revenue by month with a chart title and labeled x and y axes.",
+    "expected_output": "import matplotlib.pyplot as plt; plt.plot(df['month'], df['revenue']); plt.title('Monthly Revenue'); plt.xlabel('Month'); plt.ylabel('Revenue'); plt.show()",
+    "rubric": [
+      { "key": "c1", "description": "Creates a line chart", "points": 3,
+        "patterns": ["plt\\.plot\\s*\\(", "ax\\.plot\\s*\\(", "\\.plot\\.line\\s*\\(", "\\.plot\\s*\\([^)]*kind\\s*=\\s*.?line", "lineplot\\s*\\(", "px\\.line\\s*\\(", "\\bdf\\.plot\\s*\\("],
+        "hint": "Use plt.plot(), df.plot(kind='line'), sns.lineplot() or px.line()." },
+      { "key": "c2", "description": "Uses the month and revenue columns", "points": 2,
+        "patterns": ["month[\\s\\S]*revenue", "revenue[\\s\\S]*month"],
+        "hint": "Plot 'month' on the x-axis and 'revenue' on the y-axis." },
+      { "key": "c3", "description": "Adds a title", "points": 2,
+        "patterns": ["title\\s*\\(", "set_title\\s*\\(", "title\\s*="],
+        "hint": "Add a title with plt.title(), ax.set_title() or title=." },
+      { "key": "c4", "description": "Labels the axes", "points": 3,
+        "patterns": ["xlabel", "ylabel", "set_xlabel", "set_ylabel", "labels\\s*=\\s*\\{", "\\bax\\.set\\s*\\([^)]*label"],
+        "hint": "Label axes with plt.xlabel()/plt.ylabel() or ax.set_xlabel()/ax.set_ylabel()." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "data-visualization-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn to choose the right chart",
+      "description": "Explore From Data to Viz and its decision tree for choosing charts by data type. Summarize when to use line, bar, histogram, scatter and box plots, and common caveats.",
+      "estimated_minutes": 60,
+      "completion_criteria": "A one-page chart selection cheat sheet with one example and one pitfall per chart type.",
+      "resource_url": "https://www.data-to-viz.com/"
+    },
+    {
+      "key": "data-visualization-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Make basic charts with matplotlib",
+      "description": "Using a small data set, create a line chart, bar chart, histogram and scatter plot with matplotlib, each with a title, axis labels and units.",
+      "estimated_minutes": 90,
+      "completion_criteria": "Four saved chart images, each with a title and labeled axes.",
+      "resource_url": "https://matplotlib.org/stable/"
+    },
+    {
+      "key": "data-visualization-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Explore a data set with seaborn",
+      "description": "Follow the seaborn tutorial and perform exploratory analysis on a public data set using distribution, relational and categorical plots, using a colorblind-safe palette.",
+      "estimated_minutes": 120,
+      "completion_criteria": "A notebook with at least six plots and a written insight beneath each.",
+      "resource_url": "https://seaborn.pydata.org/tutorial.html"
+    },
+    {
+      "key": "data-visualization-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Redesign a misleading chart and publish a visual report",
+      "description": "Find a poorly designed chart, critique it (axes, encoding, color, clutter), and redesign it. Then produce a short visual report of 4-6 charts on a data set of your choice answering a clear question.",
+      "estimated_minutes": 240,
+      "completion_criteria": "A before/after critique plus a report whose charts each have a takeaway title, labeled axes, source note and accessible colors.",
+      "resource_url": "https://pandas.pydata.org/docs/user_guide/visualization.html"
+    }
+  ]
+}

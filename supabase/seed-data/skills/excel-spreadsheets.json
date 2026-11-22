@@ -1,0 +1,157 @@
+{
+  "slug": "excel-spreadsheets",
+  "name": "Excel & Spreadsheets",
+  "description": "Organizing, calculating and summarizing data in spreadsheets with formulas, lookups and PivotTables.",
+  "category": "Data Analysis",
+  "prerequisites": [],
+  "resources": [
+    { "title": "Microsoft Excel help & learning", "url": "https://support.microsoft.com/en-us/excel", "kind": "docs" },
+    { "title": "Exceljet formula guides", "url": "https://exceljet.net/", "kind": "article" },
+    { "title": "Data Analyst Roadmap", "url": "https://roadmap.sh/data-analyst", "kind": "article" }
+  ],
+  "questions": [
+    {
+      "key": "excel-spreadsheets-q1",
+      "difficulty": "beginner",
+      "question": "Which formula adds up the values in cells A2 through A10?",
+      "options": ["=ADD(A2:A10)", "=SUM(A2:A10)", "=TOTAL(A2,A10)", "=COUNT(A2:A10)"],
+      "correct_index": 1,
+      "explanation": "SUM with a range adds all numeric values in it. COUNT counts numeric cells; ADD and TOTAL are not Excel functions.",
+      "points": 1
+    },
+    {
+      "key": "excel-spreadsheets-q2",
+      "difficulty": "beginner",
+      "question": "What does the reference $A$1 mean in a formula?",
+      "options": [
+        "Cell A1 formatted as currency",
+        "Only the row is locked when copied",
+        "The value of A1 rounded to whole numbers",
+        "Both the column and row stay fixed when the formula is copied"
+      ],
+      "correct_index": 3,
+      "explanation": "Dollar signs make the column and row absolute, so the reference does not shift when the formula is filled or copied.",
+      "points": 1
+    },
+    {
+      "key": "excel-spreadsheets-q3",
+      "difficulty": "intermediate",
+      "question": "In =VLOOKUP(E2, A2:C100, 3, FALSE), what does FALSE specify?",
+      "options": [
+        "An exact match for E2 is required",
+        "The lookup should search from the bottom up",
+        "Return the 3rd row instead of the 3rd column",
+        "Ignore text values"
+      ],
+      "correct_index": 0,
+      "explanation": "The fourth argument is range_lookup; FALSE requires an exact match, returning #N/A if none is found.",
+      "points": 2
+    },
+    {
+      "key": "excel-spreadsheets-q4",
+      "difficulty": "intermediate",
+      "question": "What is a PivotTable best used for?",
+      "options": [
+        "Encrypting a workbook",
+        "Drawing freehand diagrams",
+        "Quickly summarizing and aggregating large data sets by categories, e.g. total sales by region and month",
+        "Spell-checking text cells"
+      ],
+      "correct_index": 2,
+      "explanation": "PivotTables group rows by fields and compute aggregates like sums, counts and averages interactively.",
+      "points": 2
+    },
+    {
+      "key": "excel-spreadsheets-q5",
+      "difficulty": "advanced",
+      "question": "What does =SUMIFS(C:C, A:A, \"East\", B:B, \">100\") return?",
+      "options": [
+        "The sum of column C where column A is \"East\" OR column B is greater than 100",
+        "The sum of column C where column A is \"East\" AND column B is greater than 100",
+        "The count of rows where column A is \"East\"",
+        "The sum of columns A and B where C is greater than 100"
+      ],
+      "correct_index": 1,
+      "explanation": "SUMIFS sums the first range for rows meeting all criteria pairs; multiple criteria are combined with AND.",
+      "points": 3
+    },
+    {
+      "key": "excel-spreadsheets-q6",
+      "difficulty": "advanced",
+      "question": "What does =INDEX(B2:B10, MATCH(\"Kiwi\", A2:A10, 0)) return?",
+      "options": [
+        "The row number of \"Kiwi\" in A2:A10",
+        "The number of times \"Kiwi\" appears in A2:A10",
+        "The sum of B2:B10",
+        "The value in B2:B10 on the same row where A2:A10 exactly equals \"Kiwi\""
+      ],
+      "correct_index": 3,
+      "explanation": "MATCH with 0 finds the exact position of \"Kiwi\"; INDEX returns the item at that position in B2:B10.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "excel-spreadsheets-p1",
+    "title": "Count orders with multiple conditions",
+    "difficulty": "intermediate",
+    "instructions": "A sheet has regions in B2:B500 and order amounts in C2:C500. Write a single Excel formula that counts how many orders are from the region \"West\" AND have an amount greater than 1000.",
+    "expected_output": "=COUNTIFS(B2:B500,\"West\",C2:C500,\">1000\") (or an equivalent SUMPRODUCT formula).",
+    "rubric": [
+      { "key": "c1", "description": "Starts with an equals sign", "points": 1,
+        "patterns": ["^\\s*="],
+        "hint": "Excel formulas start with =." },
+      { "key": "c2", "description": "Uses COUNTIFS (or SUMPRODUCT)", "points": 4,
+        "patterns": ["countifs\\s*\\(", "sumproduct\\s*\\("],
+        "hint": "Use COUNTIFS to count rows that meet several conditions." },
+      { "key": "c3", "description": "Applies the region criterion", "points": 2,
+        "patterns": ["\\$?b\\$?2\\s*:\\s*\\$?b\\$?500\\s*\\)?\\s*[,;=]\\s*\"west\""],
+        "hint": "Pair the range B2:B500 with the criterion \"West\"." },
+      { "key": "c4", "description": "Applies the amount criterion", "points": 3,
+        "patterns": ["\\$?c\\$?2\\s*:\\s*\\$?c\\$?500\\s*[,;]\\s*\">\\s*1000\"", "\\$?c\\$?2\\s*:\\s*\\$?c\\$?500\\s*\\)?\\s*>\\s*1000"],
+        "hint": "Pair the range C2:C500 with the criterion \">1000\" (the operator goes inside the quotes)." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "excel-spreadsheets-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn core formulas and references",
+      "description": "Use Microsoft's Excel training to learn SUM, AVERAGE, COUNT, IF and the difference between relative and absolute references. Recreate each example in your own workbook.",
+      "estimated_minutes": 90,
+      "completion_criteria": "A workbook with working examples of at least five functions and both reference types.",
+      "resource_url": "https://support.microsoft.com/en-us/excel"
+    },
+    {
+      "key": "excel-spreadsheets-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Build a personal budget sheet",
+      "description": "Create a monthly budget with categories, use SUMIF to total spending per category, and apply conditional formatting to highlight overspending.",
+      "estimated_minutes": 60,
+      "completion_criteria": "A budget sheet with SUMIF totals per category and conditional formatting that flags categories over limit.",
+      "resource_url": "https://exceljet.net/"
+    },
+    {
+      "key": "excel-spreadsheets-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Lookups and PivotTables on a sales data set",
+      "description": "Download a sample sales data set, use XLOOKUP or INDEX/MATCH to join product details, and build PivotTables summarizing revenue by region and month.",
+      "estimated_minutes": 120,
+      "completion_criteria": "A workbook with a lookup-enriched table and at least two PivotTables answering specific business questions.",
+      "resource_url": "https://support.microsoft.com/en-us/excel"
+    },
+    {
+      "key": "excel-spreadsheets-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Create an interactive reporting workbook",
+      "description": "Build a workbook that imports raw data, cleans it with formulas or Power Query, and presents a one-page summary with PivotCharts and slicers for filtering.",
+      "estimated_minutes": 240,
+      "completion_criteria": "A workbook where changing a slicer updates all charts and KPIs, with documentation of data sources and steps.",
+      "resource_url": "https://roadmap.sh/data-analyst"
+    }
+  ]
+}

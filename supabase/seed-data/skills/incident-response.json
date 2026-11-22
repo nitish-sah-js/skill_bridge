@@ -1,0 +1,161 @@
+{
+  "slug": "incident-response",
+  "name": "Incident Response",
+  "description": "Preparing for, detecting, containing, eradicating and recovering from security incidents, and learning from them.",
+  "category": "Cybersecurity",
+  "prerequisites": ["siem-monitoring"],
+  "resources": [
+    { "title": "NIST SP 800-61: Computer Security Incident Handling Guide", "url": "https://csrc.nist.gov/pubs/sp/800/61/r2/final", "kind": "docs" },
+    { "title": "CISA Incident Response resources", "url": "https://www.cisa.gov/", "kind": "docs" },
+    { "title": "SANS Digital Forensics and Incident Response", "url": "https://www.sans.org/digital-forensics-incident-response/", "kind": "article" },
+    { "title": "MITRE ATT&CK", "url": "https://attack.mitre.org/", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "incident-response-q1",
+      "difficulty": "beginner",
+      "question": "In the NIST incident response lifecycle (SP 800-61), which phase comes first?",
+      "options": ["Detection and Analysis", "Containment, Eradication and Recovery", "Preparation", "Post-Incident Activity"],
+      "correct_index": 2,
+      "explanation": "Preparation (plans, tools, training, contacts) comes before Detection and Analysis; containment and post-incident activity follow.",
+      "points": 1
+    },
+    {
+      "key": "incident-response-q2",
+      "difficulty": "beginner",
+      "question": "What is the main goal of the containment step?",
+      "options": [
+        "To limit the spread and damage of the incident",
+        "To permanently delete all logs",
+        "To publicly announce the attacker's identity",
+        "To restore every system from backup immediately"
+      ],
+      "correct_index": 0,
+      "explanation": "Containment stops the incident from spreading or causing further harm while preserving the ability to investigate.",
+      "points": 1
+    },
+    {
+      "key": "incident-response-q3",
+      "difficulty": "intermediate",
+      "question": "A single laptop shows signs of active ransomware encryption. What is the best immediate action?",
+      "options": [
+        "Ignore it until the next business day",
+        "Pay the ransom right away",
+        "Wipe and reimage the laptop before anyone looks at it",
+        "Isolate the laptop from the network (e.g. EDR network isolation) and escalate per the IR plan"
+      ],
+      "correct_index": 3,
+      "explanation": "Network isolation stops spread to shares and other hosts while keeping the system available for evidence collection.",
+      "points": 2
+    },
+    {
+      "key": "incident-response-q4",
+      "difficulty": "intermediate",
+      "question": "What is the purpose of a post-incident 'lessons learned' review?",
+      "options": [
+        "To assign personal blame to the analyst on duty",
+        "To identify what worked and what failed so processes, detections and controls can be improved",
+        "To close the ticket as quickly as possible",
+        "To delete evidence that is no longer needed"
+      ],
+      "correct_index": 1,
+      "explanation": "Lessons-learned reviews are blameless improvement exercises that feed back into preparation and detection.",
+      "points": 2
+    },
+    {
+      "key": "incident-response-q5",
+      "difficulty": "advanced",
+      "question": "Why should responders usually avoid immediately reimaging a compromised server?",
+      "options": [
+        "Volatile and disk evidence needed to understand scope, root cause and persistence would be destroyed",
+        "Reimaging is illegal in most jurisdictions",
+        "Reimaging always spreads the malware to other servers",
+        "Compromised servers cannot be reimaged"
+      ],
+      "correct_index": 0,
+      "explanation": "Without evidence, responders cannot determine how the attacker got in or what else is affected, risking reinfection.",
+      "points": 3
+    },
+    {
+      "key": "incident-response-q6",
+      "difficulty": "advanced",
+      "question": "During eradication after a phishing-driven email account compromise, which action is most essential to prevent the attacker regaining access?",
+      "options": [
+        "Changing the company's email domain name",
+        "Resetting the account's credentials, revoking active sessions and tokens, and removing malicious mailbox rules",
+        "Deleting the original phishing email only",
+        "Disabling antivirus to speed up recovery"
+      ],
+      "correct_index": 1,
+      "explanation": "Attackers often persist through existing session tokens and forwarding rules; resetting credentials alone is not enough without revoking sessions and removing persistence.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "incident-response-p1",
+    "title": "Draft a containment plan",
+    "difficulty": "intermediate",
+    "instructions": "An EDR alert shows workstation WS-042 running malware that beacons to 198.51.100.23 every 60 seconds. In 3-6 sentences, write the containment and initial response steps you would take, in order.",
+    "expected_output": "Isolate WS-042 from the network, block the C2 indicator 198.51.100.23 at firewall/DNS/proxy, preserve evidence (memory and disk image) before cleaning, scope the incident by hunting for other hosts contacting the IP in SIEM/EDR, and reset potentially exposed credentials.",
+    "rubric": [
+      { "key": "c1", "description": "Isolates the affected host", "points": 3,
+        "patterns": ["isolat", "disconnect", "quarantin", "unplug", "segment", "take\\s+(it\\s+)?off\\s+(the\\s+)?network"],
+        "hint": "First isolate WS-042 from the network to stop the beaconing and spread." },
+      { "key": "c2", "description": "Blocks the malicious indicator", "points": 2,
+        "patterns": ["block", "blacklist|blocklist|denylist", "sinkhole", "firewall"],
+        "hint": "Block 198.51.100.23 at the firewall, proxy or DNS." },
+      { "key": "c3", "description": "Preserves evidence", "points": 2,
+        "patterns": ["memory", "\\bram\\b", "image", "evidence", "forensic", "snapshot", "preserv"],
+        "hint": "Capture memory and a disk image before cleaning the host." },
+      { "key": "c4", "description": "Scopes the incident across other hosts", "points": 2,
+        "patterns": ["other\\s+(hosts|machines|systems|endpoints|devices|workstations)", "\\bscope", "hunt", "\\bsiem\\b", "lateral", "search\\s+(the\\s+)?(logs|environment|network)"],
+        "hint": "Search SIEM/EDR for other hosts communicating with the same IP to determine scope." },
+      { "key": "c5", "description": "Addresses credentials", "points": 1,
+        "patterns": ["credential", "password", "reset"],
+        "hint": "Reset credentials that may have been exposed on the workstation." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "incident-response-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Study the incident response lifecycle",
+      "description": "Read NIST SP 800-61 and summarize each lifecycle phase with two concrete activities. Note how incidents are prioritized.",
+      "estimated_minutes": 90,
+      "completion_criteria": "A summary of all phases with at least two activities each and the prioritization factors.",
+      "resource_url": "https://csrc.nist.gov/pubs/sp/800/61/r2/final"
+    },
+    {
+      "key": "incident-response-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Map an incident to ATT&CK",
+      "description": "Read a public incident write-up and map each attacker action to a MITRE ATT&CK tactic and technique. Identify where detection could have happened earlier.",
+      "estimated_minutes": 60,
+      "completion_criteria": "A table mapping at least 6 attacker actions to ATT&CK techniques with a detection opportunity for each.",
+      "resource_url": "https://attack.mitre.org/"
+    },
+    {
+      "key": "incident-response-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Write an incident response playbook",
+      "description": "Create a step-by-step playbook for one scenario such as phishing account compromise or ransomware, covering triage, containment, eradication, recovery and communication.",
+      "estimated_minutes": 120,
+      "completion_criteria": "A playbook with defined roles, decision points, evidence to collect and a communications checklist.",
+      "resource_url": "https://www.sans.org/digital-forensics-incident-response/"
+    },
+    {
+      "key": "incident-response-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Run a tabletop exercise",
+      "description": "Design and facilitate a tabletop exercise with peers using your playbook and a realistic scenario with injects. Capture decisions, gaps and an after-action report.",
+      "estimated_minutes": 180,
+      "completion_criteria": "A scenario with at least five injects, participant decision log, and an after-action report with prioritized improvements.",
+      "resource_url": "https://www.cisa.gov/"
+    }
+  ]
+}

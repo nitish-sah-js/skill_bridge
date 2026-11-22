@@ -1,0 +1,157 @@
+{
+  "slug": "machine-learning",
+  "name": "Machine Learning",
+  "description": "Training, evaluating and tuning supervised and unsupervised models on tabular data using libraries such as scikit-learn.",
+  "category": "AI & Machine Learning",
+  "prerequisites": ["python", "statistics", "math-for-ml"],
+  "resources": [
+    { "title": "scikit-learn User Guide", "url": "https://scikit-learn.org/stable/user_guide.html", "kind": "docs" },
+    { "title": "Kaggle Learn: Intro to Machine Learning", "url": "https://www.kaggle.com/learn/intro-to-machine-learning", "kind": "interactive" },
+    { "title": "Coursera: Machine Learning Specialization", "url": "https://www.coursera.org/specializations/machine-learning-introduction", "kind": "course" }
+  ],
+  "questions": [
+    {
+      "key": "machine-learning-q1",
+      "difficulty": "beginner",
+      "question": "Predicting a house's sale price from its features is an example of which type of task?",
+      "options": ["Classification", "Clustering", "Regression", "Dimensionality reduction"],
+      "correct_index": 2,
+      "explanation": "Regression predicts a continuous numeric target such as price.",
+      "points": 1
+    },
+    {
+      "key": "machine-learning-q2",
+      "difficulty": "beginner",
+      "question": "Why do we evaluate a model on a held-out test set?",
+      "options": [
+        "To make training faster",
+        "To estimate how well the model generalizes to unseen data",
+        "To increase the size of the training data",
+        "To remove outliers from the data"
+      ],
+      "correct_index": 1,
+      "explanation": "Performance on data the model never saw during training estimates real-world generalization.",
+      "points": 1
+    },
+    {
+      "key": "machine-learning-q3",
+      "difficulty": "intermediate",
+      "question": "A model has 99% training accuracy but 70% validation accuracy. What is the most likely issue?",
+      "options": [
+        "Underfitting",
+        "The learning rate is too low",
+        "The validation set is too large",
+        "Overfitting"
+      ],
+      "correct_index": 3,
+      "explanation": "A large gap between training and validation performance indicates the model memorized training data and generalizes poorly.",
+      "points": 2
+    },
+    {
+      "key": "machine-learning-q4",
+      "difficulty": "intermediate",
+      "question": "In a fraud dataset where only 1% of transactions are fraudulent, why is accuracy a poor metric?",
+      "options": [
+        "A model that always predicts 'not fraud' scores 99% accuracy while catching no fraud",
+        "Accuracy cannot be computed for binary classification",
+        "Accuracy always underestimates performance on imbalanced data",
+        "Accuracy only works for regression"
+      ],
+      "correct_index": 0,
+      "explanation": "With class imbalance, metrics such as precision, recall, F1 or PR-AUC better reflect performance on the minority class.",
+      "points": 2
+    },
+    {
+      "key": "machine-learning-q5",
+      "difficulty": "advanced",
+      "question": "You standardize features by fitting a StandardScaler on the entire dataset before splitting into train and test. What is the problem?",
+      "options": [
+        "StandardScaler cannot be used before splitting",
+        "Data leakage: test-set statistics influence the training transformation, inflating evaluation scores",
+        "The model will underfit because features have unit variance",
+        "There is no problem; this is the recommended approach"
+      ],
+      "correct_index": 1,
+      "explanation": "Preprocessing should be fit on training data only (e.g. inside a Pipeline) so no information from the test set leaks into training.",
+      "points": 3
+    },
+    {
+      "key": "machine-learning-q6",
+      "difficulty": "advanced",
+      "question": "How does increasing the regularization strength (e.g. a larger alpha in Ridge regression) typically affect bias and variance?",
+      "options": [
+        "Decreases both bias and variance",
+        "Increases variance and decreases bias",
+        "Has no effect on bias or variance",
+        "Increases bias and decreases variance"
+      ],
+      "correct_index": 3,
+      "explanation": "Stronger regularization constrains model weights, making the model simpler: more bias, less variance.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "machine-learning-p1",
+    "title": "Train and evaluate a classifier with scikit-learn",
+    "difficulty": "intermediate",
+    "instructions": "Given a feature matrix X and labels y, write a short scikit-learn snippet that splits the data into train and test sets (20% test), trains a RandomForestClassifier, predicts on the test set and prints the accuracy.",
+    "expected_output": "from sklearn.model_selection import train_test_split; from sklearn.ensemble import RandomForestClassifier; from sklearn.metrics import accuracy_score; X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42); model = RandomForestClassifier(); model.fit(X_train, y_train); print(accuracy_score(y_test, model.predict(X_test)))",
+    "rubric": [
+      { "key": "c1", "description": "Splits data with train_test_split and a 20% test set", "points": 3,
+        "patterns": ["train_test_split\\s*\\([\\s\\S]*test_size\\s*=\\s*0?\\.20?\\b"],
+        "hint": "Use train_test_split(X, y, test_size=0.2)." },
+      { "key": "c2", "description": "Creates a RandomForestClassifier", "points": 2,
+        "patterns": ["RandomForestClassifier\\s*\\("],
+        "hint": "Instantiate sklearn.ensemble.RandomForestClassifier()." },
+      { "key": "c3", "description": "Fits on the training data only", "points": 3,
+        "patterns": ["\\.fit\\s*\\(\\s*X_?train\\s*,\\s*y_?train\\s*\\)"],
+        "hint": "Call .fit(X_train, y_train), never on the test data." },
+      { "key": "c4", "description": "Predicts on the test set and computes accuracy", "points": 2,
+        "patterns": ["accuracy_score\\s*\\(", "\\.score\\s*\\(\\s*X_?test"],
+        "hint": "Use accuracy_score(y_test, model.predict(X_test)) or model.score(X_test, y_test)." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "machine-learning-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Complete Kaggle Intro to Machine Learning",
+      "description": "Work through the Kaggle Intro to Machine Learning course to learn model training, validation and underfitting versus overfitting with decision trees and random forests.",
+      "estimated_minutes": 180,
+      "completion_criteria": "All course exercises completed and certificate earned.",
+      "resource_url": "https://www.kaggle.com/learn/intro-to-machine-learning"
+    },
+    {
+      "key": "machine-learning-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Train your first classifier",
+      "description": "Load the Iris or Titanic dataset, split into train and test sets, and train logistic regression and decision tree classifiers. Compare their test accuracy.",
+      "estimated_minutes": 90,
+      "completion_criteria": "Notebook showing two trained models and their test-set metrics.",
+      "resource_url": "https://scikit-learn.org/stable/getting_started.html"
+    },
+    {
+      "key": "machine-learning-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Build a pipeline with cross-validated tuning",
+      "description": "Create a scikit-learn Pipeline with preprocessing (imputation, scaling, one-hot encoding) and a model. Tune hyperparameters with GridSearchCV using 5-fold cross-validation and report precision, recall and F1.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Pipeline with no data leakage, tuned hyperparameters and a classification report on a held-out test set.",
+      "resource_url": "https://scikit-learn.org/stable/user_guide.html"
+    },
+    {
+      "key": "machine-learning-t4",
+      "level": 3,
+      "type": "project",
+      "title": "End-to-end ML project with error analysis",
+      "description": "Pick a Kaggle competition or public dataset, engineer features, compare at least three model families and analyze errors on the validation set. Document decisions and results in a README.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Public repository with notebook, README, model comparison table and error analysis section.",
+      "resource_url": "https://www.kaggle.com/learn/intermediate-machine-learning"
+    }
+  ]
+}

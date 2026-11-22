@@ -1,0 +1,125 @@
+{
+  "slug": "javascript",
+  "name": "JavaScript",
+  "description": "Writing modern JavaScript, including types, functions, closures, arrays and asynchronous code with promises and async/await.",
+  "category": "Programming",
+  "prerequisites": [],
+  "resources": [
+    { "title": "MDN: JavaScript Guide", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide", "kind": "docs" },
+    { "title": "The Modern JavaScript Tutorial", "url": "https://javascript.info/", "kind": "article" },
+    { "title": "JavaScript Roadmap", "url": "https://roadmap.sh/javascript", "kind": "interactive" }
+  ],
+  "questions": [
+    {
+      "key": "javascript-q1",
+      "difficulty": "beginner",
+      "question": "Which keyword declares a block-scoped variable that cannot be reassigned?",
+      "options": ["var", "let", "const", "static"],
+      "correct_index": 2,
+      "explanation": "const creates a block-scoped binding that cannot be reassigned (though an object it refers to can still be mutated).",
+      "points": 1
+    },
+    {
+      "key": "javascript-q2",
+      "difficulty": "beginner",
+      "question": "What does typeof null evaluate to?",
+      "options": ["\"null\"", "\"object\"", "\"undefined\"", "\"number\""],
+      "correct_index": 1,
+      "explanation": "typeof null is \"object\", a long-standing quirk kept for backward compatibility.",
+      "points": 1
+    },
+    {
+      "key": "javascript-q3",
+      "difficulty": "intermediate",
+      "question": "What does [1, 2, 3].map(x => x * 2) return?",
+      "options": ["[2, 4, 6]", "12", "undefined", "[1, 2, 3]"],
+      "correct_index": 0,
+      "explanation": "map returns a new array containing the callback's result for each element.",
+      "points": 2
+    },
+    {
+      "key": "javascript-q4",
+      "difficulty": "intermediate",
+      "question": "How does === differ from ==?",
+      "options": ["=== compares only object references", "== is faster and stricter", "There is no difference", "=== compares without type coercion; == converts types before comparing"],
+      "correct_index": 3,
+      "explanation": "For example 0 == '0' is true but 0 === '0' is false.",
+      "points": 2
+    },
+    {
+      "key": "javascript-q5",
+      "difficulty": "advanced",
+      "question": "What order is printed by: console.log('A'); setTimeout(() => console.log('B'), 0); Promise.resolve().then(() => console.log('C')); console.log('D');",
+      "options": ["A B C D", "A D C B", "A D B C", "A C D B"],
+      "correct_index": 1,
+      "explanation": "Synchronous code runs first (A, D); then the microtask queue (promise callback C) drains before the next macrotask (timer B).",
+      "points": 3
+    },
+    {
+      "key": "javascript-q6",
+      "difficulty": "advanced",
+      "question": "What does this print: for (var i = 0; i < 3; i++) { setTimeout(() => console.log(i)); }",
+      "options": ["0 1 2", "2 2 2", "3 3 3", "0 0 0"],
+      "correct_index": 2,
+      "explanation": "var is function-scoped, so all callbacks share one i, which is 3 when they run; using let would print 0 1 2.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "javascript-p1",
+    "title": "Fetch a user's name",
+    "difficulty": "intermediate",
+    "instructions": "Write an async JavaScript function getUserName(id) that fetches https://api.example.com/users/{id}, throws an Error if the response is not OK, and returns the name property from the JSON body.",
+    "expected_output": "async function getUserName(id) { const res = await fetch(`https://api.example.com/users/${id}`); if (!res.ok) throw new Error(...); const data = await res.json(); return data.name; }",
+    "rubric": [
+      { "key": "c1", "description": "Declares an async function", "points": 2, "patterns": ["async\\s+function", "async\\s*\\(", "async\\s+\\w+\\s*=>"], "hint": "Mark the function async so you can use await." },
+      { "key": "c2", "description": "Awaits fetch", "points": 3, "patterns": ["await\\s+fetch\\s*\\("], "hint": "Use await fetch(url) to get the Response." },
+      { "key": "c3", "description": "Checks the response status", "points": 2, "patterns": ["\\.ok\\b", "\\.status\\b"], "hint": "fetch does not reject on HTTP errors; check response.ok and throw." },
+      { "key": "c4", "description": "Parses JSON", "points": 2, "patterns": ["\\.json\\s*\\(\\s*\\)"], "hint": "Call await response.json() to parse the body." },
+      { "key": "c5", "description": "Returns the name", "points": 1, "patterns": ["\\.name\\b", "\\[\\s*['\"]name['\"]\\s*\\]", "\\{\\s*name\\s*\\}"], "hint": "Return data.name." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "javascript-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn JavaScript fundamentals",
+      "description": "Work through the JavaScript Fundamentals part of javascript.info: variables, types, operators, conditionals, loops and functions. Run each example in the browser console or Node.",
+      "estimated_minutes": 120,
+      "completion_criteria": "All chapter tasks in the Fundamentals section attempted and solved.",
+      "resource_url": "https://javascript.info/"
+    },
+    {
+      "key": "javascript-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Practise arrays, objects and string methods",
+      "description": "Solve 10 small exercises using map, filter, reduce, object destructuring and template literals, such as grouping a list of people by age.",
+      "estimated_minutes": 90,
+      "completion_criteria": "10 working solutions run with Node.",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+    },
+    {
+      "key": "javascript-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Master closures and async code",
+      "description": "Study closures, promises, async/await and the event loop on javascript.info. Write a script that fetches data from two public APIs in parallel with Promise.all and handles errors.",
+      "estimated_minutes": 150,
+      "completion_criteria": "Script fetches in parallel, handles a failed request gracefully and you can explain microtasks vs macrotasks.",
+      "resource_url": "https://javascript.info/"
+    },
+    {
+      "key": "javascript-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build an interactive web app in vanilla JavaScript",
+      "description": "Build a small app (e.g. a weather dashboard or quiz) in plain JavaScript that calls a public API, manipulates the DOM, stores preferences in localStorage and is organised into ES modules.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Deployed app that loads live data, handles API errors and persists user preferences.",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "slug": "linux-fundamentals",
+  "name": "Linux Fundamentals",
+  "description": "Navigating and administering Linux systems from the command line, including files, permissions, processes and shell pipelines.",
+  "category": "Systems",
+  "prerequisites": [],
+  "resources": [
+    { "title": "Linux Journey", "url": "https://linuxjourney.com/", "kind": "interactive" },
+    { "title": "OverTheWire: Bandit", "url": "https://overthewire.org/wargames/bandit/", "kind": "interactive" },
+    { "title": "GNU Bash Reference Manual", "url": "https://www.gnu.org/software/bash/manual/", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "linux-fundamentals-q1",
+      "difficulty": "beginner",
+      "question": "Which command lists the files in a directory including hidden ones (names starting with a dot)?",
+      "options": ["ls -a", "ls -h", "ls -t", "ls -s"],
+      "correct_index": 0,
+      "explanation": "-a (all) includes dotfiles; -h is human-readable sizes, -t sorts by time and -s shows sizes.",
+      "points": 1
+    },
+    {
+      "key": "linux-fundamentals-q2",
+      "difficulty": "beginner",
+      "question": "What does the pwd command print?",
+      "options": ["The current user's password", "A list of running processes", "The absolute path of the current working directory", "The previous working directory"],
+      "correct_index": 2,
+      "explanation": "pwd stands for print working directory.",
+      "points": 1
+    },
+    {
+      "key": "linux-fundamentals-q3",
+      "difficulty": "intermediate",
+      "question": "What permissions does chmod 750 file set?",
+      "options": ["Owner rw-, group r--, others r--", "Owner rwx, group r-x, others no permissions", "Owner rwx, group rwx, others r-x", "Owner r-x, group r--, others none"],
+      "correct_index": 1,
+      "explanation": "7 = rwx, 5 = r-x, 0 = ---, applied to owner, group and others respectively.",
+      "points": 2
+    },
+    {
+      "key": "linux-fundamentals-q4",
+      "difficulty": "intermediate",
+      "question": "Which command shows a snapshot of all running processes on the system?",
+      "options": ["df -h", "du -sh", "free -m", "ps aux"],
+      "correct_index": 3,
+      "explanation": "ps aux lists every process with owner, CPU and memory usage; df/du report disk usage and free reports memory.",
+      "points": 2
+    },
+    {
+      "key": "linux-fundamentals-q5",
+      "difficulty": "advanced",
+      "question": "What does cmd > out.txt 2>&1 do?",
+      "options": ["Sends only errors to out.txt", "Appends stdout to out.txt and discards stderr", "Redirects stdout to out.txt, then points stderr at the same place, so both go to out.txt", "Runs cmd twice"],
+      "correct_index": 2,
+      "explanation": "Redirections are processed left to right: stdout goes to the file, then 2>&1 duplicates stderr onto stdout's current target.",
+      "points": 3
+    },
+    {
+      "key": "linux-fundamentals-q6",
+      "difficulty": "advanced",
+      "question": "Which command finds all .log files under /var modified within the last 7 days?",
+      "options": ["find /var -name '*.log' -mtime +7", "grep -r '*.log' /var", "ls -R /var | grep log", "find /var -name '*.log' -mtime -7"],
+      "correct_index": 3,
+      "explanation": "-mtime -7 means modified less than 7 days ago; +7 means more than 7 days ago. grep searches contents, not modification times.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "linux-fundamentals-p1",
+    "title": "Top IPs from an access log",
+    "difficulty": "intermediate",
+    "instructions": "Write one shell pipeline that prints the 5 most frequent IP addresses (the first space-separated field of each line) in access.log, along with how many times each appears.",
+    "expected_output": "awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -5 (or cut -d' ' -f1 in place of awk).",
+    "rubric": [
+      { "key": "c1", "description": "Extracts the first field", "points": 3, "patterns": ["awk\\b[^|]*print\\s+\\$1\\b", "cut\\b[^|]*-f\\s*1\\b"], "hint": "Use awk '{print $1}' or cut -d' ' -f1 to get the IP column." },
+      { "key": "c2", "description": "Sorts before counting", "points": 2, "patterns": ["\\|\\s*sort\\b"], "hint": "uniq only collapses adjacent duplicates, so sort first." },
+      { "key": "c3", "description": "Counts occurrences with uniq -c", "points": 2, "patterns": ["uniq\\s+-c", "uniq\\s+--count"], "hint": "uniq -c prefixes each line with its count." },
+      { "key": "c4", "description": "Sorts counts numerically, descending", "points": 2, "patterns": ["sort\\s+-(nr|rn)\\b", "sort\\s+-n\\s+-r\\b", "sort\\s+-r\\s+-n\\b", "sort\\s+(-\\w+\\s+)*-k\\s*1,?1?nr"], "hint": "Use sort -rn to put the highest counts first." },
+      { "key": "c5", "description": "Limits output to 5 lines", "points": 1, "patterns": ["head\\s+(-n\\s*)?-?5\\b"], "hint": "Finish with head -5 (or head -n 5)." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "linux-fundamentals-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Complete Linux Journey: Command Line and Text-Fu",
+      "description": "Work through the Getting Started, Command Line and Text-Fu sections of Linux Journey in a real terminal (WSL, a VM or a Linux machine).",
+      "estimated_minutes": 120,
+      "completion_criteria": "You can navigate directories, create/move/delete files and use pipes and redirection without notes.",
+      "resource_url": "https://linuxjourney.com/"
+    },
+    {
+      "key": "linux-fundamentals-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Play OverTheWire Bandit levels 0-10",
+      "description": "Solve the first 10 Bandit levels, which practise ssh, file reading, find, grep and permissions. Write down the command that solved each level.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Levels 0-10 solved with a notes file of commands used.",
+      "resource_url": "https://overthewire.org/wargames/bandit/"
+    },
+    {
+      "key": "linux-fundamentals-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Manage users, permissions and processes",
+      "description": "On a VM, create users and groups, set file permissions with chmod/chown, manage services with systemctl, and inspect processes with ps, top and kill. Read the Linux Journey sections on permissions, processes and init.",
+      "estimated_minutes": 150,
+      "completion_criteria": "A shared directory writable only by one group, and a service you started, stopped and enabled at boot.",
+      "resource_url": "https://linuxjourney.com/"
+    },
+    {
+      "key": "linux-fundamentals-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Write a system health-check script",
+      "description": "Write a Bash script that reports disk, memory, CPU load, failed services and the top log errors, with arguments and error handling. Schedule it with cron and save its output to a dated log file.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Script runs via cron, handles missing tools gracefully and produces a readable report.",
+      "resource_url": "https://www.gnu.org/software/bash/manual/"
+    }
+  ]
+}

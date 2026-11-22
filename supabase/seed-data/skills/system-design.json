@@ -1,0 +1,124 @@
+{
+  "slug": "system-design",
+  "name": "System Design Basics",
+  "description": "Designing scalable, reliable services using load balancing, caching, databases, queues and sensible trade-offs.",
+  "category": "Computer Science",
+  "prerequisites": ["web-apis", "sql-databases"],
+  "resources": [
+    { "title": "The System Design Primer", "url": "https://github.com/donnemartin/system-design-primer", "kind": "article" },
+    { "title": "System Design Roadmap", "url": "https://roadmap.sh/system-design", "kind": "interactive" }
+  ],
+  "questions": [
+    {
+      "key": "system-design-q1",
+      "difficulty": "beginner",
+      "question": "What is the main job of a load balancer?",
+      "options": ["Encrypting data at rest", "Compressing database tables", "Storing user sessions permanently", "Distributing incoming requests across multiple servers"],
+      "correct_index": 3,
+      "explanation": "Load balancers spread traffic across backends to improve capacity and availability.",
+      "points": 1
+    },
+    {
+      "key": "system-design-q2",
+      "difficulty": "beginner",
+      "question": "What does horizontal scaling mean?",
+      "options": ["Adding more machines to share the load", "Adding more CPU and RAM to a single machine", "Rewriting the service in a faster language", "Reducing the number of features"],
+      "correct_index": 0,
+      "explanation": "Horizontal scaling (scale out) adds nodes; vertical scaling (scale up) makes one node bigger.",
+      "points": 1
+    },
+    {
+      "key": "system-design-q3",
+      "difficulty": "intermediate",
+      "question": "What is the primary purpose of placing a cache such as Redis in front of a database?",
+      "options": ["To guarantee strong consistency", "To replace backups", "To reduce latency and database load by serving frequently read data from memory", "To enforce foreign keys"],
+      "correct_index": 2,
+      "explanation": "Caches serve hot data quickly from memory, at the cost of possible staleness that must be managed.",
+      "points": 2
+    },
+    {
+      "key": "system-design-q4",
+      "difficulty": "intermediate",
+      "question": "According to the CAP theorem, during a network partition a distributed system must choose between:",
+      "options": ["Latency and throughput", "Consistency and availability", "Durability and partition tolerance", "Scalability and security"],
+      "correct_index": 1,
+      "explanation": "When a partition occurs, a system can either reject some requests to stay consistent or keep serving and risk inconsistency.",
+      "points": 2
+    },
+    {
+      "key": "system-design-q5",
+      "difficulty": "advanced",
+      "question": "Why place a message queue between an order service and an email-sending service?",
+      "options": ["To make emails send synchronously before responding", "To remove the need for retries", "To store orders permanently instead of a database", "To decouple the services so emails are processed asynchronously and survive temporary consumer outages"],
+      "correct_index": 3,
+      "explanation": "Queues buffer work, absorb traffic spikes and let the consumer fail and retry without blocking order placement.",
+      "points": 3
+    },
+    {
+      "key": "system-design-q6",
+      "difficulty": "advanced",
+      "question": "What is the main benefit of consistent hashing for distributing keys across cache nodes?",
+      "options": ["It encrypts keys", "It guarantees every node holds exactly the same number of keys", "When a node is added or removed, only a small fraction of keys need to move", "It eliminates the need for replication"],
+      "correct_index": 2,
+      "explanation": "With modulo hashing nearly all keys remap when node count changes; consistent hashing limits remapping to roughly K/N keys.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "system-design-p1",
+    "title": "Sketch a URL shortener",
+    "difficulty": "intermediate",
+    "instructions": "In 4-6 sentences, describe a design for a URL shortener: how you generate short codes, where you store the mappings, how you handle heavy read traffic, how you scale, and which HTTP status code the redirect returns.",
+    "expected_output": "Codes from a counter/unique ID encoded in base62 (or a hash); mappings in a key-value store or database; a cache (e.g. Redis/CDN) for hot links; load balancer with replicas or sharding; redirect with 301/302.",
+    "rubric": [
+      { "key": "c1", "description": "Explains short-code generation", "points": 2, "patterns": ["base\\s*-?\\s*62", "\\bhash", "counter", "unique\\s+id", "random"], "hint": "Explain how codes are generated, e.g. base62-encoding an auto-increment ID." },
+      { "key": "c2", "description": "Chooses storage for mappings", "points": 2, "patterns": ["database", "\\bdb\\b", "key[\\s-]*value", "\\btable\\b", "sql", "dynamo", "cassandra", "postgres", "mysql"], "hint": "Say where code-to-URL mappings are stored." },
+      { "key": "c3", "description": "Uses caching for reads", "points": 2, "patterns": ["cach", "redis", "memcache", "\\bcdn\\b"], "hint": "Reads dominate; cache popular mappings in memory." },
+      { "key": "c4", "description": "Addresses scaling", "points": 2, "patterns": ["load\\s*-?\\s*balanc", "replica", "shard", "partition", "horizontal"], "hint": "Mention load balancing, read replicas or sharding." },
+      { "key": "c5", "description": "Correct redirect status", "points": 2, "patterns": ["\\b30[1278]\\b"], "hint": "Redirect with 301 (permanent) or 302 (temporary)." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "system-design-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Read the System Design Primer fundamentals",
+      "description": "Read the primer sections on performance vs scalability, latency vs throughput, availability vs consistency, DNS, CDNs and load balancers. Summarise each in two sentences.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Written summaries for at least 6 core concepts.",
+      "resource_url": "https://github.com/donnemartin/system-design-primer"
+    },
+    {
+      "key": "system-design-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Diagram an app you use",
+      "description": "Pick a familiar app (e.g. a food-delivery app) and draw its likely architecture: clients, load balancer, services, databases, caches and queues. Label what each component does.",
+      "estimated_minutes": 60,
+      "completion_criteria": "A labelled architecture diagram with at least 6 components.",
+      "resource_url": "https://roadmap.sh/system-design"
+    },
+    {
+      "key": "system-design-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Work through two classic design problems",
+      "description": "Design a URL shortener and a news feed using the primer's approach: requirements, capacity estimates, high-level design, then bottlenecks. Compare with the primer's solutions afterwards.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Two written designs with capacity estimates and identified trade-offs.",
+      "resource_url": "https://github.com/donnemartin/system-design-primer"
+    },
+    {
+      "key": "system-design-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build and load-test a scaled service",
+      "description": "Run a small API behind a load balancer with two instances, a database and a Redis cache using Docker Compose. Load-test it and measure latency with and without caching.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Load-test results showing the effect of caching and of running multiple instances.",
+      "resource_url": "https://roadmap.sh/system-design"
+    }
+  ]
+}

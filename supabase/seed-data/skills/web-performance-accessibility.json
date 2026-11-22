@@ -1,0 +1,158 @@
+{
+  "slug": "web-performance-accessibility",
+  "name": "Web Performance & Accessibility",
+  "description": "Making websites fast and usable by everyone, using Core Web Vitals, performance optimization techniques and WCAG accessibility practices.",
+  "category": "Web Development",
+  "prerequisites": ["html-css"],
+  "resources": [
+    { "title": "web.dev: Learn Performance", "url": "https://web.dev/learn/performance", "kind": "course" },
+    { "title": "web.dev: Learn Accessibility", "url": "https://web.dev/learn/accessibility", "kind": "course" },
+    { "title": "W3C WAI: WCAG 2 Overview", "url": "https://www.w3.org/WAI/standards-guidelines/wcag/", "kind": "docs" },
+    { "title": "MDN: Accessibility", "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "web-performance-accessibility-q1",
+      "difficulty": "beginner",
+      "question": "What is the purpose of the alt attribute on an <img> element?",
+      "options": [
+        "It sets the image's tooltip color",
+        "It lazy-loads the image",
+        "It provides a text alternative for screen readers and when the image fails to load",
+        "It defines the image's file format"
+      ],
+      "correct_index": 2,
+      "explanation": "alt text conveys the image's meaning to users who cannot see it; decorative images should use alt=\"\".",
+      "points": 1
+    },
+    {
+      "key": "web-performance-accessibility-q2",
+      "difficulty": "beginner",
+      "question": "Which Core Web Vital measures how long it takes for the largest visible content element to render?",
+      "options": [
+        "Largest Contentful Paint (LCP)",
+        "Cumulative Layout Shift (CLS)",
+        "Interaction to Next Paint (INP)",
+        "Time to First Byte (TTFB)"
+      ],
+      "correct_index": 0,
+      "explanation": "LCP measures loading performance by timing when the largest image or text block in the viewport is rendered.",
+      "points": 1
+    },
+    {
+      "key": "web-performance-accessibility-q3",
+      "difficulty": "intermediate",
+      "question": "What is the WCAG 2 Level AA minimum contrast ratio for normal-size body text?",
+      "options": ["2:1", "3:1", "7:1", "4.5:1"],
+      "correct_index": 3,
+      "explanation": "WCAG success criterion 1.4.3 (AA) requires 4.5:1 for normal text and 3:1 for large text.",
+      "points": 2
+    },
+    {
+      "key": "web-performance-accessibility-q4",
+      "difficulty": "intermediate",
+      "question": "Which change most directly reduces Cumulative Layout Shift (CLS) caused by images?",
+      "options": [
+        "Converting images to PNG",
+        "Specifying width and height attributes (or aspect-ratio) so space is reserved before the image loads",
+        "Adding more images above the fold",
+        "Loading images with JavaScript after page load"
+      ],
+      "correct_index": 1,
+      "explanation": "Reserving dimensions lets the browser allocate space up front, so content does not jump when images arrive.",
+      "points": 2
+    },
+    {
+      "key": "web-performance-accessibility-q5",
+      "difficulty": "advanced",
+      "question": "A developer builds a clickable <div onclick=\"save()\">Save</div>. What is the best fix for accessibility?",
+      "options": [
+        "Add a title attribute to the div",
+        "Add cursor: pointer in CSS",
+        "Use a native <button> element, which is focusable, keyboard-operable and announced as a button",
+        "Add aria-label=\"Save\" to the div"
+      ],
+      "correct_index": 2,
+      "explanation": "Native buttons provide focus, Enter/Space activation and the correct role for free; a div needs role, tabindex and key handlers to approximate this.",
+      "points": 3
+    },
+    {
+      "key": "web-performance-accessibility-q6",
+      "difficulty": "advanced",
+      "question": "What is the effect of adding the defer attribute to a <script src> tag in the document head?",
+      "options": [
+        "The script is downloaded in parallel with HTML parsing and executed after parsing completes, in document order",
+        "The script is never executed",
+        "The script blocks parsing until it downloads and executes",
+        "The script executes immediately when downloaded, in any order"
+      ],
+      "correct_index": 0,
+      "explanation": "defer avoids render-blocking: scripts download without blocking the parser and run in order after the document is parsed (async runs as soon as downloaded, in any order).",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "web-performance-accessibility-p1",
+    "title": "Write an accessible, performance-friendly image and form field",
+    "difficulty": "intermediate",
+    "instructions": "Write HTML for (1) a below-the-fold product photo 'shoe.jpg' that is lazy-loaded, has meaningful alt text and has explicit width (400) and height (300) to avoid layout shift; and (2) an email input with a properly associated visible label.",
+    "expected_output": "<img src=\"shoe.jpg\" alt=\"Red running shoe, side view\" width=\"400\" height=\"300\" loading=\"lazy\"> <label for=\"email\">Email</label> <input type=\"email\" id=\"email\" name=\"email\">",
+    "rubric": [
+      { "key": "c1", "description": "Image has non-empty alt text", "points": 3,
+        "patterns": ["<img[^>]*\\balt\\s*=\\s*[\"'][^\"']*\\w[^\"']*[\"']"],
+        "hint": "Add descriptive alt text, e.g. alt=\"Red running shoe\"." },
+      { "key": "c2", "description": "Image is lazy-loaded", "points": 2,
+        "patterns": ["loading\\s*=\\s*[\"']?lazy"],
+        "hint": "Use loading=\"lazy\" for images below the fold." },
+      { "key": "c3", "description": "Image declares width and height", "points": 2,
+        "patterns": ["<img(?=[^>]*\\bwidth\\s*=\\s*[\"']?400)(?=[^>]*\\bheight\\s*=\\s*[\"']?300)[^>]*>"],
+        "hint": "Set width=\"400\" height=\"300\" so the browser reserves space." },
+      { "key": "c4", "description": "Input is associated with a label", "points": 3,
+        "patterns": ["<label[^>]*\\bfor\\s*=\\s*[\"']?([\\w-]+)[\\s\\S]*<input[^>]*\\bid\\s*=\\s*[\"']?\\1", "<input[^>]*\\bid\\s*=\\s*[\"']?([\\w-]+)[\\s\\S]*<label[^>]*\\bfor\\s*=\\s*[\"']?\\1", "<label[^>]*>[^<]*<input", "aria-labelledby\\s*="],
+        "hint": "Use <label for=\"email\"> with a matching id on the input, or wrap the input in the label." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "web-performance-accessibility-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn accessibility and performance basics",
+      "description": "Work through the first modules of web.dev Learn Accessibility and Learn Performance. Note the WCAG principles (perceivable, operable, understandable, robust) and the Core Web Vitals.",
+      "estimated_minutes": 150,
+      "completion_criteria": "Can define LCP, INP and CLS and give one example per WCAG principle.",
+      "resource_url": "https://web.dev/learn/accessibility"
+    },
+    {
+      "key": "web-performance-accessibility-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Audit a page with Lighthouse",
+      "description": "Run a Lighthouse audit in Chrome DevTools on one of your own pages. Fix at least five reported performance or accessibility issues and re-run the audit.",
+      "estimated_minutes": 90,
+      "completion_criteria": "Before/after Lighthouse reports showing at least five issues fixed.",
+      "resource_url": "https://developer.chrome.com/docs/lighthouse/overview/"
+    },
+    {
+      "key": "web-performance-accessibility-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Make a component keyboard and screen-reader friendly",
+      "description": "Build an accessible modal dialog or tabs component following the ARIA Authoring Practices Guide pattern. Test it using only the keyboard and with a screen reader.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Component meets the APG keyboard interaction spec, traps and restores focus correctly, and is announced properly by a screen reader.",
+      "resource_url": "https://www.w3.org/WAI/ARIA/apg/"
+    },
+    {
+      "key": "web-performance-accessibility-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Optimize a site to pass Core Web Vitals and WCAG AA",
+      "description": "Take an existing multi-page site and optimize images, fonts and scripts, then remediate accessibility issues against WCAG 2.2 AA. Document each change and its measured impact.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Lighthouse performance and accessibility scores of at least 90 and a written report of changes with before/after metrics.",
+      "resource_url": "https://www.w3.org/WAI/standards-guidelines/wcag/"
+    }
+  ]
+}

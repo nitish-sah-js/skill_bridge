@@ -1,0 +1,147 @@
+{
+  "slug": "statistics",
+  "name": "Statistics",
+  "description": "Descriptive statistics, probability distributions and inference for summarizing data and testing hypotheses.",
+  "category": "Data Analysis",
+  "prerequisites": [],
+  "resources": [
+    { "title": "Khan Academy: Statistics and Probability", "url": "https://www.khanacademy.org/math/statistics-probability", "kind": "course" },
+    { "title": "Seeing Theory (Brown University)", "url": "https://seeing-theory.brown.edu/", "kind": "interactive" },
+    { "title": "OpenIntro Statistics (free textbook)", "url": "https://www.openintro.org/book/os/", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "statistics-q1",
+      "difficulty": "beginner",
+      "question": "What is the median of the data set 3, 7, 9, 15, 100?",
+      "options": ["26.8", "9", "7", "15"],
+      "correct_index": 1,
+      "explanation": "With the values sorted, the middle (3rd of 5) value is 9. 26.8 is the mean.",
+      "points": 1
+    },
+    {
+      "key": "statistics-q2",
+      "difficulty": "beginner",
+      "question": "Which measure of center is most affected by extreme outliers?",
+      "options": ["Median", "Mode", "Mean", "Interquartile range"],
+      "correct_index": 2,
+      "explanation": "The mean uses every value's magnitude, so one extreme value can pull it substantially; the median and IQR are robust.",
+      "points": 1
+    },
+    {
+      "key": "statistics-q3",
+      "difficulty": "intermediate",
+      "question": "A hypothesis test gives p = 0.03. Which interpretation is correct?",
+      "options": [
+        "If the null hypothesis were true, there would be about a 3% chance of observing a result at least as extreme as this one",
+        "There is a 3% chance the null hypothesis is true",
+        "There is a 97% chance the alternative hypothesis is true",
+        "The effect size is 3%"
+      ],
+      "correct_index": 0,
+      "explanation": "A p-value is computed assuming the null hypothesis; it is not the probability that either hypothesis is true.",
+      "points": 2
+    },
+    {
+      "key": "statistics-q4",
+      "difficulty": "intermediate",
+      "question": "Ice cream sales and drowning incidents have a correlation of 0.85. What is the best conclusion?",
+      "options": [
+        "Eating ice cream causes drowning",
+        "Drowning causes people to buy ice cream",
+        "The data must be wrong because the correlation is too high",
+        "The variables are strongly positively associated, possibly through a confounder such as hot weather, which does not establish causation"
+      ],
+      "correct_index": 3,
+      "explanation": "Correlation measures association, not causation. A lurking variable like temperature can drive both.",
+      "points": 2
+    },
+    {
+      "key": "statistics-q5",
+      "difficulty": "advanced",
+      "question": "Test scores are approximately normally distributed with mean 70 and standard deviation 5. About what percentage of scores fall between 60 and 80?",
+      "options": ["68%", "95%", "99.7%", "50%"],
+      "correct_index": 1,
+      "explanation": "60 and 80 are two standard deviations from the mean; by the empirical rule about 95% of values lie within plus or minus 2 SD.",
+      "points": 3
+    },
+    {
+      "key": "statistics-q6",
+      "difficulty": "advanced",
+      "question": "What is a Type I error?",
+      "options": [
+        "Failing to reject a false null hypothesis",
+        "Using the wrong statistical test",
+        "Rejecting a null hypothesis that is actually true",
+        "Collecting a sample that is too small"
+      ],
+      "correct_index": 2,
+      "explanation": "A Type I error is a false positive: rejecting a true null. Its probability is controlled by the significance level alpha. Failing to reject a false null is a Type II error.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "statistics-p1",
+    "title": "Compute descriptive statistics",
+    "difficulty": "beginner",
+    "instructions": "For the data set 4, 8, 6, 5, 3, 10: compute the mean, the median and the range, and state whether the distribution is roughly symmetric, right-skewed or left-skewed (one sentence). Label each value, e.g. 'mean = ...'.",
+    "expected_output": "Mean = 6, median = 5.5, range = 7 (10 - 3); because the mean is greater than the median, the data are slightly right (positively) skewed.",
+    "rubric": [
+      { "key": "c1", "description": "Correct mean (6)", "points": 3,
+        "patterns": ["mean[^\\n,;]{0,30}?(=|is|:|of|≈)\\s*6(\\.0+)?(?!\\d|\\.\\d)"],
+        "hint": "Mean = sum / count = 36 / 6 = 6." },
+      { "key": "c2", "description": "Correct median (5.5)", "points": 3,
+        "patterns": ["median[^\\n,;]{0,40}?5\\.5"],
+        "hint": "Sort the values (3, 4, 5, 6, 8, 10); the median is the average of the two middle values: (5 + 6) / 2 = 5.5." },
+      { "key": "c3", "description": "Correct range (7)", "points": 2,
+        "patterns": ["range[^\\n,;]{0,30}?\\b7(?!\\d|\\.\\d)"],
+        "hint": "Range = max - min = 10 - 3 = 7." },
+      { "key": "c4", "description": "Identifies right/positive skew", "points": 2,
+        "patterns": ["(right|positive)[^.\\n]{0,20}skew", "right[-\\s]*skew", "positive(ly)?[-\\s]*skew", "skewed\\s+(to\\s+the\\s+)?right", "skewed\\s+positive"],
+        "hint": "Mean (6) > median (5.5) suggests a slight right (positive) skew." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "statistics-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn descriptive statistics",
+      "description": "Complete the Khan Academy units on summarizing quantitative data: mean, median, spread, standard deviation and box plots. Do the practice exercises in each unit.",
+      "estimated_minutes": 120,
+      "completion_criteria": "All practice exercises in the summarizing quantitative data unit completed with at least 80% accuracy.",
+      "resource_url": "https://www.khanacademy.org/math/statistics-probability"
+    },
+    {
+      "key": "statistics-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Explore distributions visually",
+      "description": "Use Seeing Theory's interactive chapters on basic probability and probability distributions. Change parameters and record how the shape, mean and variance respond.",
+      "estimated_minutes": 60,
+      "completion_criteria": "Notes describing the effect of parameter changes for at least three distributions.",
+      "resource_url": "https://seeing-theory.brown.edu/"
+    },
+    {
+      "key": "statistics-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Run hypothesis tests on real data",
+      "description": "Using a public data set, formulate two hypotheses, run a t-test and a chi-square test in a spreadsheet or Python, and interpret the p-values and confidence intervals in plain language.",
+      "estimated_minutes": 150,
+      "completion_criteria": "A short write-up stating hypotheses, test results, p-values, confidence intervals and correct conclusions for both tests.",
+      "resource_url": "https://www.openintro.org/book/os/"
+    },
+    {
+      "key": "statistics-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Design and analyze an A/B test",
+      "description": "Design an A/B experiment (e.g. two webpage variants), simulate or collect data, compute the required sample size, analyze the result and discuss Type I/II error risks and practical significance.",
+      "estimated_minutes": 240,
+      "completion_criteria": "A report with sample size calculation, test statistic, p-value, confidence interval for the effect, and a recommendation.",
+      "resource_url": "https://www.khanacademy.org/math/statistics-probability"
+    }
+  ]
+}

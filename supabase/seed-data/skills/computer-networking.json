@@ -1,0 +1,124 @@
+{
+  "slug": "computer-networking",
+  "name": "Computer Networking",
+  "description": "Understanding how data moves across networks, including IP addressing, subnetting, TCP/UDP, DNS and the OSI/TCP-IP models.",
+  "category": "Networking",
+  "prerequisites": [],
+  "resources": [
+    { "title": "Khan Academy: Computers and the Internet", "url": "https://www.khanacademy.org/computing/computers-and-internet", "kind": "course" },
+    { "title": "Cloudflare Learning Center", "url": "https://www.cloudflare.com/learning/", "kind": "article" },
+    { "title": "Wireshark documentation", "url": "https://www.wireshark.org/docs/", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "computer-networking-q1",
+      "difficulty": "beginner",
+      "question": "What is the main job of DNS?",
+      "options": ["Encrypting web traffic", "Translating domain names into IP addresses", "Assigning IP addresses to devices", "Blocking malicious traffic"],
+      "correct_index": 1,
+      "explanation": "DNS resolves human-readable names like example.com to IP addresses; DHCP assigns addresses.",
+      "points": 1
+    },
+    {
+      "key": "computer-networking-q2",
+      "difficulty": "beginner",
+      "question": "What is the default TCP port for HTTPS?",
+      "options": ["80", "21", "443", "22"],
+      "correct_index": 2,
+      "explanation": "HTTPS uses 443; 80 is HTTP, 21 is FTP and 22 is SSH.",
+      "points": 1
+    },
+    {
+      "key": "computer-networking-q3",
+      "difficulty": "intermediate",
+      "question": "Which statement correctly contrasts TCP and UDP?",
+      "options": ["TCP is connection-oriented with reliable, ordered delivery; UDP is connectionless with no delivery guarantees", "UDP guarantees ordering; TCP does not", "TCP is only used on local networks", "UDP encrypts data by default"],
+      "correct_index": 0,
+      "explanation": "TCP provides handshakes, acknowledgements and retransmission; UDP trades those for lower overhead.",
+      "points": 2
+    },
+    {
+      "key": "computer-networking-q4",
+      "difficulty": "intermediate",
+      "question": "How many usable host addresses does an IPv4 /24 subnet provide?",
+      "options": ["256", "255", "128", "254"],
+      "correct_index": 3,
+      "explanation": "A /24 has 256 addresses; the network and broadcast addresses are reserved, leaving 254.",
+      "points": 2
+    },
+    {
+      "key": "computer-networking-q5",
+      "difficulty": "advanced",
+      "question": "At which OSI layer does a router primarily make forwarding decisions?",
+      "options": ["Layer 2 (Data Link)", "Layer 3 (Network)", "Layer 4 (Transport)", "Layer 7 (Application)"],
+      "correct_index": 1,
+      "explanation": "Routers forward packets based on IP addresses, which belong to the network layer; switches typically work at layer 2.",
+      "points": 3
+    },
+    {
+      "key": "computer-networking-q6",
+      "difficulty": "advanced",
+      "question": "What is the correct sequence of the TCP three-way handshake?",
+      "options": ["SYN, ACK, FIN", "ACK, SYN, SYN-ACK", "SYN, SYN-ACK, ACK", "SYN, FIN, RST"],
+      "correct_index": 2,
+      "explanation": "The client sends SYN, the server replies SYN-ACK, and the client confirms with ACK.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "computer-networking-p1",
+    "title": "Subnet calculation",
+    "difficulty": "intermediate",
+    "instructions": "For the host 192.168.10.37/26, state the subnet mask in dotted-decimal form, the network address, the broadcast address and the number of usable host addresses.",
+    "expected_output": "Mask 255.255.255.192, network 192.168.10.0, broadcast 192.168.10.63, 62 usable hosts.",
+    "rubric": [
+      { "key": "c1", "description": "Correct subnet mask", "points": 2, "patterns": ["255\\.255\\.255\\.192"], "hint": "/26 means 26 one-bits: the last octet is 11000000 = 192." },
+      { "key": "c2", "description": "Correct network address", "points": 3, "patterns": ["192\\.168\\.10\\.0(?![\\d.])"], "hint": "Block size is 64, so .37 falls in the .0-.63 block." },
+      { "key": "c3", "description": "Correct broadcast address", "points": 3, "patterns": ["192\\.168\\.10\\.63(?![\\d.])"], "hint": "The broadcast is the last address in the block: .63." },
+      { "key": "c4", "description": "Correct usable host count", "points": 2, "patterns": ["\\b62\\b"], "hint": "2^(32-26) - 2 = 62 usable hosts." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "computer-networking-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn how the internet works",
+      "description": "Complete the Internet unit of Khan Academy's Computers and the Internet course, covering IP addresses, DNS, packets, routing, TCP/UDP and HTTP.",
+      "estimated_minutes": 120,
+      "completion_criteria": "You can explain what happens when you type a URL into a browser, step by step.",
+      "resource_url": "https://www.khanacademy.org/computing/computers-and-internet"
+    },
+    {
+      "key": "computer-networking-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Explore your network with CLI tools",
+      "description": "Use ipconfig/ip addr, ping, traceroute/tracert and nslookup/dig to inspect your own network and resolve a few domains. Record what each tool shows.",
+      "estimated_minutes": 60,
+      "completion_criteria": "Notes with output and explanation for each of the 4 tools.",
+      "resource_url": "https://www.cloudflare.com/learning/"
+    },
+    {
+      "key": "computer-networking-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Subnetting drills and packet capture",
+      "description": "Solve 20 subnetting problems by hand (masks, network/broadcast addresses, host counts). Then capture your own traffic in Wireshark and identify a DNS query and a TCP handshake.",
+      "estimated_minutes": 150,
+      "completion_criteria": "20 correct subnetting answers and annotated screenshots of a DNS exchange and a TCP handshake.",
+      "resource_url": "https://www.wireshark.org/docs/"
+    },
+    {
+      "key": "computer-networking-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Design and simulate a small office network",
+      "description": "Design a network for a small office with separate subnets or VLANs for staff, guests and servers, and document the addressing plan, routing and firewall rules. Build it in a network simulator or with virtual machines.",
+      "estimated_minutes": 240,
+      "completion_criteria": "An addressing plan, diagram and working simulation where guest devices cannot reach the server subnet.",
+      "resource_url": "https://www.cloudflare.com/learning/"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "slug": "python",
+  "name": "Python Programming",
+  "description": "Writing clear, idiomatic Python using core data types, control flow, functions and the standard library.",
+  "category": "Programming",
+  "prerequisites": [],
+  "resources": [
+    { "title": "The Python Tutorial (official)", "url": "https://docs.python.org/3/tutorial/", "kind": "docs" },
+    { "title": "Python Developer Roadmap", "url": "https://roadmap.sh/python", "kind": "interactive" },
+    { "title": "freeCodeCamp Curriculum", "url": "https://www.freecodecamp.org/learn/", "kind": "course" }
+  ],
+  "questions": [
+    {
+      "key": "python-q1",
+      "difficulty": "beginner",
+      "question": "What does len([1, 2, [3, 4]]) return?",
+      "options": ["4", "3", "2", "It raises a TypeError"],
+      "correct_index": 1,
+      "explanation": "The outer list has three elements: 1, 2 and the nested list [3, 4]. len() does not count elements of nested lists.",
+      "points": 1
+    },
+    {
+      "key": "python-q2",
+      "difficulty": "beginner",
+      "question": "Which keyword starts a named function definition in Python?",
+      "options": ["func", "define", "def", "fn"],
+      "correct_index": 2,
+      "explanation": "Named functions are defined with the def keyword, e.g. def greet(name):.",
+      "points": 1
+    },
+    {
+      "key": "python-q3",
+      "difficulty": "intermediate",
+      "question": "What is printed by: x = [1, 2, 3]; y = x; y.append(4); print(x)",
+      "options": ["[1, 2, 3, 4]", "[1, 2, 3]", "[4, 1, 2, 3]", "It raises a TypeError"],
+      "correct_index": 0,
+      "explanation": "Assignment binds y to the same list object as x, so mutating it through y is visible through x.",
+      "points": 2
+    },
+    {
+      "key": "python-q4",
+      "difficulty": "intermediate",
+      "question": "Which of these built-in types is immutable?",
+      "options": ["list", "dict", "set", "tuple"],
+      "correct_index": 3,
+      "explanation": "Tuples cannot be changed after creation; lists, dicts and sets can be modified in place.",
+      "points": 2
+    },
+    {
+      "key": "python-q5",
+      "difficulty": "advanced",
+      "question": "Given def f(a, lst=[]): lst.append(a); return lst — what does print(f(2)) output if f(1) was called once before?",
+      "options": ["[2]", "[1]", "None", "[1, 2]"],
+      "correct_index": 3,
+      "explanation": "Default argument values are evaluated once at definition time, so the same list is shared across calls and keeps the 1 from the first call.",
+      "points": 3
+    },
+    {
+      "key": "python-q6",
+      "difficulty": "advanced",
+      "question": "What does sum(x * x for x in range(10**6)) avoid compared to sum([x * x for x in range(10**6)])?",
+      "options": ["Building the whole intermediate list in memory", "Computing the squares", "Integer overflow", "Acquiring the Global Interpreter Lock"],
+      "correct_index": 0,
+      "explanation": "A generator expression yields values lazily one at a time, so no million-element list is materialised; the result is the same.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "python-p1",
+    "title": "Word frequency counter",
+    "difficulty": "beginner",
+    "instructions": "Write a Python function count_words(text) that returns a dictionary mapping each lowercase word to the number of times it appears. Split words on whitespace.",
+    "expected_output": "A function named count_words that lowercases the text, splits it on whitespace, counts occurrences (with a dict, dict.get, defaultdict or collections.Counter) and returns the result.",
+    "rubric": [
+      { "key": "c1", "description": "Defines a function named count_words", "points": 2, "patterns": ["def\\s+count_words\\s*\\("], "hint": "Start with def count_words(text):" },
+      { "key": "c2", "description": "Normalises case", "points": 2, "patterns": ["\\.lower\\s*\\(\\s*\\)", "\\.casefold\\s*\\(\\s*\\)"], "hint": "Use text.lower() so 'The' and 'the' count as the same word." },
+      { "key": "c3", "description": "Splits the text into words", "points": 2, "patterns": ["\\.split\\s*\\("], "hint": "text.split() splits on any whitespace." },
+      { "key": "c4", "description": "Counts occurrences", "points": 3, "patterns": ["Counter\\s*\\(", "\\.get\\s*\\(", "\\+=\\s*1", "defaultdict\\s*\\("], "hint": "Increment a count per word, e.g. counts[w] = counts.get(w, 0) + 1, or use collections.Counter." },
+      { "key": "c5", "description": "Returns the result", "points": 1, "patterns": ["\\breturn\\b"], "hint": "The function should return the dictionary, not just print it." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "python-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Work through the official Python tutorial basics",
+      "description": "Read sections 3 to 5 of the official Python tutorial (informal introduction, control flow, data structures). Type and run every example in an interpreter rather than just reading.",
+      "estimated_minutes": 120,
+      "completion_criteria": "You can write a loop, a function and use lists and dicts without looking up syntax.",
+      "resource_url": "https://docs.python.org/3/tutorial/"
+    },
+    {
+      "key": "python-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Solve 10 small Python exercises",
+      "description": "Write 10 short scripts such as FizzBuzz, reversing a string, finding the max of a list without max(), and counting vowels. Run each with a few inputs to confirm it works.",
+      "estimated_minutes": 90,
+      "completion_criteria": "10 working scripts saved in a folder, each tested with at least 2 inputs.",
+      "resource_url": "https://www.freecodecamp.org/learn/"
+    },
+    {
+      "key": "python-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Use the standard library for file and data processing",
+      "description": "Write a script that reads a CSV file with the csv module, aggregates a column with collections.Counter or defaultdict, and writes a summary to a new file. Use functions and a main guard.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Script runs from the command line on a sample CSV and produces a correct summary file.",
+      "resource_url": "https://docs.python.org/3/library/collections.html"
+    },
+    {
+      "key": "python-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build a command-line tool",
+      "description": "Build a small CLI (for example a to-do manager or expense tracker) using argparse, JSON file storage and separate modules. Include error handling for bad input and missing files.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Tool supports at least 3 subcommands, persists data between runs and handles invalid input without crashing.",
+      "resource_url": "https://docs.python.org/3/library/argparse.html"
+    }
+  ]
+}
