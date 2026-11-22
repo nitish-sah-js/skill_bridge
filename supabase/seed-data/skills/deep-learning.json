@@ -1,0 +1,162 @@
+{
+  "slug": "deep-learning",
+  "name": "Deep Learning",
+  "description": "Designing and training neural networks, including CNNs, sequence models and transformers, with frameworks such as PyTorch.",
+  "category": "AI & Machine Learning",
+  "prerequisites": ["machine-learning"],
+  "resources": [
+    { "title": "PyTorch Tutorials", "url": "https://pytorch.org/tutorials/", "kind": "docs" },
+    { "title": "Coursera: Deep Learning Specialization", "url": "https://www.coursera.org/specializations/deep-learning", "kind": "course" },
+    { "title": "Kaggle Learn: Intro to Deep Learning", "url": "https://www.kaggle.com/learn/intro-to-deep-learning", "kind": "interactive" }
+  ],
+  "questions": [
+    {
+      "key": "deep-learning-q1",
+      "difficulty": "beginner",
+      "question": "Why are non-linear activation functions such as ReLU used between layers of a neural network?",
+      "options": [
+        "To reduce the number of parameters",
+        "Without them, stacked linear layers collapse into a single linear function and cannot model non-linear patterns",
+        "To normalize the input data",
+        "To make training deterministic"
+      ],
+      "correct_index": 1,
+      "explanation": "A composition of linear maps is linear; non-linearities let deep networks represent complex functions.",
+      "points": 1
+    },
+    {
+      "key": "deep-learning-q2",
+      "difficulty": "beginner",
+      "question": "What does one epoch mean during training?",
+      "options": [
+        "One forward pass of a single example",
+        "One update of the learning rate",
+        "One complete pass through the entire training dataset",
+        "One layer of the network"
+      ],
+      "correct_index": 2,
+      "explanation": "An epoch is one full pass over all training examples, typically made of many mini-batch steps.",
+      "points": 1
+    },
+    {
+      "key": "deep-learning-q3",
+      "difficulty": "intermediate",
+      "question": "Why are convolutional layers well suited to image data?",
+      "options": [
+        "They share weights across spatial positions and exploit local patterns, needing far fewer parameters than fully connected layers",
+        "They convert images to grayscale automatically",
+        "They do not require any training",
+        "They process each pixel independently of its neighbors"
+      ],
+      "correct_index": 0,
+      "explanation": "Convolutions apply the same small filters across the image, capturing local features with translation equivariance and parameter sharing.",
+      "points": 2
+    },
+    {
+      "key": "deep-learning-q4",
+      "difficulty": "intermediate",
+      "question": "In a PyTorch training loop, why is optimizer.zero_grad() called each iteration?",
+      "options": [
+        "To reset the model weights to zero",
+        "To set the learning rate to zero",
+        "To disable gradient tracking during evaluation",
+        "Because gradients accumulate by default in .grad, so they must be cleared before the next backward pass"
+      ],
+      "correct_index": 3,
+      "explanation": "loss.backward() adds to existing .grad values; without zeroing, gradients from previous batches would be summed in.",
+      "points": 2
+    },
+    {
+      "key": "deep-learning-q5",
+      "difficulty": "advanced",
+      "question": "What problem do residual (skip) connections, as in ResNet, primarily help with?",
+      "options": [
+        "Reducing the size of the training dataset",
+        "Making very deep networks easier to optimize by improving gradient flow",
+        "Removing the need for activation functions",
+        "Guaranteeing zero training loss"
+      ],
+      "correct_index": 1,
+      "explanation": "Skip connections give gradients a direct path backwards, mitigating degradation and vanishing gradients in deep networks.",
+      "points": 3
+    },
+    {
+      "key": "deep-learning-q6",
+      "difficulty": "advanced",
+      "question": "In scaled dot-product attention, why are the scores QK^T divided by sqrt(d_k)?",
+      "options": [
+        "To convert the scores into probabilities",
+        "To reduce memory usage",
+        "To make the attention matrix symmetric",
+        "To keep dot products from growing large with dimension, which would push softmax into regions with tiny gradients"
+      ],
+      "correct_index": 3,
+      "explanation": "Large dot products saturate softmax; scaling by sqrt(d_k) keeps variance stable and gradients useful.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "deep-learning-p1",
+    "title": "Write a PyTorch training step",
+    "difficulty": "intermediate",
+    "instructions": "Given a PyTorch model, an optimizer, a loss function criterion, and a batch (inputs, targets), write the lines of code for one training step: compute predictions, compute the loss, clear old gradients, backpropagate and update the weights.",
+    "expected_output": "outputs = model(inputs); loss = criterion(outputs, targets); optimizer.zero_grad(); loss.backward(); optimizer.step()",
+    "rubric": [
+      { "key": "c1", "description": "Runs a forward pass and computes the loss", "points": 2,
+        "patterns": ["criterion\\s*\\(|loss_fn\\s*\\(|F\\.\\w+_loss\\s*\\(|\\bloss\\s*=\\s*\\w+\\s*\\("],
+        "hint": "Compute loss = criterion(model(inputs), targets)." },
+      { "key": "c2", "description": "Clears gradients with zero_grad", "points": 3,
+        "patterns": ["\\.zero_grad\\s*\\("],
+        "hint": "Call optimizer.zero_grad() so gradients from earlier batches do not accumulate." },
+      { "key": "c3", "description": "Backpropagates with loss.backward()", "points": 3,
+        "patterns": ["\\.backward\\s*\\("],
+        "hint": "Call loss.backward() to compute gradients." },
+      { "key": "c4", "description": "Updates weights with optimizer.step()", "points": 2,
+        "patterns": ["\\.step\\s*\\(\\s*\\)"],
+        "hint": "Call optimizer.step() to apply the gradient update." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "deep-learning-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn neural network fundamentals",
+      "description": "Complete the Kaggle Intro to Deep Learning course, covering neurons, activation functions, stochastic gradient descent, overfitting and dropout.",
+      "estimated_minutes": 180,
+      "completion_criteria": "All course exercises completed.",
+      "resource_url": "https://www.kaggle.com/learn/intro-to-deep-learning"
+    },
+    {
+      "key": "deep-learning-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Train an image classifier with PyTorch",
+      "description": "Follow the PyTorch beginner tutorial to train a small network on FashionMNIST. Write the training and evaluation loops yourself and track loss per epoch.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Model reaches at least 85% test accuracy with a loss curve plotted.",
+      "resource_url": "https://pytorch.org/tutorials/beginner/basics/intro.html"
+    },
+    {
+      "key": "deep-learning-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Fine-tune a pretrained CNN",
+      "description": "Use transfer learning to fine-tune a pretrained ResNet on a small custom image dataset. Apply data augmentation and compare training from scratch versus fine-tuning.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Comparison table showing fine-tuning outperforms training from scratch, with augmentation used.",
+      "resource_url": "https://pytorch.org/tutorials/"
+    },
+    {
+      "key": "deep-learning-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build and analyze a transformer-based model",
+      "description": "Implement or fine-tune a small transformer for a text classification task. Run experiments on learning rate and model size, and visualize attention or errors to explain model behavior.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Repository with training code, experiment log of at least 3 runs and a written analysis.",
+      "resource_url": "https://www.coursera.org/specializations/deep-learning"
+    }
+  ]
+}

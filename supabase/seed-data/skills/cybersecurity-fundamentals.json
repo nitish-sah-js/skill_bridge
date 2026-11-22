@@ -1,0 +1,148 @@
+{
+  "slug": "cybersecurity-fundamentals",
+  "name": "Cybersecurity Fundamentals",
+  "description": "Core security concepts such as the CIA triad, threats and controls, risk management, and secure authentication practices.",
+  "category": "Cybersecurity",
+  "prerequisites": ["computer-networking", "linux-fundamentals"],
+  "resources": [
+    { "title": "NIST Cybersecurity Framework", "url": "https://www.nist.gov/cyberframework", "kind": "docs" },
+    { "title": "Cyber Security Roadmap", "url": "https://roadmap.sh/cyber-security", "kind": "article" },
+    { "title": "TryHackMe hands-on security labs", "url": "https://tryhackme.com/", "kind": "interactive" },
+    { "title": "CISA Cybersecurity Best Practices", "url": "https://www.cisa.gov/topics/cybersecurity-best-practices", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "cybersecurity-fundamentals-q1",
+      "difficulty": "beginner",
+      "question": "An attacker silently changes the amounts in a company's payroll records. Which property of the CIA triad has been violated?",
+      "options": ["Confidentiality", "Integrity", "Availability", "Anonymity"],
+      "correct_index": 1,
+      "explanation": "Integrity means data is accurate and has not been altered without authorization. Unauthorized modification is an integrity violation.",
+      "points": 1
+    },
+    {
+      "key": "cybersecurity-fundamentals-q2",
+      "difficulty": "beginner",
+      "question": "What does the principle of least privilege require?",
+      "options": [
+        "All users share one administrator account to simplify auditing",
+        "Users receive full access first and permissions are removed only after an incident",
+        "Passwords must be at least 8 characters long",
+        "Users and processes get only the minimum access needed to perform their tasks"
+      ],
+      "correct_index": 3,
+      "explanation": "Least privilege limits each account or process to the minimum permissions required, reducing the damage a compromised account can cause.",
+      "points": 1
+    },
+    {
+      "key": "cybersecurity-fundamentals-q3",
+      "difficulty": "intermediate",
+      "question": "Which statement correctly describes authorization?",
+      "options": [
+        "Determining what an already-identified user is allowed to access or do",
+        "Proving that a user is who they claim to be, e.g. with a password",
+        "Recording user actions in an audit log",
+        "Encrypting data so only the intended user can read it"
+      ],
+      "correct_index": 0,
+      "explanation": "Authentication verifies identity; authorization decides which resources and actions that authenticated identity is permitted.",
+      "points": 2
+    },
+    {
+      "key": "cybersecurity-fundamentals-q4",
+      "difficulty": "intermediate",
+      "question": "Which scenario is the best example of defense in depth?",
+      "options": [
+        "Relying on a single, very expensive next-generation firewall",
+        "Using the same strong password on every system",
+        "Combining a firewall, MFA, endpoint protection, patching and log monitoring so one failed control does not expose the system",
+        "Hiding the server's IP address so attackers cannot find it"
+      ],
+      "correct_index": 2,
+      "explanation": "Defense in depth layers multiple independent controls so that the failure of any single control does not lead to compromise.",
+      "points": 2
+    },
+    {
+      "key": "cybersecurity-fundamentals-q5",
+      "difficulty": "advanced",
+      "question": "A security team reviews centralized logs and raises an alert when unusual logins occur. What type of control is this?",
+      "options": ["Preventive", "Corrective", "Deterrent", "Detective"],
+      "correct_index": 3,
+      "explanation": "Detective controls identify and alert on events that have occurred or are occurring; they do not block them (preventive) or repair damage (corrective).",
+      "points": 3
+    },
+    {
+      "key": "cybersecurity-fundamentals-q6",
+      "difficulty": "advanced",
+      "question": "A company buys a cyber insurance policy to cover losses from a possible data breach. Which risk treatment strategy is this?",
+      "options": ["Risk avoidance", "Risk transfer", "Risk mitigation", "Risk acceptance"],
+      "correct_index": 1,
+      "explanation": "Insurance shifts the financial impact of a risk to a third party, which is risk transfer. Mitigation would reduce likelihood or impact through controls.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "cybersecurity-fundamentals-p1",
+    "title": "Analyze suspicious SSH log entries",
+    "difficulty": "beginner",
+    "instructions": "You are reviewing /var/log/auth.log on a lab server you administer. It contains 250 lines like 'Failed password for root from 203.0.113.45 port 51122 ssh2' within 4 minutes, followed by 'Accepted password for root from 203.0.113.45 port 51190 ssh2'. In 2-5 sentences: name the attack, identify the source, explain why the last line is worrying, and recommend at least two defensive actions.",
+    "expected_output": "Identifies a brute-force / password-guessing attack from 203.0.113.45, notes that the accepted login means the account is likely compromised and must be investigated, and recommends controls such as blocking the IP, fail2ban/lockout or rate limiting, disabling password or root login in favor of SSH keys/MFA, and resetting credentials.",
+    "rubric": [
+      { "key": "c1", "description": "Identifies brute-force / password guessing", "points": 3,
+        "patterns": ["brute[-\\s]*forc", "password[-\\s]*(guess|spray)", "credential[-\\s]*stuff", "dictionary\\s+attack"],
+        "hint": "Many failed logins from one source in a short time is a brute-force (password guessing) attack." },
+      { "key": "c2", "description": "Identifies the source IP address", "points": 2,
+        "patterns": ["203\\.0\\.113\\.45"],
+        "hint": "Name the attacking source IP shown in the log lines." },
+      { "key": "c3", "description": "Recognizes the successful login indicates compromise", "points": 2,
+        "patterns": ["compromis", "accepted", "success", "logged\\s*in", "gained\\s+access", "breach"],
+        "hint": "The 'Accepted password' line means the attacker likely got in; treat the account as compromised." },
+      { "key": "c4", "description": "Recommends concrete defensive controls", "points": 3,
+        "patterns": ["fail2ban", "lock\\s*-?\\s*out", "rate[-\\s]*limit", "block", "firewall", "mfa|multi[-\\s]*factor|2fa", "ssh[-\\s]*keys?|key[-\\s]*based", "disable\\s+(password|root)|permitrootlogin", "reset|rotate|change\\s+(the\\s+)?password"],
+        "hint": "Recommend controls such as blocking the IP, fail2ban/lockouts, disabling root/password login, SSH keys or MFA, and resetting the password." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "cybersecurity-fundamentals-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn the CIA triad and core security controls",
+      "description": "Read the NIST Cybersecurity Framework overview and summarize its core functions. Write one real-world example each for confidentiality, integrity and availability failures.",
+      "estimated_minutes": 60,
+      "completion_criteria": "A one-page summary listing the framework's core functions and three CIA examples.",
+      "resource_url": "https://www.nist.gov/cyberframework"
+    },
+    {
+      "key": "cybersecurity-fundamentals-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Complete an introductory security lab",
+      "description": "Work through a beginner pre-security or cyber fundamentals path on TryHackMe. Take notes on each concept covered and the commands you used.",
+      "estimated_minutes": 120,
+      "completion_criteria": "At least two beginner rooms completed with personal notes for each.",
+      "resource_url": "https://tryhackme.com/"
+    },
+    {
+      "key": "cybersecurity-fundamentals-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Harden a Linux virtual machine",
+      "description": "On your own VM, create a non-root sudo user, disable SSH root and password login in favor of keys, enable a host firewall allowing only required ports, and enable automatic security updates.",
+      "estimated_minutes": 120,
+      "completion_criteria": "A checklist documenting each hardening change with the command or config line used, verified by re-testing SSH access.",
+      "resource_url": "https://www.cisa.gov/topics/cybersecurity-best-practices"
+    },
+    {
+      "key": "cybersecurity-fundamentals-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Write a risk assessment for a small organization",
+      "description": "Pick a fictional small business, list its key assets, threats and vulnerabilities, rate each risk by likelihood and impact, and propose a treatment (mitigate, transfer, avoid, accept) mapped to NIST CSF functions.",
+      "estimated_minutes": 180,
+      "completion_criteria": "A risk register with at least 8 risks, each scored and assigned a treatment and control.",
+      "resource_url": "https://www.nist.gov/cyberframework"
+    }
+  ]
+}

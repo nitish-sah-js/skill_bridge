@@ -1,0 +1,153 @@
+{
+  "slug": "digital-forensics",
+  "name": "Digital Forensics",
+  "description": "Acquiring, preserving and analyzing digital evidence from disks, memory and logs in a forensically sound way.",
+  "category": "Cybersecurity",
+  "prerequisites": ["linux-fundamentals", "cybersecurity-fundamentals"],
+  "resources": [
+    { "title": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response", "url": "https://csrc.nist.gov/pubs/sp/800/86/final", "kind": "docs" },
+    { "title": "Autopsy Digital Forensics Platform", "url": "https://www.autopsy.com/", "kind": "docs" },
+    { "title": "SANS Digital Forensics and Incident Response", "url": "https://www.sans.org/digital-forensics-incident-response/", "kind": "article" },
+    { "title": "TryHackMe hands-on labs", "url": "https://tryhackme.com/", "kind": "interactive" }
+  ],
+  "questions": [
+    {
+      "key": "digital-forensics-q1",
+      "difficulty": "beginner",
+      "question": "Following the order of volatility, which source should generally be collected first from a running system?",
+      "options": ["A full hard-disk image", "Archived backup tapes", "System memory (RAM)", "Printed documentation"],
+      "correct_index": 2,
+      "explanation": "RAM contents are lost when the system powers off or changes, so the most volatile evidence is captured before disks and backups.",
+      "points": 1
+    },
+    {
+      "key": "digital-forensics-q2",
+      "difficulty": "beginner",
+      "question": "What is the purpose of a chain of custody record?",
+      "options": [
+        "To document who handled the evidence, when, and what was done, demonstrating it was not tampered with",
+        "To list all the malware found on a device",
+        "To encrypt evidence so suspects cannot read it",
+        "To record the network topology of the organization"
+      ],
+      "correct_index": 0,
+      "explanation": "Chain of custody tracks every transfer and action on evidence so its integrity and admissibility can be demonstrated.",
+      "points": 1
+    },
+    {
+      "key": "digital-forensics-q3",
+      "difficulty": "intermediate",
+      "question": "Why is a hardware or software write blocker used when acquiring a disk image?",
+      "options": [
+        "To speed up the imaging process",
+        "To compress the image to save space",
+        "To decrypt encrypted volumes automatically",
+        "To prevent any writes to the source drive, so the original evidence is not modified"
+      ],
+      "correct_index": 3,
+      "explanation": "Simply mounting a drive can change metadata. A write blocker allows reads only, preserving the original evidence.",
+      "points": 2
+    },
+    {
+      "key": "digital-forensics-q4",
+      "difficulty": "intermediate",
+      "question": "On an NTFS volume, which file-system structure holds a record for every file, including its timestamps and attributes?",
+      "options": ["pagefile.sys", "$MFT (Master File Table)", "hiberfil.sys", "desktop.ini"],
+      "correct_index": 1,
+      "explanation": "The Master File Table contains an entry per file with metadata such as $STANDARD_INFORMATION and $FILE_NAME timestamps.",
+      "points": 2
+    },
+    {
+      "key": "digital-forensics-q5",
+      "difficulty": "advanced",
+      "question": "After acquiring a drive image, the SHA-256 hash of the source and the hash of the image do not match. What is the most appropriate conclusion?",
+      "options": [
+        "The image is valid because hashes often differ slightly",
+        "SHA-256 is broken, so switch to MD5",
+        "The image cannot be shown to be an exact copy; investigate the cause and re-acquire before analysis",
+        "Delete the source drive to avoid confusion"
+      ],
+      "correct_index": 2,
+      "explanation": "Matching hashes are how examiners prove the image is bit-for-bit identical. A mismatch means integrity is unproven, so the acquisition must be investigated and repeated.",
+      "points": 3
+    },
+    {
+      "key": "digital-forensics-q6",
+      "difficulty": "advanced",
+      "question": "What is the Volatility framework primarily used for?",
+      "options": [
+        "Carving deleted files from unallocated disk space",
+        "Capturing live network packets",
+        "Aggregating logs into a SIEM",
+        "Analyzing memory images for processes, network connections and injected code"
+      ],
+      "correct_index": 3,
+      "explanation": "Volatility is an open-source memory forensics framework that extracts artifacts such as process lists, sockets and loaded modules from RAM dumps.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "digital-forensics-p1",
+    "title": "Verify evidence integrity with a hash",
+    "difficulty": "beginner",
+    "instructions": "You have acquired a disk image named evidence.img in an authorized lab investigation. Write the command (Linux or Windows PowerShell) to compute its SHA-256 hash, then write 1-2 sentences explaining why you record this hash and when you would compute it again.",
+    "expected_output": "A command such as 'sha256sum evidence.img' or 'Get-FileHash evidence.img -Algorithm SHA256', plus an explanation that the hash proves integrity (the image is unaltered) and is recomputed later/before analysis or in court to verify it matches, supporting chain of custody.",
+    "rubric": [
+      { "key": "c1", "description": "Uses a SHA-256 hashing tool", "points": 4,
+        "patterns": ["sha256sum", "get-filehash", "shasum\\s+-a\\s*256", "openssl\\s+(dgst\\s+-)?sha256", "certutil\\s+-hashfile[\\s\\S]*sha256"],
+        "hint": "Use sha256sum (Linux), Get-FileHash (PowerShell), shasum -a 256 or certutil -hashfile ... SHA256." },
+      { "key": "c2", "description": "Targets the evidence file", "points": 2,
+        "patterns": ["evidence\\.img"],
+        "hint": "Run the command against evidence.img." },
+      { "key": "c3", "description": "Explains integrity / tamper detection", "points": 2,
+        "patterns": ["integrity", "tamper", "unchanged", "unaltered", "not\\s+(been\\s+)?(modified|altered|changed)", "identical", "chain\\s+of\\s+custody"],
+        "hint": "The hash proves the evidence has not been altered and supports chain of custody." },
+      { "key": "c4", "description": "States when to re-verify", "points": 2,
+        "patterns": ["again", "re-?comput", "re-?verif", "verify", "compare", "match", "later", "before\\s+(analysis|court|examination)"],
+        "hint": "Recompute and compare the hash later (e.g. before analysis or presentation) to confirm it still matches." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "digital-forensics-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn the forensic process",
+      "description": "Read NIST SP 800-86 and summarize the four phases: collection, examination, analysis and reporting. Note the guidance on order of volatility and evidence integrity.",
+      "estimated_minutes": 90,
+      "completion_criteria": "A summary describing each phase and listing data sources in order of volatility.",
+      "resource_url": "https://csrc.nist.gov/pubs/sp/800/86/final"
+    },
+    {
+      "key": "digital-forensics-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Create and verify a forensic image",
+      "description": "Image a small USB stick or virtual disk you own using dd or FTK Imager, hash both source and image with SHA-256, and fill out a simple chain of custody form.",
+      "estimated_minutes": 60,
+      "completion_criteria": "Matching source and image hashes recorded alongside a completed chain of custody entry.",
+      "resource_url": "https://www.sans.org/digital-forensics-incident-response/"
+    },
+    {
+      "key": "digital-forensics-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Analyze a disk image with Autopsy",
+      "description": "Load a practice disk image into Autopsy, review the file system timeline, recover deleted files, and inspect web history artifacts. Record findings with timestamps.",
+      "estimated_minutes": 150,
+      "completion_criteria": "A notes file listing at least five artifacts with their paths, timestamps and significance.",
+      "resource_url": "https://www.autopsy.com/"
+    },
+    {
+      "key": "digital-forensics-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Write a full forensic investigation report",
+      "description": "Complete a forensics challenge room or practice case in a lab environment, covering disk and memory evidence. Produce a professional report with scope, methodology, evidence hashes, timeline and conclusions.",
+      "estimated_minutes": 240,
+      "completion_criteria": "A report containing an evidence log with hashes, a reconstructed timeline of at least 10 events, and supported conclusions.",
+      "resource_url": "https://tryhackme.com/"
+    }
+  ]
+}

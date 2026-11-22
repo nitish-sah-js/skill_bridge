@@ -1,0 +1,124 @@
+{
+  "slug": "testing-debugging",
+  "name": "Testing & Debugging",
+  "description": "Writing automated tests and systematically locating and fixing defects in code.",
+  "category": "Programming",
+  "prerequisites": ["python"],
+  "resources": [
+    { "title": "pytest: Get Started", "url": "https://docs.pytest.org/en/stable/getting-started.html", "kind": "docs" },
+    { "title": "unittest.mock (official docs)", "url": "https://docs.python.org/3/library/unittest.mock.html", "kind": "docs" },
+    { "title": "pdb: The Python Debugger", "url": "https://docs.python.org/3/library/pdb.html", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "testing-debugging-q1",
+      "difficulty": "beginner",
+      "question": "What does a unit test primarily check?",
+      "options": ["That the whole system works end to end in production", "That a small, isolated piece of code such as a single function behaves as expected", "That the code is formatted correctly", "That the application handles heavy load"],
+      "correct_index": 1,
+      "explanation": "Unit tests target the smallest testable units in isolation; end-to-end and load tests are different levels.",
+      "points": 1
+    },
+    {
+      "key": "testing-debugging-q2",
+      "difficulty": "beginner",
+      "question": "In pytest, how do you check that result equals expected?",
+      "options": ["assert result == expected", "check(result, expected)", "expect result to equal expected", "verify result is expected"],
+      "correct_index": 0,
+      "explanation": "pytest uses plain assert statements and rewrites them to show detailed failure messages.",
+      "points": 1
+    },
+    {
+      "key": "testing-debugging-q3",
+      "difficulty": "intermediate",
+      "question": "What is the main purpose of a mock in a unit test?",
+      "options": ["To make tests run in parallel", "To measure code coverage", "To generate random test data", "To replace a real dependency (such as a network call) with a controllable stand-in so the test is isolated and deterministic"],
+      "correct_index": 3,
+      "explanation": "Mocks isolate the code under test from slow or unpredictable collaborators and let you assert how they were called.",
+      "points": 2
+    },
+    {
+      "key": "testing-debugging-q4",
+      "difficulty": "intermediate",
+      "question": "A test sometimes passes and sometimes fails without any code change. What is it called?",
+      "options": ["Regression test", "Smoke test", "Flaky test", "Boundary test"],
+      "correct_index": 2,
+      "explanation": "Flaky tests are non-deterministic, often due to timing, ordering, shared state or external services.",
+      "points": 2
+    },
+    {
+      "key": "testing-debugging-q5",
+      "difficulty": "advanced",
+      "question": "Module app.py does 'from requests import get'. A test uses unittest.mock.patch('requests.get') but app still makes real calls. Why?",
+      "options": ["patch only works on classes, not functions", "requests cannot be mocked", "The mock must be created before Python starts", "patch replaces the name where it is looked up; app holds its own reference, so you must patch 'app.get'"],
+      "correct_index": 3,
+      "explanation": "The 'where to patch' rule: patch the name in the namespace that uses it, here app.get.",
+      "points": 3
+    },
+    {
+      "key": "testing-debugging-q6",
+      "difficulty": "advanced",
+      "question": "Which pytest command runs only tests whose names contain the substring 'login'?",
+      "options": ["pytest -k login", "pytest -m login", "pytest --name login", "pytest -x login"],
+      "correct_index": 0,
+      "explanation": "-k selects tests by keyword expression on names; -m selects by marker and -x stops at the first failure.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "testing-debugging-p1",
+    "title": "Test a divide function",
+    "difficulty": "beginner",
+    "instructions": "A function divide(a, b) returns a / b and raises ZeroDivisionError when b is 0. Write two pytest test functions: one checking a normal result and one checking that dividing by zero raises ZeroDivisionError.",
+    "expected_output": "def test_divide(): assert divide(10, 2) == 5 and def test_divide_by_zero(): with pytest.raises(ZeroDivisionError): divide(1, 0).",
+    "rubric": [
+      { "key": "c1", "description": "Test functions named test_*", "points": 2, "patterns": ["def\\s+test_\\w*\\s*\\("], "hint": "pytest only collects functions whose names start with test_." },
+      { "key": "c2", "description": "Asserts a normal division result", "points": 3, "patterns": ["assert\\s+[^\\n]*divide\\s*\\(", "assert(Equal|AlmostEqual)\\s*\\(\\s*divide\\s*\\("], "hint": "Add something like assert divide(10, 2) == 5." },
+      { "key": "c3", "description": "Checks the exception is raised", "points": 3, "patterns": ["pytest\\.raises\\s*\\(\\s*ZeroDivisionError", "assertRaises\\s*\\(\\s*ZeroDivisionError"], "hint": "Use with pytest.raises(ZeroDivisionError): ..." },
+      { "key": "c4", "description": "Calls divide with zero divisor", "points": 2, "patterns": ["divide\\s*\\([^)]*,\\s*0(\\.0)?\\s*\\)"], "hint": "Call divide(1, 0) inside the raises block." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "testing-debugging-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Get started with pytest",
+      "description": "Install pytest and follow the Get Started guide. Write your first tests, run them, and read the failure output of a deliberately broken test.",
+      "estimated_minutes": 60,
+      "completion_criteria": "A test file with at least 3 passing tests run via the pytest command.",
+      "resource_url": "https://docs.pytest.org/en/stable/getting-started.html"
+    },
+    {
+      "key": "testing-debugging-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Debug with pdb and breakpoints",
+      "description": "Take a buggy script (or introduce an off-by-one bug yourself) and use breakpoint(), step, next and print variables in pdb to find it. Write down the steps you followed.",
+      "estimated_minutes": 60,
+      "completion_criteria": "Bug fixed and a short written log of the debugging steps.",
+      "resource_url": "https://docs.python.org/3/library/pdb.html"
+    },
+    {
+      "key": "testing-debugging-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Use fixtures, parametrize and mocks",
+      "description": "Write tests for a function that calls an external API, using unittest.mock to fake responses. Use pytest fixtures and parametrize to cover edge cases.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Tests run offline, cover success and error responses, and use at least one fixture and one parametrized test.",
+      "resource_url": "https://docs.python.org/3/library/unittest.mock.html"
+    },
+    {
+      "key": "testing-debugging-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Add a test suite and CI to a project",
+      "description": "Add a meaningful test suite to one of your existing projects, measure coverage and raise it above 80%. Configure continuous integration to run tests on every push.",
+      "estimated_minutes": 240,
+      "completion_criteria": "CI pipeline green with coverage report above 80%.",
+      "resource_url": "https://docs.pytest.org/en/stable/"
+    }
+  ]
+}

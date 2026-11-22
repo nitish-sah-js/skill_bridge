@@ -1,0 +1,175 @@
+[
+  {
+    "slug": "software-developer",
+    "name": "Software Developer",
+    "description": "Designs, builds, tests and maintains software applications, turning requirements into reliable, readable code.",
+    "responsibilities": [
+      "Implement features from requirements and user stories",
+      "Write automated tests and fix defects",
+      "Review teammates' code and keep the codebase maintainable",
+      "Design data models and integrate with APIs and databases",
+      "Collaborate through version control and code review workflows"
+    ],
+    "prerequisites": [
+      "Comfort with at least one programming language",
+      "Basic logical and mathematical reasoning",
+      "Familiarity with using a command line"
+    ],
+    "suggested_projects": [
+      { "title": "Task tracker API with tests", "description": "Build a small REST API (create, list, update, delete tasks) backed by a SQL database, with automated tests and a README describing endpoints." },
+      { "title": "CLI utility", "description": "Write a command-line tool that parses a log or CSV file and reports summary statistics, with unit tests for the parsing logic." },
+      { "title": "Contribute to open source", "description": "Find a beginner-friendly issue in an open-source project, submit a pull request and respond to review feedback." }
+    ],
+    "sort_order": 1,
+    "skills": [
+      { "skill": "python", "required_proficiency": 75, "importance_weight": 1.3 },
+      { "skill": "data-structures-algorithms", "required_proficiency": 70, "importance_weight": 1.2 },
+      { "skill": "oop-design", "required_proficiency": 65, "importance_weight": 1.0 },
+      { "skill": "git-version-control", "required_proficiency": 70, "importance_weight": 1.0 },
+      { "skill": "sql-databases", "required_proficiency": 65, "importance_weight": 1.0 },
+      { "skill": "testing-debugging", "required_proficiency": 70, "importance_weight": 1.1 },
+      { "skill": "web-apis", "required_proficiency": 65, "importance_weight": 1.0 },
+      { "skill": "linux-fundamentals", "required_proficiency": 55, "importance_weight": 0.7 },
+      { "skill": "system-design", "required_proficiency": 50, "importance_weight": 0.8 },
+      { "skill": "computer-networking", "required_proficiency": 45, "importance_weight": 0.6 }
+    ]
+  },
+  {
+    "slug": "cybersecurity-engineer",
+    "name": "Cybersecurity Engineer",
+    "description": "Protects systems, networks and data by monitoring for threats, finding weaknesses before attackers do and responding to incidents.",
+    "responsibilities": [
+      "Monitor security alerts and investigate suspicious activity",
+      "Assess systems for vulnerabilities and recommend remediation",
+      "Harden servers, networks and web applications",
+      "Respond to and document security incidents",
+      "Automate security checks with scripts"
+    ],
+    "prerequisites": [
+      "Understanding of how computers and operating systems work",
+      "Basic networking concepts (IP addresses, ports)",
+      "Willingness to work only in authorized lab environments"
+    ],
+    "suggested_projects": [
+      { "title": "Home security lab report", "description": "Build an isolated virtual lab, collect logs from a Linux host, write two detection rules for suspicious activity and document an investigation of a simulated alert." },
+      { "title": "Log analysis script", "description": "Write a Python script that parses SSH authentication logs and flags brute-force patterns, with a short report of findings." },
+      { "title": "Web app hardening review", "description": "Review a deliberately vulnerable training app (e.g. OWASP Juice Shop) locally, document three vulnerability classes found and the fixes you would apply." }
+    ],
+    "sort_order": 2,
+    "skills": [
+      { "skill": "computer-networking", "required_proficiency": 75, "importance_weight": 1.3 },
+      { "skill": "linux-fundamentals", "required_proficiency": 70, "importance_weight": 1.2 },
+      { "skill": "python", "required_proficiency": 65, "importance_weight": 1.0 },
+      { "skill": "cybersecurity-fundamentals", "required_proficiency": 75, "importance_weight": 1.3 },
+      { "skill": "cryptography", "required_proficiency": 60, "importance_weight": 1.0 },
+      { "skill": "web-application-security", "required_proficiency": 75, "importance_weight": 1.2 },
+      { "skill": "digital-forensics", "required_proficiency": 55, "importance_weight": 0.8 },
+      { "skill": "siem-monitoring", "required_proficiency": 65, "importance_weight": 1.0 },
+      { "skill": "vulnerability-assessment", "required_proficiency": 65, "importance_weight": 1.0 },
+      { "skill": "incident-response", "required_proficiency": 60, "importance_weight": 0.9 }
+    ]
+  },
+  {
+    "slug": "data-analyst",
+    "name": "Data Analyst",
+    "description": "Turns raw data into answers: cleans and queries datasets, analyses trends and communicates findings that inform decisions.",
+    "responsibilities": [
+      "Query and combine data from databases and spreadsheets",
+      "Clean and validate datasets before analysis",
+      "Apply descriptive and inferential statistics",
+      "Build dashboards and visualizations for stakeholders",
+      "Present findings and recommendations clearly"
+    ],
+    "prerequisites": [
+      "Comfort with school-level mathematics",
+      "Experience using spreadsheets",
+      "Curiosity about how businesses measure success"
+    ],
+    "suggested_projects": [
+      { "title": "Public dataset analysis", "description": "Pick an open dataset, clean it, answer three business questions with SQL or pandas and present the results in a short slide-style report." },
+      { "title": "KPI dashboard", "description": "Build an interactive dashboard tracking five KPIs from a sample sales dataset, with filters and a one-paragraph insight for each chart." },
+      { "title": "A/B test write-up", "description": "Analyse a sample A/B test dataset, check statistical significance and recommend a decision with caveats." }
+    ],
+    "sort_order": 3,
+    "skills": [
+      { "skill": "sql-databases", "required_proficiency": 75, "importance_weight": 1.4 },
+      { "skill": "excel-spreadsheets", "required_proficiency": 70, "importance_weight": 1.0 },
+      { "skill": "statistics", "required_proficiency": 65, "importance_weight": 1.2 },
+      { "skill": "python", "required_proficiency": 55, "importance_weight": 0.9 },
+      { "skill": "data-cleaning", "required_proficiency": 70, "importance_weight": 1.2 },
+      { "skill": "data-visualization", "required_proficiency": 70, "importance_weight": 1.1 },
+      { "skill": "bi-dashboards", "required_proficiency": 60, "importance_weight": 0.9 },
+      { "skill": "data-storytelling", "required_proficiency": 65, "importance_weight": 1.0 }
+    ]
+  },
+  {
+    "slug": "ai-ml-engineer",
+    "name": "AI/ML Engineer",
+    "description": "Builds, evaluates and deploys machine learning models, from data preparation to monitoring models in production.",
+    "responsibilities": [
+      "Prepare and engineer features from raw data",
+      "Train, tune and evaluate machine learning models",
+      "Build deep learning models for unstructured data",
+      "Package and deploy models behind reliable services",
+      "Monitor model performance and data drift"
+    ],
+    "prerequisites": [
+      "Solid programming fundamentals, ideally in Python",
+      "High-school algebra and basic probability",
+      "Comfort reading technical documentation"
+    ],
+    "suggested_projects": [
+      { "title": "End-to-end ML pipeline", "description": "Train a classification model on a public dataset, compare it with a baseline, track experiments and serve predictions through a small API." },
+      { "title": "Image classifier", "description": "Fine-tune a small pretrained neural network on an image dataset and report accuracy, a confusion matrix and failure cases." },
+      { "title": "Model card", "description": "Write a model card for one of your models covering intended use, metrics, limitations and fairness checks." }
+    ],
+    "sort_order": 4,
+    "skills": [
+      { "skill": "python", "required_proficiency": 80, "importance_weight": 1.3 },
+      { "skill": "math-for-ml", "required_proficiency": 65, "importance_weight": 1.1 },
+      { "skill": "statistics", "required_proficiency": 65, "importance_weight": 1.0 },
+      { "skill": "data-cleaning", "required_proficiency": 65, "importance_weight": 0.9 },
+      { "skill": "machine-learning", "required_proficiency": 75, "importance_weight": 1.4 },
+      { "skill": "deep-learning", "required_proficiency": 65, "importance_weight": 1.1 },
+      { "skill": "mlops", "required_proficiency": 55, "importance_weight": 0.9 },
+      { "skill": "sql-databases", "required_proficiency": 55, "importance_weight": 0.7 },
+      { "skill": "git-version-control", "required_proficiency": 60, "importance_weight": 0.7 },
+      { "skill": "data-structures-algorithms", "required_proficiency": 55, "importance_weight": 0.7 }
+    ]
+  },
+  {
+    "slug": "web-developer",
+    "name": "Web Developer",
+    "description": "Builds fast, accessible and secure websites and web applications across the front end and back end.",
+    "responsibilities": [
+      "Build responsive, accessible user interfaces",
+      "Implement interactive features with JavaScript and React",
+      "Create server-side APIs and connect databases",
+      "Optimize performance and fix cross-browser issues",
+      "Apply secure coding practices"
+    ],
+    "prerequisites": [
+      "Basic computer literacy and comfort with a code editor",
+      "Interest in design and user experience",
+      "Logical problem-solving skills"
+    ],
+    "suggested_projects": [
+      { "title": "Full-stack notes app", "description": "Build a notes app with a React front end, a Node.js API and a database, including form validation and an accessibility check." },
+      { "title": "Portfolio site", "description": "Create a responsive personal portfolio that scores well on a Lighthouse audit for performance and accessibility." },
+      { "title": "Public API dashboard", "description": "Fetch data from a public API and display it with loading, error and empty states in a typed React application." }
+    ],
+    "sort_order": 5,
+    "skills": [
+      { "skill": "html-css", "required_proficiency": 75, "importance_weight": 1.2 },
+      { "skill": "javascript", "required_proficiency": 75, "importance_weight": 1.4 },
+      { "skill": "typescript", "required_proficiency": 60, "importance_weight": 0.9 },
+      { "skill": "react", "required_proficiency": 70, "importance_weight": 1.2 },
+      { "skill": "nodejs-backend", "required_proficiency": 60, "importance_weight": 1.0 },
+      { "skill": "web-apis", "required_proficiency": 65, "importance_weight": 1.0 },
+      { "skill": "sql-databases", "required_proficiency": 55, "importance_weight": 0.8 },
+      { "skill": "git-version-control", "required_proficiency": 65, "importance_weight": 0.8 },
+      { "skill": "web-application-security", "required_proficiency": 55, "importance_weight": 0.8 },
+      { "skill": "web-performance-accessibility", "required_proficiency": 60, "importance_weight": 0.9 }
+    ]
+  }
+]

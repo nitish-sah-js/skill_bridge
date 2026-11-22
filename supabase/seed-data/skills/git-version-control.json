@@ -1,0 +1,124 @@
+{
+  "slug": "git-version-control",
+  "name": "Git & Version Control",
+  "description": "Tracking changes, branching, merging and collaborating on code with Git and remote repositories.",
+  "category": "Tools",
+  "prerequisites": [],
+  "resources": [
+    { "title": "Pro Git book (official)", "url": "https://git-scm.com/book/en/v2", "kind": "docs" },
+    { "title": "Learn Git Branching", "url": "https://learngitbranching.js.org/", "kind": "interactive" },
+    { "title": "Git reference documentation", "url": "https://git-scm.com/docs", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "git-version-control-q1",
+      "difficulty": "beginner",
+      "question": "Which command creates a new, empty Git repository in the current directory?",
+      "options": ["git start", "git init", "git create", "git new"],
+      "correct_index": 1,
+      "explanation": "git init creates the .git directory that turns the folder into a repository.",
+      "points": 1
+    },
+    {
+      "key": "git-version-control-q2",
+      "difficulty": "beginner",
+      "question": "Which command stages all changes in the current directory for the next commit?",
+      "options": ["git commit .", "git push .", "git add .", "git save ."],
+      "correct_index": 2,
+      "explanation": "git add . adds changes under the current directory to the staging area (index).",
+      "points": 1
+    },
+    {
+      "key": "git-version-control-q3",
+      "difficulty": "intermediate",
+      "question": "What is the difference between git fetch and git pull?",
+      "options": ["fetch downloads remote changes without integrating them; pull fetches and then merges or rebases them into the current branch", "fetch uploads commits; pull downloads them", "They are identical aliases", "pull only works on the main branch"],
+      "correct_index": 0,
+      "explanation": "git pull is essentially git fetch followed by git merge (or rebase); fetch leaves your working branch untouched.",
+      "points": 2
+    },
+    {
+      "key": "git-version-control-q4",
+      "difficulty": "intermediate",
+      "question": "Which command undoes the last local commit but keeps its changes staged?",
+      "options": ["git reset --hard HEAD~1", "git revert HEAD", "git checkout HEAD~1", "git reset --soft HEAD~1"],
+      "correct_index": 3,
+      "explanation": "--soft moves the branch pointer back but leaves the index and working tree intact; --hard discards changes and revert creates a new commit.",
+      "points": 2
+    },
+    {
+      "key": "git-version-control-q5",
+      "difficulty": "advanced",
+      "question": "Why should you avoid rebasing commits that are already pushed to a shared branch?",
+      "options": ["Rebase deletes the remote repository", "Rebasing rewrites commits with new hashes, so collaborators' histories diverge from the rewritten one", "Rebase cannot be used with remote branches", "Rebase always causes merge conflicts"],
+      "correct_index": 1,
+      "explanation": "Rewritten history forces others to reconcile duplicate or missing commits and requires force-pushing.",
+      "points": 3
+    },
+    {
+      "key": "git-version-control-q6",
+      "difficulty": "advanced",
+      "question": "Which command uses binary search through history to find the commit that introduced a bug?",
+      "options": ["git blame", "git reflog", "git bisect", "git log --graph"],
+      "correct_index": 2,
+      "explanation": "git bisect checks out midpoints between a known good and bad commit until the first bad commit is identified.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "git-version-control-p1",
+    "title": "Feature branch workflow",
+    "difficulty": "beginner",
+    "instructions": "Write the sequence of Git commands to: create and switch to a branch named feature/login, stage the file login.py, commit it with a message, and push the branch to origin while setting the upstream.",
+    "expected_output": "git checkout -b feature/login (or git switch -c), git add login.py, git commit -m \"...\", git push -u origin feature/login.",
+    "rubric": [
+      { "key": "c1", "description": "Creates and switches to feature/login", "points": 3, "patterns": ["git\\s+(checkout\\s+-b|switch\\s+(-c|--create))\\s+feature/login", "git\\s+branch\\s+feature/login"], "hint": "Use git checkout -b feature/login or git switch -c feature/login." },
+      { "key": "c2", "description": "Stages login.py", "points": 2, "patterns": ["git\\s+add\\s+(login\\.py|\\.|-A|--all)"], "hint": "Stage the file with git add login.py." },
+      { "key": "c3", "description": "Commits with a message", "points": 2, "patterns": ["git\\s+commit\\b[^\\n]*\\s-[a-z]*m"], "hint": "Use git commit -m \"Add login\"." },
+      { "key": "c4", "description": "Pushes and sets upstream", "points": 3, "patterns": ["git\\s+push\\b[^\\n]*(\\s-u\\b|--set-upstream)"], "hint": "Use git push -u origin feature/login to set the upstream." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "git-version-control-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Read Git basics",
+      "description": "Read chapters 1 and 2 of Pro Git (Getting Started and Git Basics). Set up your name and email and practise init, status, add, commit and log in a test folder.",
+      "estimated_minutes": 90,
+      "completion_criteria": "A local repo with at least 5 commits and a clean git status.",
+      "resource_url": "https://git-scm.com/book/en/v2"
+    },
+    {
+      "key": "git-version-control-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Complete Learn Git Branching introduction",
+      "description": "Complete the Introduction Sequence and Ramping Up levels on Learn Git Branching. Focus on branch, merge, rebase and HEAD movement.",
+      "estimated_minutes": 60,
+      "completion_criteria": "All levels in the first two sections completed.",
+      "resource_url": "https://learngitbranching.js.org/"
+    },
+    {
+      "key": "git-version-control-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Resolve merge conflicts and use remotes",
+      "description": "Push a repo to a hosting service, create two branches that edit the same lines and resolve the conflict. Practise fetch, pull, stash and reset in the process.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Remote repo shows a merge commit resolving a real conflict.",
+      "resource_url": "https://git-scm.com/book/en/v2"
+    },
+    {
+      "key": "git-version-control-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Run a pull-request workflow on a team project",
+      "description": "With a classmate or an open-source project, work through feature branches, pull requests, code review and an interactive rebase to clean up history before merging. Use git bisect once to locate a deliberately introduced bug.",
+      "estimated_minutes": 180,
+      "completion_criteria": "At least 2 merged pull requests with review comments, plus notes from a successful bisect session.",
+      "resource_url": "https://git-scm.com/docs"
+    }
+  ]
+}

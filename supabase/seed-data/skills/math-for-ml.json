@@ -1,0 +1,142 @@
+{
+  "slug": "math-for-ml",
+  "name": "Mathematics for ML",
+  "description": "The linear algebra, calculus and probability foundations needed to understand and implement machine learning algorithms.",
+  "category": "AI & Machine Learning",
+  "prerequisites": [],
+  "resources": [
+    { "title": "Khan Academy: Linear Algebra", "url": "https://www.khanacademy.org/math/linear-algebra", "kind": "course" },
+    { "title": "Khan Academy: Multivariable Calculus", "url": "https://www.khanacademy.org/math/multivariable-calculus", "kind": "course" },
+    { "title": "Coursera: Mathematics for Machine Learning Specialization", "url": "https://www.coursera.org/specializations/mathematics-machine-learning", "kind": "course" }
+  ],
+  "questions": [
+    {
+      "key": "math-for-ml-q1",
+      "difficulty": "beginner",
+      "question": "What is the dot product of the vectors [1, 2, 3] and [4, 5, 6]?",
+      "options": ["32", "21", "[4, 10, 18]", "15"],
+      "correct_index": 0,
+      "explanation": "1*4 + 2*5 + 3*6 = 4 + 10 + 18 = 32.",
+      "points": 1
+    },
+    {
+      "key": "math-for-ml-q2",
+      "difficulty": "beginner",
+      "question": "If matrix A is 3x2 and matrix B is 2x4, what is the shape of the product AB?",
+      "options": ["2x2", "3x4", "4x3", "The product is undefined"],
+      "correct_index": 1,
+      "explanation": "The inner dimensions (2 and 2) match, and the result takes the outer dimensions: 3x4.",
+      "points": 1
+    },
+    {
+      "key": "math-for-ml-q3",
+      "difficulty": "intermediate",
+      "question": "What is the derivative of f(x) = 3x^2 + 2x with respect to x?",
+      "options": ["3x + 2", "6x^2 + 2", "x^3 + x^2", "6x + 2"],
+      "correct_index": 3,
+      "explanation": "Using the power rule: d/dx(3x^2) = 6x and d/dx(2x) = 2.",
+      "points": 2
+    },
+    {
+      "key": "math-for-ml-q4",
+      "difficulty": "intermediate",
+      "question": "In gradient descent, why do we update parameters in the direction of the negative gradient?",
+      "options": [
+        "Because the gradient points toward the global minimum",
+        "Because it keeps the parameters positive",
+        "Because the gradient points in the direction of steepest increase, so its negative locally decreases the loss fastest",
+        "Because it guarantees convergence in one step"
+      ],
+      "correct_index": 2,
+      "explanation": "The gradient gives the direction of steepest ascent; stepping opposite to it locally reduces the loss.",
+      "points": 2
+    },
+    {
+      "key": "math-for-ml-q5",
+      "difficulty": "advanced",
+      "question": "For a square matrix A, if Av = 5v for a non-zero vector v, what are v and 5?",
+      "options": [
+        "v is an eigenvector of A and 5 is its eigenvalue",
+        "v is the determinant of A and 5 is its trace",
+        "v is a row of A and 5 is its rank",
+        "v is the inverse of A and 5 is its norm"
+      ],
+      "correct_index": 0,
+      "explanation": "By definition, a non-zero v with Av = lambda v is an eigenvector, and lambda is the corresponding eigenvalue.",
+      "points": 3
+    },
+    {
+      "key": "math-for-ml-q6",
+      "difficulty": "advanced",
+      "question": "A test for a disease has 99% sensitivity and 99% specificity, and 1% of the population has the disease. If a random person tests positive, what is the probability they have the disease?",
+      "options": ["99%", "1%", "About 90%", "50%"],
+      "correct_index": 3,
+      "explanation": "By Bayes' theorem: P(D|+) = 0.99*0.01 / (0.99*0.01 + 0.01*0.99) = 0.5.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "math-for-ml-p1",
+    "title": "Compute one gradient descent step",
+    "difficulty": "intermediate",
+    "instructions": "The loss is L(w) = (w - 3)^2. Starting from w = 1 with learning rate 0.1, compute one gradient descent step. Write the derivative dL/dw, the gradient value at w = 1, and the updated value of w.",
+    "expected_output": "dL/dw = 2(w - 3); at w = 1 the gradient is -4; w_new = 1 - 0.1 * (-4) = 1.4",
+    "rubric": [
+      { "key": "c1", "description": "Correct derivative 2(w - 3)", "points": 3,
+        "patterns": ["2\\s*\\*?\\s*\\(\\s*w\\s*-\\s*3\\s*\\)", "2\\s*\\*?\\s*w\\s*-\\s*6"],
+        "hint": "Apply the chain rule: d/dw (w - 3)^2 = 2(w - 3)." },
+      { "key": "c2", "description": "Gradient at w = 1 equals -4", "points": 3,
+        "patterns": ["(^|[^0-9.])-\\s*4(?![0-9.])", "minus\\s*4|negative\\s*4"],
+        "hint": "Substitute w = 1: 2(1 - 3) = -4." },
+      { "key": "c3", "description": "Uses the update rule w - lr * gradient", "points": 1,
+        "patterns": ["w\\s*-\\s*0?\\.1\\s*\\*?", "1\\s*-\\s*0?\\.1", "w\\s*(_?new|')?\\s*=\\s*w\\s*-"],
+        "hint": "The update rule is w_new = w - learning_rate * gradient." },
+      { "key": "c4", "description": "Updated w equals 1.4", "points": 3,
+        "patterns": ["(^|[^0-9.])1\\.4(?![0-9])"],
+        "hint": "1 - 0.1 * (-4) = 1 + 0.4 = 1.4." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "math-for-ml-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Review vectors and matrices",
+      "description": "Complete the Khan Academy units on vectors, matrix multiplication and linear transformations. Focus on dot products and how matrix shapes combine.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Completes the unit exercises with at least 80% accuracy.",
+      "resource_url": "https://www.khanacademy.org/math/linear-algebra"
+    },
+    {
+      "key": "math-for-ml-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Implement vector and matrix operations in NumPy",
+      "description": "Write small Python functions for dot product, matrix multiplication and transpose by hand, then compare your results with NumPy's built-in functions on random inputs.",
+      "estimated_minutes": 90,
+      "completion_criteria": "Hand-written functions match NumPy results on at least 5 test cases.",
+      "resource_url": "https://numpy.org/doc/stable/user/absolute_beginners.html"
+    },
+    {
+      "key": "math-for-ml-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Derive and code gradient descent",
+      "description": "Study partial derivatives and gradients, then derive the gradient of mean squared error for linear regression. Implement gradient descent from scratch and plot the loss over iterations.",
+      "estimated_minutes": 180,
+      "completion_criteria": "From-scratch gradient descent converges to within 1% of the closed-form least-squares solution.",
+      "resource_url": "https://www.khanacademy.org/math/multivariable-calculus"
+    },
+    {
+      "key": "math-for-ml-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Implement PCA from scratch",
+      "description": "Using eigendecomposition of the covariance matrix, implement PCA from scratch on a real dataset. Compare explained variance with scikit-learn's PCA and write up the math behind each step.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Explained variance ratios match scikit-learn to 3 decimal places and the write-up explains eigenvectors and variance.",
+      "resource_url": "https://www.coursera.org/specializations/mathematics-machine-learning"
+    }
+  ]
+}

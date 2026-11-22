@@ -1,0 +1,148 @@
+{
+  "slug": "web-application-security",
+  "name": "Web Application Security",
+  "description": "Recognizing and mitigating common web vulnerabilities such as injection, XSS, CSRF and broken access control.",
+  "category": "Cybersecurity",
+  "prerequisites": ["cybersecurity-fundamentals", "web-apis"],
+  "resources": [
+    { "title": "OWASP Top 10", "url": "https://owasp.org/www-project-top-ten/", "kind": "docs" },
+    { "title": "PortSwigger Web Security Academy", "url": "https://portswigger.net/web-security", "kind": "interactive" },
+    { "title": "OWASP Cheat Sheet Series", "url": "https://cheatsheetseries.owasp.org/", "kind": "docs" },
+    { "title": "MDN Web Security", "url": "https://developer.mozilla.org/en-US/docs/Web/Security", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "web-application-security-q1",
+      "difficulty": "beginner",
+      "question": "Using parameterized queries (prepared statements) is the primary defense against which vulnerability?",
+      "options": ["Cross-site scripting (XSS)", "SQL injection", "Clickjacking", "Denial of service"],
+      "correct_index": 1,
+      "explanation": "Parameterized queries send user input as data separate from the SQL command, so it can never change the query's structure.",
+      "points": 1
+    },
+    {
+      "key": "web-application-security-q2",
+      "difficulty": "beginner",
+      "question": "What happens in a cross-site scripting (XSS) attack?",
+      "options": [
+        "Attacker-controlled script is executed in other users' browsers in the context of the vulnerable site",
+        "The attacker floods the server with requests until it crashes",
+        "The attacker guesses a user's password by trying many combinations",
+        "Database queries are modified to return extra rows"
+      ],
+      "correct_index": 0,
+      "explanation": "XSS occurs when untrusted input is rendered as executable script in a page, letting it run with the site's privileges in a victim's browser.",
+      "points": 1
+    },
+    {
+      "key": "web-application-security-q3",
+      "difficulty": "intermediate",
+      "question": "Which cookie attribute prevents client-side JavaScript from reading a session cookie?",
+      "options": ["Secure", "SameSite=Lax", "Path=/", "HttpOnly"],
+      "correct_index": 3,
+      "explanation": "HttpOnly hides the cookie from document.cookie, limiting session theft via XSS. Secure only restricts it to HTTPS.",
+      "points": 2
+    },
+    {
+      "key": "web-application-security-q4",
+      "difficulty": "intermediate",
+      "question": "Which is the most effective mitigation for cross-site request forgery (CSRF) on state-changing form submissions?",
+      "options": [
+        "Hashing passwords with bcrypt",
+        "Minifying JavaScript files",
+        "Requiring an unpredictable anti-CSRF token per session or request, combined with SameSite cookies",
+        "Using GET requests for all state-changing actions"
+      ],
+      "correct_index": 2,
+      "explanation": "A secret token the attacker's site cannot read, together with SameSite cookie restrictions, ensures forged cross-site requests are rejected.",
+      "points": 2
+    },
+    {
+      "key": "web-application-security-q5",
+      "difficulty": "advanced",
+      "question": "A logged-in user changes the URL /invoices/1001 to /invoices/1002 and sees another customer's invoice. Which OWASP Top 10 category does this fall under?",
+      "options": ["Broken Access Control", "Cryptographic Failures", "Injection", "Security Logging and Monitoring Failures"],
+      "correct_index": 0,
+      "explanation": "This is an insecure direct object reference (IDOR): the server fails to check that the user is authorized for the requested object, which is Broken Access Control.",
+      "points": 3
+    },
+    {
+      "key": "web-application-security-q6",
+      "difficulty": "advanced",
+      "question": "What is the main security purpose of a Content-Security-Policy (CSP) header?",
+      "options": [
+        "To encrypt all traffic between browser and server",
+        "To prevent SQL injection in backend queries",
+        "To compress page content for faster delivery",
+        "To restrict which sources scripts and other resources may load from, reducing the impact of XSS"
+      ],
+      "correct_index": 3,
+      "explanation": "CSP tells the browser which origins are allowed to supply scripts, styles and other content, blocking injected inline or third-party scripts.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "web-application-security-p1",
+    "title": "Fix a vulnerable database query",
+    "difficulty": "intermediate",
+    "instructions": "This login lookup is vulnerable: query = \"SELECT * FROM users WHERE email = '\" + email + \"'\"; db.execute(query). Name the vulnerability class, then rewrite the code (any language or library) so it is safe, and add one sentence explaining why your fix works.",
+    "expected_output": "Identifies SQL injection and rewrites using a parameterized query/prepared statement with a placeholder (?, $1, %s, :email) and the email passed as a separate parameter, explaining that input is treated as data, not SQL. Example: db.execute(\"SELECT * FROM users WHERE email = ?\", (email,)).",
+    "rubric": [
+      { "key": "c1", "description": "Identifies SQL injection", "points": 3,
+        "patterns": ["sql\\s*-?\\s*injection", "\\bsqli\\b"],
+        "hint": "Concatenating user input into SQL creates a SQL injection vulnerability." },
+      { "key": "c2", "description": "Uses a query placeholder", "points": 4,
+        "patterns": ["=\\s*(\\?|\\$1|%s|:\\w+|@\\w+)"],
+        "hint": "Replace the concatenated value with a placeholder such as ?, $1, %s or :email." },
+      { "key": "c3", "description": "Passes the value as a separate parameter", "points": 2,
+        "patterns": ["execute\\s*\\([^)]*,", "query\\s*\\([^)]*,", "prepare", "bind", "param"],
+        "hint": "Pass the email as a separate argument to execute/query or bind it to the prepared statement." },
+      { "key": "c4", "description": "Explains why the fix works", "points": 1,
+        "patterns": ["separat", "as\\s+data", "not\\s+(as\\s+)?(sql|code|part\\s+of\\s+the\\s+query)", "never\\s+(executed|interpreted)", "escap"],
+        "hint": "Explain that the database treats parameters as data, never as part of the SQL command." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "web-application-security-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Study the OWASP Top 10",
+      "description": "Read the current OWASP Top 10 and, for each category, write a one-line description and one example. Note the primary mitigation for each.",
+      "estimated_minutes": 90,
+      "completion_criteria": "A table of all ten categories with an example and a mitigation for each.",
+      "resource_url": "https://owasp.org/www-project-top-ten/"
+    },
+    {
+      "key": "web-application-security-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Complete introductory Web Security Academy labs",
+      "description": "Create a free PortSwigger account and complete the apprentice-level labs on SQL injection and cross-site scripting in their intentionally vulnerable lab environment. Record the root cause and fix for each lab.",
+      "estimated_minutes": 120,
+      "completion_criteria": "At least four apprentice labs solved with notes on root cause and remediation.",
+      "resource_url": "https://portswigger.net/web-security"
+    },
+    {
+      "key": "web-application-security-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Harden HTTP headers and cookies",
+      "description": "On an app you built, add a Content-Security-Policy, set session cookies with HttpOnly, Secure and SameSite, and add anti-CSRF protection to forms. Verify with browser developer tools.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Response headers and cookie attributes shown in dev tools, and a forged cross-site form submission is rejected.",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Web/Security"
+    },
+    {
+      "key": "web-application-security-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Perform a secure code review of your own app",
+      "description": "Review a full-stack project you own against the OWASP Cheat Sheet Series for authentication, access control, input validation and output encoding. Fix the issues you find and document them.",
+      "estimated_minutes": 240,
+      "completion_criteria": "A findings report with at least five reviewed areas, severity ratings, and commits fixing the identified issues.",
+      "resource_url": "https://cheatsheetseries.owasp.org/"
+    }
+  ]
+}

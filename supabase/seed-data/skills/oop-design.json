@@ -1,0 +1,125 @@
+{
+  "slug": "oop-design",
+  "name": "Object-Oriented Design",
+  "description": "Modelling software with classes and objects using encapsulation, inheritance, polymorphism and common design principles.",
+  "category": "Programming",
+  "prerequisites": ["python"],
+  "resources": [
+    { "title": "Python Tutorial: Classes", "url": "https://docs.python.org/3/tutorial/classes.html", "kind": "docs" },
+    { "title": "Refactoring.Guru: Design Patterns", "url": "https://refactoring.guru/design-patterns", "kind": "article" },
+    { "title": "Python abc module (abstract base classes)", "url": "https://docs.python.org/3/library/abc.html", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "oop-design-q1",
+      "difficulty": "beginner",
+      "question": "Which statement best describes encapsulation?",
+      "options": ["Creating many subclasses from one base class", "Running several objects in parallel", "Bundling data with the methods that operate on it and restricting direct access to internal state", "Converting objects to JSON"],
+      "correct_index": 2,
+      "explanation": "Encapsulation keeps an object's state and behaviour together and exposes a controlled interface instead of raw internals.",
+      "points": 1
+    },
+    {
+      "key": "oop-design-q2",
+      "difficulty": "beginner",
+      "question": "In Python, what is the conventional name of the first parameter of an instance method?",
+      "options": ["self", "this", "cls", "me"],
+      "correct_index": 0,
+      "explanation": "Python passes the instance explicitly as the first argument, conventionally named self; cls is used for class methods.",
+      "points": 1
+    },
+    {
+      "key": "oop-design-q3",
+      "difficulty": "intermediate",
+      "question": "Which statement describes polymorphism?",
+      "options": ["A class having more than one constructor", "Hiding attributes with a leading underscore", "Copying objects deeply", "Different classes providing their own implementation of the same method so callers can treat them uniformly"],
+      "correct_index": 3,
+      "explanation": "Polymorphism lets code call shape.area() without knowing whether shape is a Circle or a Rectangle.",
+      "points": 2
+    },
+    {
+      "key": "oop-design-q4",
+      "difficulty": "intermediate",
+      "question": "What does the guideline 'favor composition over inheritance' recommend?",
+      "options": ["Always use multiple inheritance", "Build behaviour by holding references to other objects rather than extending deep class hierarchies", "Put all code in one large class", "Avoid using classes at all"],
+      "correct_index": 1,
+      "explanation": "Composition assembles behaviour from collaborating objects, which is more flexible and less tightly coupled than inheritance chains.",
+      "points": 2
+    },
+    {
+      "key": "oop-design-q5",
+      "difficulty": "advanced",
+      "question": "What does the Liskov Substitution Principle state?",
+      "options": ["A class should have only one reason to change", "Depend on abstractions, not concrete classes", "Objects of a subclass must be usable wherever the base class is expected without breaking correctness", "Clients should not depend on methods they do not use"],
+      "correct_index": 2,
+      "explanation": "LSP requires subtypes to honour the base type's contract; the other options describe SRP, DIP and ISP.",
+      "points": 3
+    },
+    {
+      "key": "oop-design-q6",
+      "difficulty": "advanced",
+      "question": "Which design pattern lets you swap an algorithm at runtime by injecting an object that implements a common interface?",
+      "options": ["Singleton", "Strategy", "Observer", "Adapter"],
+      "correct_index": 1,
+      "explanation": "Strategy encapsulates interchangeable algorithms behind one interface so the context can switch between them.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "oop-design-p1",
+    "title": "Shape class hierarchy",
+    "difficulty": "beginner",
+    "instructions": "Write Python code for a base class Shape with an area() method, and two subclasses Rectangle (width, height) and Circle (radius) that each override area().",
+    "expected_output": "class Shape with area(); class Rectangle(Shape) and class Circle(Shape), each with __init__ storing attributes and an area() implementation (circle uses math.pi).",
+    "rubric": [
+      { "key": "c1", "description": "Defines the Shape base class", "points": 2, "patterns": ["class\\s+Shape\\b"], "hint": "Create a base class named Shape." },
+      { "key": "c2", "description": "Subclasses inherit from Shape", "points": 3, "patterns": ["class\\s+\\w+\\s*\\(\\s*Shape\\s*\\)"], "hint": "Declare subclasses as class Rectangle(Shape):" },
+      { "key": "c3", "description": "Implements area() methods", "points": 2, "patterns": ["def\\s+area\\s*\\(\\s*self"], "hint": "Each class needs def area(self):" },
+      { "key": "c4", "description": "Initialises instance attributes", "points": 2, "patterns": ["def\\s+__init__\\s*\\(\\s*self"], "hint": "Store width/height/radius in __init__ using self." },
+      { "key": "c5", "description": "Uses pi for the circle area", "points": 1, "patterns": ["math\\.pi", "3\\.14", "\\bpi\\b"], "hint": "Circle area is pi * r ** 2." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "oop-design-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn Python classes",
+      "description": "Read the Classes chapter of the Python tutorial, covering instance attributes, methods, inheritance and private-name conventions. Recreate each example and modify it.",
+      "estimated_minutes": 90,
+      "completion_criteria": "You can explain self, __init__, inheritance and method overriding in your own words.",
+      "resource_url": "https://docs.python.org/3/tutorial/classes.html"
+    },
+    {
+      "key": "oop-design-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Model a bank account",
+      "description": "Write a BankAccount class with deposit, withdraw and balance, rejecting invalid amounts. Add a SavingsAccount subclass that adds interest.",
+      "estimated_minutes": 60,
+      "completion_criteria": "Both classes work, invalid withdrawals raise an exception, and the subclass reuses the parent logic.",
+      "resource_url": "https://docs.python.org/3/tutorial/classes.html"
+    },
+    {
+      "key": "oop-design-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Apply SOLID and two design patterns",
+      "description": "Refactor a procedural script (e.g. a report generator) into classes, applying single responsibility and dependency inversion. Implement Strategy and Observer from Refactoring.Guru in your own example.",
+      "estimated_minutes": 150,
+      "completion_criteria": "Refactored code with classes each having one responsibility, plus working Strategy and Observer examples.",
+      "resource_url": "https://refactoring.guru/design-patterns"
+    },
+    {
+      "key": "oop-design-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Design a library management system",
+      "description": "Design and implement a library system with books, members, loans and fines. Draw a simple class diagram first, use abstract base classes where appropriate, and keep persistence behind an interface.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Class diagram plus working code where storage can be swapped (e.g. in-memory vs JSON) without changing business logic.",
+      "resource_url": "https://docs.python.org/3/library/abc.html"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "slug": "react",
+  "name": "React",
+  "description": "Building component-based user interfaces with React, including state, effects, hooks and data flow.",
+  "category": "Web Development",
+  "prerequisites": ["javascript", "html-css"],
+  "resources": [
+    { "title": "React: Quick Start", "url": "https://react.dev/learn", "kind": "docs" },
+    { "title": "React: Tutorial - Tic-Tac-Toe", "url": "https://react.dev/learn/tutorial-tic-tac-toe", "kind": "interactive" },
+    { "title": "React API Reference", "url": "https://react.dev/reference/react", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "react-q1",
+      "difficulty": "beginner",
+      "question": "How does a parent component pass data down to a child component in React?",
+      "options": ["Through props", "Through global CSS variables", "Through the child's state", "Through the DOM id attribute"],
+      "correct_index": 0,
+      "explanation": "Props are the inputs a parent passes to a child component.",
+      "points": 1
+    },
+    {
+      "key": "react-q2",
+      "difficulty": "beginner",
+      "question": "Why should each element rendered from a list have a key prop?",
+      "options": [
+        "Keys are required for CSS styling",
+        "Keys make the list sorted automatically",
+        "Keys help React identify which items changed, were added or removed between renders",
+        "Keys encrypt the list data"
+      ],
+      "correct_index": 2,
+      "explanation": "Stable, unique keys let React match list items across renders and preserve their state correctly.",
+      "points": 1
+    },
+    {
+      "key": "react-q3",
+      "difficulty": "intermediate",
+      "question": "When does an effect declared as useEffect(() => { ... }, []) run?",
+      "options": [
+        "Before every render",
+        "After every render",
+        "Only when the component unmounts",
+        "Once after the component mounts (its cleanup runs on unmount)"
+      ],
+      "correct_index": 3,
+      "explanation": "An empty dependency array means the effect has no dependencies, so it runs after the initial mount only. (In development Strict Mode React runs setup and cleanup an extra time to surface bugs.)",
+      "points": 2
+    },
+    {
+      "key": "react-q4",
+      "difficulty": "intermediate",
+      "question": "count is 0. A click handler calls setCount(count + 1) three times in a row. What is count after the re-render?",
+      "options": ["3", "1", "0", "It throws an error"],
+      "correct_index": 1,
+      "explanation": "Each call uses the same snapshot value count = 0, so all three set it to 1. Use the updater form setCount(c => c + 1) to increment three times.",
+      "points": 2
+    },
+    {
+      "key": "react-q5",
+      "difficulty": "advanced",
+      "question": "A component does items.push(newItem); setItems(items); and the UI does not update. Why?",
+      "options": [
+        "The state was mutated in place, so the array reference is the same and React bails out of re-rendering",
+        "push is not allowed in JavaScript arrays",
+        "setItems only accepts strings",
+        "React requires a key on setItems calls"
+      ],
+      "correct_index": 0,
+      "explanation": "React compares state with Object.is; passing the same mutated array means no change is detected. Create a new array, e.g. setItems([...items, newItem]).",
+      "points": 3
+    },
+    {
+      "key": "react-q6",
+      "difficulty": "advanced",
+      "question": "What is the primary purpose of useMemo?",
+      "options": [
+        "To store values that persist across page reloads",
+        "To trigger a re-render when a value changes",
+        "To run side effects after rendering",
+        "To cache the result of an expensive calculation between renders until its dependencies change"
+      ],
+      "correct_index": 3,
+      "explanation": "useMemo memoizes a computed value and recomputes it only when a dependency changes; it is a performance optimization.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "react-p1",
+    "title": "Write a counter component",
+    "difficulty": "beginner",
+    "instructions": "Write a React function component named Counter that keeps a count in state starting at 0, displays it, and has a button that increments the count by 1 when clicked.",
+    "expected_output": "function Counter() { const [count, setCount] = useState(0); return (<div><p>{count}</p><button onClick={() => setCount(c => c + 1)}>Increment</button></div>); }",
+    "rubric": [
+      { "key": "c1", "description": "Declares a function component named Counter", "points": 2,
+        "patterns": ["function\\s+Counter\\s*\\(", "(const|let)\\s+Counter\\s*=\\s*(\\([^)]*\\)|\\w+)\\s*=>"],
+        "hint": "Define 'function Counter() { ... }'." },
+      { "key": "c2", "description": "Uses useState initialized to 0", "points": 3,
+        "patterns": ["useState\\s*(<\\s*number\\s*>)?\\s*\\(\\s*0\\s*\\)"],
+        "hint": "Use const [count, setCount] = useState(0)." },
+      { "key": "c3", "description": "Button with an onClick handler", "points": 2,
+        "patterns": ["<button[^>]*onClick\\s*=\\s*\\{"],
+        "hint": "Attach onClick={...} to a <button>." },
+      { "key": "c4", "description": "Increments the count via the setter", "points": 3,
+        "patterns": ["set\\w*\\s*\\(\\s*\\(?\\s*\\w+\\s*\\)?\\s*=>\\s*\\w+\\s*\\+\\s*1", "set\\w*\\s*\\(\\s*\\w+\\s*\\+\\s*1\\s*\\)", "set\\w*\\s*\\(\\s*\\+\\+|set\\w*\\s*\\(\\s*\\w+\\s*\\+\\s*1"],
+        "hint": "Call setCount(c => c + 1) in the click handler; do not mutate count directly." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "react-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Complete the React Learn section",
+      "description": "Read the react.dev Learn pages on describing the UI, adding interactivity and managing state. Build each small example as you go.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Can explain components, props, state and why state is immutable, with your own examples.",
+      "resource_url": "https://react.dev/learn"
+    },
+    {
+      "key": "react-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Build the Tic-Tac-Toe tutorial",
+      "description": "Follow the official Tic-Tac-Toe tutorial, then extend it by highlighting the winning squares and showing a draw message.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Working game with time travel, winning-line highlight and draw detection.",
+      "resource_url": "https://react.dev/learn/tutorial-tic-tac-toe"
+    },
+    {
+      "key": "react-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Fetch data and manage effects",
+      "description": "Build a searchable list that fetches data from a public API with useEffect, handles loading and error states, and cleans up stale requests when the query changes.",
+      "estimated_minutes": 180,
+      "completion_criteria": "App shows loading and error states, debounces or aborts stale requests, and has no console warnings.",
+      "resource_url": "https://react.dev/reference/react"
+    },
+    {
+      "key": "react-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build a multi-page React application",
+      "description": "Build a task manager or similar app with routing, shared state via context or a reducer, form validation and component tests. Deploy it publicly.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Deployed app with at least 3 routes, useReducer or context for shared state, and at least 5 passing component tests.",
+      "resource_url": "https://react.dev/learn"
+    }
+  ]
+}

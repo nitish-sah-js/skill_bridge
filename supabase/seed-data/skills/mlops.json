@@ -1,0 +1,163 @@
+{
+  "slug": "mlops",
+  "name": "MLOps & Model Deployment",
+  "description": "Packaging, deploying, tracking and monitoring machine learning models in production with reproducible, automated workflows.",
+  "category": "AI & Machine Learning",
+  "prerequisites": ["machine-learning", "git-version-control"],
+  "resources": [
+    { "title": "MLflow documentation", "url": "https://mlflow.org/docs/latest/index.html", "kind": "docs" },
+    { "title": "Docker: Get started", "url": "https://docs.docker.com/get-started/", "kind": "docs" },
+    { "title": "MLOps roadmap", "url": "https://roadmap.sh/mlops", "kind": "interactive" },
+    { "title": "FastAPI tutorial", "url": "https://fastapi.tiangolo.com/tutorial/", "kind": "docs" }
+  ],
+  "questions": [
+    {
+      "key": "mlops-q1",
+      "difficulty": "beginner",
+      "question": "What is the main purpose of an experiment tracking tool such as MLflow Tracking?",
+      "options": [
+        "To label training data",
+        "To write model code automatically",
+        "To record parameters, metrics and artifacts of training runs so they can be compared and reproduced",
+        "To replace version control for source code"
+      ],
+      "correct_index": 2,
+      "explanation": "Experiment tracking logs each run's configuration and results, enabling comparison and reproducibility.",
+      "points": 1
+    },
+    {
+      "key": "mlops-q2",
+      "difficulty": "beginner",
+      "question": "Why is a trained model often packaged into a Docker container for deployment?",
+      "options": [
+        "It bundles the model with its exact dependencies so it runs consistently across environments",
+        "It makes the model more accurate",
+        "It removes the need for a server",
+        "It automatically retrains the model"
+      ],
+      "correct_index": 0,
+      "explanation": "Containers capture the runtime environment, avoiding 'works on my machine' problems.",
+      "points": 1
+    },
+    {
+      "key": "mlops-q3",
+      "difficulty": "intermediate",
+      "question": "What is data drift?",
+      "options": [
+        "Data being moved between cloud regions",
+        "Gradual corruption of files on disk",
+        "The model's weights changing after deployment",
+        "A change in the distribution of input data in production compared with the training data"
+      ],
+      "correct_index": 3,
+      "explanation": "When production inputs shift away from the training distribution, model performance can degrade even though the model itself is unchanged.",
+      "points": 2
+    },
+    {
+      "key": "mlops-q4",
+      "difficulty": "intermediate",
+      "question": "What is the role of a model registry?",
+      "options": [
+        "Storing raw training data",
+        "Managing versioned models and their lifecycle stages, such as staging and production",
+        "Hosting the team's source code",
+        "Generating synthetic features"
+      ],
+      "correct_index": 1,
+      "explanation": "A model registry provides a central store for model versions, lineage, and promotion between stages.",
+      "points": 2
+    },
+    {
+      "key": "mlops-q5",
+      "difficulty": "advanced",
+      "question": "What is training-serving skew?",
+      "options": [
+        "A difference between how features are computed at training time and at inference time, causing degraded predictions",
+        "When the training job uses more GPUs than the serving job",
+        "When serving latency exceeds training time",
+        "When the model is trained on more data than it serves"
+      ],
+      "correct_index": 0,
+      "explanation": "Inconsistent feature pipelines between training and serving (e.g. different preprocessing code) silently hurt production accuracy; feature stores and shared pipelines help prevent it.",
+      "points": 3
+    },
+    {
+      "key": "mlops-q6",
+      "difficulty": "advanced",
+      "question": "In a canary deployment of a new model version, what happens?",
+      "options": [
+        "The old model is deleted immediately and replaced",
+        "The new model is only run offline on historical data",
+        "Both models are retrained together",
+        "A small fraction of live traffic is routed to the new model while its metrics are monitored before a full rollout"
+      ],
+      "correct_index": 3,
+      "explanation": "Canary releases limit risk by exposing the new version to a small share of traffic first and rolling back if metrics degrade.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "mlops-p1",
+    "title": "Log a training run with MLflow",
+    "difficulty": "intermediate",
+    "instructions": "Write a short Python snippet that, inside an MLflow run, logs the hyperparameter max_depth=5, logs the metric accuracy (stored in a variable acc), and logs a trained scikit-learn model stored in a variable model.",
+    "expected_output": "import mlflow; with mlflow.start_run(): mlflow.log_param('max_depth', 5); mlflow.log_metric('accuracy', acc); mlflow.sklearn.log_model(model, 'model')",
+    "rubric": [
+      { "key": "c1", "description": "Starts an MLflow run", "points": 2,
+        "patterns": ["mlflow\\.start_run\\s*\\(", "mlflow\\.\\w+\\.autolog\\s*\\(|mlflow\\.autolog\\s*\\("],
+        "hint": "Wrap logging in 'with mlflow.start_run():'." },
+      { "key": "c2", "description": "Logs the max_depth parameter", "points": 3,
+        "patterns": ["log_params?\\s*\\([\\s\\S]*max_depth"],
+        "hint": "Use mlflow.log_param('max_depth', 5)." },
+      { "key": "c3", "description": "Logs the accuracy metric", "points": 3,
+        "patterns": ["log_metrics?\\s*\\([\\s\\S]*acc"],
+        "hint": "Use mlflow.log_metric('accuracy', acc)." },
+      { "key": "c4", "description": "Logs the model artifact", "points": 2,
+        "patterns": ["\\.log_model\\s*\\("],
+        "hint": "Use mlflow.sklearn.log_model(model, 'model')." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "mlops-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Understand the MLOps lifecycle",
+      "description": "Study the MLOps roadmap and the MLflow overview docs. Summarize the stages of experiment tracking, packaging, deployment and monitoring.",
+      "estimated_minutes": 90,
+      "completion_criteria": "One-page summary describing each lifecycle stage and a tool used for it.",
+      "resource_url": "https://roadmap.sh/mlops"
+    },
+    {
+      "key": "mlops-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Track experiments with MLflow",
+      "description": "Instrument an existing scikit-learn training script with MLflow tracking. Run it with several hyperparameter values and compare runs in the MLflow UI.",
+      "estimated_minutes": 90,
+      "completion_criteria": "At least 5 logged runs with parameters, metrics and a saved model artifact.",
+      "resource_url": "https://mlflow.org/docs/latest/index.html"
+    },
+    {
+      "key": "mlops-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Serve a model as a containerized API",
+      "description": "Wrap a trained model in a FastAPI prediction endpoint with input validation. Write a Dockerfile, build the image and call the endpoint from the command line.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Docker container runs locally and returns predictions for a sample request.",
+      "resource_url": "https://fastapi.tiangolo.com/tutorial/"
+    },
+    {
+      "key": "mlops-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build an automated ML pipeline with monitoring",
+      "description": "Create a Git repository with a CI workflow that tests, trains and registers a model, then deploys the container. Add basic monitoring that logs prediction inputs and flags data drift.",
+      "estimated_minutes": 240,
+      "completion_criteria": "CI pipeline runs on push, model is versioned in a registry, and a drift report is generated from logged inputs.",
+      "resource_url": "https://mlflow.org/docs/latest/index.html"
+    }
+  ]
+}

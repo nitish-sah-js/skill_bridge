@@ -1,0 +1,138 @@
+{
+  "slug": "html-css",
+  "name": "HTML & CSS",
+  "description": "Structuring web pages with semantic HTML and styling them with modern CSS, including Flexbox, Grid and responsive design.",
+  "category": "Web Development",
+  "prerequisites": [],
+  "resources": [
+    { "title": "MDN: Learn web development", "url": "https://developer.mozilla.org/en-US/docs/Learn", "kind": "docs" },
+    { "title": "MDN: CSS reference", "url": "https://developer.mozilla.org/en-US/docs/Web/CSS", "kind": "docs" },
+    { "title": "web.dev: Learn CSS", "url": "https://web.dev/learn/css", "kind": "course" },
+    { "title": "web.dev: Learn HTML", "url": "https://web.dev/learn/html", "kind": "course" }
+  ],
+  "questions": [
+    {
+      "key": "html-css-q1",
+      "difficulty": "beginner",
+      "question": "Which HTML element is most appropriate for the main navigation links of a site?",
+      "options": ["<div>", "<section>", "<span>", "<nav>"],
+      "correct_index": 3,
+      "explanation": "<nav> is the semantic element for major navigation blocks and is exposed as a landmark to assistive technology.",
+      "points": 1
+    },
+    {
+      "key": "html-css-q2",
+      "difficulty": "beginner",
+      "question": "Which CSS selector targets all elements with class=\"card\"?",
+      "options": ["#card", ".card", "card", "*card"],
+      "correct_index": 1,
+      "explanation": "A leading dot selects by class; # selects by id and a bare name selects by element type.",
+      "points": 1
+    },
+    {
+      "key": "html-css-q3",
+      "difficulty": "intermediate",
+      "question": "With box-sizing: border-box, an element has width: 200px, padding: 20px and border: 5px. What is its rendered outer width (excluding margin)?",
+      "options": ["200px", "250px", "240px", "225px"],
+      "correct_index": 0,
+      "explanation": "With border-box, the declared width includes padding and border, so the total stays 200px.",
+      "points": 2
+    },
+    {
+      "key": "html-css-q4",
+      "difficulty": "intermediate",
+      "question": "In a flex container with the default flex-direction: row, which property horizontally centers the items?",
+      "options": ["align-items: center", "text-align: center", "justify-content: center", "vertical-align: middle"],
+      "correct_index": 2,
+      "explanation": "justify-content aligns items along the main axis, which is horizontal for flex-direction: row.",
+      "points": 2
+    },
+    {
+      "key": "html-css-q5",
+      "difficulty": "advanced",
+      "question": "Which selector has the highest specificity?",
+      "options": ["div.card p", "#main .title", ".nav .item a", "ul li a:hover"],
+      "correct_index": 1,
+      "explanation": "#main .title has specificity (1,1,0); the others contain no ID selector, so it wins.",
+      "points": 3
+    },
+    {
+      "key": "html-css-q6",
+      "difficulty": "advanced",
+      "question": "What does grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) do?",
+      "options": [
+        "Creates exactly 200 columns",
+        "Creates one column that is always 200px wide",
+        "Hides columns narrower than 200px",
+        "Creates as many columns of at least 200px as fit the container, stretching them to share leftover space"
+      ],
+      "correct_index": 3,
+      "explanation": "auto-fit with minmax creates a responsive grid that wraps columns without media queries, collapsing empty tracks so items expand.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "html-css-p1",
+    "title": "Center a card with Flexbox",
+    "difficulty": "beginner",
+    "instructions": "Write the CSS rule for a .container element that uses Flexbox to center its child both horizontally and vertically, and makes the container fill the full viewport height.",
+    "expected_output": ".container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }",
+    "rubric": [
+      { "key": "c1", "description": "Uses display: flex", "points": 3,
+        "patterns": ["display\\s*:\\s*(inline-)?flex\\b"],
+        "hint": "Set display: flex on the container." },
+      { "key": "c2", "description": "Centers on the main axis", "points": 2,
+        "patterns": ["justify-content\\s*:\\s*center", "place-content\\s*:\\s*center", "place-items\\s*:\\s*center"],
+        "hint": "Use justify-content: center." },
+      { "key": "c3", "description": "Centers on the cross axis", "points": 2,
+        "patterns": ["align-items\\s*:\\s*center", "place-items\\s*:\\s*center", "place-content\\s*:\\s*center"],
+        "hint": "Use align-items: center." },
+      { "key": "c4", "description": "Fills the viewport height", "points": 3,
+        "patterns": ["(min-)?height\\s*:\\s*100(vh|dvh|svh|lvh|%)"],
+        "hint": "Give the container min-height: 100vh so there is vertical space to center in." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "html-css-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn HTML and CSS fundamentals",
+      "description": "Work through the MDN Learn web development modules on HTML structure and CSS basics, including selectors, the box model and the cascade.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Completes the MDN assessment challenges for HTML basics and CSS building blocks.",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Learn"
+    },
+    {
+      "key": "html-css-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Build a semantic personal profile page",
+      "description": "Create a single-page profile using semantic elements (header, nav, main, section, footer), an image with alt text and a styled contact form.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Page passes the W3C HTML validator with no errors and uses at least 5 semantic elements.",
+      "resource_url": "https://validator.w3.org/"
+    },
+    {
+      "key": "html-css-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Create a responsive layout with Grid and Flexbox",
+      "description": "Build a responsive product listing page that uses CSS Grid for the card layout and Flexbox for card internals. Add media queries so it works from 320px phones to wide desktops.",
+      "estimated_minutes": 180,
+      "completion_criteria": "Layout has no horizontal scrolling at 320px and adapts to at least 3 breakpoints.",
+      "resource_url": "https://web.dev/learn/css"
+    },
+    {
+      "key": "html-css-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build a multi-page responsive website",
+      "description": "Design and build a 3-page website for a fictional business using custom properties for theming, a dark mode, CSS transitions and accessible forms. Deploy it to a free static host.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Deployed site with 3 pages, CSS variables, dark mode and a Lighthouse accessibility score of at least 90.",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Web/CSS"
+    }
+  ]
+}

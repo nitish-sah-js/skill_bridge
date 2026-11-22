@@ -1,0 +1,153 @@
+{
+  "slug": "data-cleaning",
+  "name": "Data Cleaning & Wrangling",
+  "description": "Detecting and fixing missing, duplicate, inconsistent and mistyped data, and reshaping it into analysis-ready form with pandas.",
+  "category": "Data Analysis",
+  "prerequisites": ["python"],
+  "resources": [
+    { "title": "pandas documentation", "url": "https://pandas.pydata.org/docs/", "kind": "docs" },
+    { "title": "pandas: Working with missing data", "url": "https://pandas.pydata.org/docs/user_guide/missing_data.html", "kind": "docs" },
+    { "title": "pandas: Reshaping and pivot tables", "url": "https://pandas.pydata.org/docs/user_guide/reshaping.html", "kind": "docs" },
+    { "title": "Kaggle Learn: Data Cleaning", "url": "https://www.kaggle.com/learn/data-cleaning", "kind": "course" }
+  ],
+  "questions": [
+    {
+      "key": "data-cleaning-q1",
+      "difficulty": "beginner",
+      "question": "Which pandas method returns a boolean mask showing where values are missing?",
+      "options": ["df.isna()", "df.dropna()", "df.fillna()", "df.describe()"],
+      "correct_index": 0,
+      "explanation": "isna() (alias isnull()) marks missing values as True. dropna removes them and fillna replaces them.",
+      "points": 1
+    },
+    {
+      "key": "data-cleaning-q2",
+      "difficulty": "beginner",
+      "question": "What does df.drop_duplicates() do by default?",
+      "options": [
+        "Removes columns with identical names",
+        "Removes rows that contain any missing value",
+        "Sorts the DataFrame by its index",
+        "Removes rows that are exact duplicates of an earlier row across all columns, keeping the first"
+      ],
+      "correct_index": 3,
+      "explanation": "By default drop_duplicates compares all columns and keeps the first occurrence (keep='first').",
+      "points": 1
+    },
+    {
+      "key": "data-cleaning-q3",
+      "difficulty": "intermediate",
+      "question": "A 'price' column contains strings like \"1,200\" and \"N/A\". Which code converts it to numbers, turning unparseable values into NaN?",
+      "options": [
+        "df['price'].astype(int)",
+        "df['price'].fillna(0)",
+        "pd.to_numeric(df['price'].str.replace(',', ''), errors='coerce')",
+        "df['price'].str.upper()"
+      ],
+      "correct_index": 2,
+      "explanation": "Removing thousands separators then using to_numeric with errors='coerce' converts valid numbers and sets invalid ones to NaN; astype(int) would raise an error.",
+      "points": 2
+    },
+    {
+      "key": "data-cleaning-q4",
+      "difficulty": "intermediate",
+      "question": "Why is median imputation often preferred over mean imputation for a heavily right-skewed income column?",
+      "options": [
+        "The median is less influenced by extreme values, so imputed values are more typical",
+        "The median is always zero for skewed data",
+        "Mean imputation is not supported in pandas",
+        "The median removes outliers from the data set"
+      ],
+      "correct_index": 0,
+      "explanation": "In skewed data a few large values inflate the mean; the median better represents a typical observation.",
+      "points": 2
+    },
+    {
+      "key": "data-cleaning-q5",
+      "difficulty": "advanced",
+      "question": "A table has columns id, sales_2022, sales_2023, sales_2024. Which pandas operation reshapes it into a long format with columns id, year and sales?",
+      "options": ["df.pivot()", "df.melt()", "df.merge()", "df.groupby()"],
+      "correct_index": 1,
+      "explanation": "melt unpivots wide columns into variable/value pairs (wide to long). pivot does the reverse.",
+      "points": 3
+    },
+    {
+      "key": "data-cleaning-q6",
+      "difficulty": "advanced",
+      "question": "Which is the recommended way to set 'status' to 'inactive' for rows where 'last_login' is before 2023, avoiding chained-assignment problems?",
+      "options": [
+        "df[df['last_login'] < '2023-01-01']['status'] = 'inactive'",
+        "df['status'][df['last_login'] < '2023-01-01'] = 'inactive'",
+        "df.loc[df['last_login'] < '2023-01-01', 'status'] = 'inactive'",
+        "df.status == 'inactive'"
+      ],
+      "correct_index": 2,
+      "explanation": ".loc with a row mask and column label assigns in a single step on the original DataFrame; chained indexing may modify a copy.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "data-cleaning-p1",
+    "title": "Clean a customer table with pandas",
+    "difficulty": "intermediate",
+    "instructions": "A pandas DataFrame df has columns 'email' and 'age'. Write pandas code that (1) strips surrounding whitespace and lowercases the emails, (2) removes duplicate rows based on email, and (3) fills missing ages with the median age.",
+    "expected_output": "df['email'] = df['email'].str.strip().str.lower(); df = df.drop_duplicates(subset='email'); df['age'] = df['age'].fillna(df['age'].median())",
+    "rubric": [
+      { "key": "c1", "description": "Strips whitespace", "points": 2,
+        "patterns": ["\\.str\\.strip\\s*\\("],
+        "hint": "Use .str.strip() on the email column." },
+      { "key": "c2", "description": "Lowercases emails", "points": 2,
+        "patterns": ["\\.str\\.lower\\s*\\(", "\\.str\\.casefold\\s*\\("],
+        "hint": "Use .str.lower() to normalize email case." },
+      { "key": "c3", "description": "Drops duplicates by email", "points": 3,
+        "patterns": ["drop_duplicates\\s*\\(\\s*(subset\\s*=\\s*)?\\[?\\s*['\"]email['\"]"],
+        "hint": "Use drop_duplicates(subset='email') so duplicates are judged by email." },
+      { "key": "c4", "description": "Fills missing ages with the median", "points": 3,
+        "patterns": ["fillna\\s*\\([^\\n]*median\\s*\\(", "median\\s*\\(\\s*\\)[\\s\\S]*fillna"],
+        "hint": "Use df['age'].fillna(df['age'].median())." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "data-cleaning-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn missing-data handling in pandas",
+      "description": "Read the pandas guide on working with missing data. Practice isna, dropna and fillna on a small DataFrame you create.",
+      "estimated_minutes": 60,
+      "completion_criteria": "A notebook demonstrating detection, removal and imputation of missing values with explanations.",
+      "resource_url": "https://pandas.pydata.org/docs/user_guide/missing_data.html"
+    },
+    {
+      "key": "data-cleaning-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Complete a data cleaning course",
+      "description": "Work through Kaggle Learn's Data Cleaning lessons covering missing values, scaling, parsing dates, character encodings and inconsistent entries.",
+      "estimated_minutes": 120,
+      "completion_criteria": "All lesson exercises completed.",
+      "resource_url": "https://www.kaggle.com/learn/data-cleaning"
+    },
+    {
+      "key": "data-cleaning-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Reshape and merge messy tables",
+      "description": "Take two related CSVs, standardize column names and types, merge them on a key, and reshape between wide and long formats using melt and pivot_table.",
+      "estimated_minutes": 120,
+      "completion_criteria": "A notebook producing a tidy merged DataFrame with correct dtypes and no unintended duplicate or lost rows (verified with row counts).",
+      "resource_url": "https://pandas.pydata.org/docs/user_guide/reshaping.html"
+    },
+    {
+      "key": "data-cleaning-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build a reusable cleaning pipeline",
+      "description": "Choose a messy public data set and write a Python module with functions for each cleaning step, plus data quality checks (nulls, ranges, uniqueness) that fail loudly. Document every decision.",
+      "estimated_minutes": 240,
+      "completion_criteria": "A script that runs end-to-end on raw data, outputs a clean file, and includes at least five automated quality checks and a data cleaning log.",
+      "resource_url": "https://pandas.pydata.org/docs/"
+    }
+  ]
+}

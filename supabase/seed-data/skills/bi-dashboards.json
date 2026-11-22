@@ -1,0 +1,162 @@
+{
+  "slug": "bi-dashboards",
+  "name": "BI Tools & Dashboards",
+  "description": "Building interactive business intelligence reports and dashboards with tools such as Power BI and Tableau, including data modeling and calculated measures.",
+  "category": "Data & Analytics",
+  "prerequisites": ["data-visualization"],
+  "resources": [
+    { "title": "Microsoft Power BI documentation", "url": "https://learn.microsoft.com/en-us/power-bi/", "kind": "docs" },
+    { "title": "DAX function reference", "url": "https://learn.microsoft.com/en-us/dax/", "kind": "docs" },
+    { "title": "Tableau free training videos", "url": "https://www.tableau.com/learn/training", "kind": "video" }
+  ],
+  "questions": [
+    {
+      "key": "bi-dashboards-q1",
+      "difficulty": "beginner",
+      "question": "In a typical dashboard, what is a KPI card best used for?",
+      "options": [
+        "Showing the full row-level detail of a table",
+        "Highlighting a single headline metric, often compared to a target",
+        "Displaying geographic distribution of sales",
+        "Editing the underlying data source"
+      ],
+      "correct_index": 1,
+      "explanation": "A KPI (card) visual surfaces one key number, such as revenue this month, usually with a target or trend for context.",
+      "points": 1
+    },
+    {
+      "key": "bi-dashboards-q2",
+      "difficulty": "beginner",
+      "question": "In a star schema, which table typically holds numeric, transaction-level measurements such as sales amounts?",
+      "options": [
+        "Dimension table",
+        "Lookup table",
+        "Bridge table",
+        "Fact table"
+      ],
+      "correct_index": 3,
+      "explanation": "Fact tables store measurable events (amounts, quantities) and reference dimension tables that describe them (date, product, customer).",
+      "points": 1
+    },
+    {
+      "key": "bi-dashboards-q3",
+      "difficulty": "intermediate",
+      "question": "In Power BI, what is the key difference between a calculated column and a measure?",
+      "options": [
+        "A calculated column is computed row by row and stored in the model; a measure is evaluated at query time in the current filter context",
+        "A measure is stored in the model; a calculated column is evaluated only when a visual is rendered",
+        "Calculated columns can only contain text; measures can only contain numbers",
+        "There is no difference; the names are interchangeable"
+      ],
+      "correct_index": 0,
+      "explanation": "Calculated columns are computed at refresh for each row and take memory; measures are aggregations computed dynamically based on filters and slicers.",
+      "points": 2
+    },
+    {
+      "key": "bi-dashboards-q4",
+      "difficulty": "intermediate",
+      "question": "A slicer on a report page filters by Region. What does this let a viewer do?",
+      "options": [
+        "Permanently delete rows for other regions from the dataset",
+        "Change the data type of the Region column",
+        "Interactively restrict the visuals on the page to the selected region(s)",
+        "Schedule a data refresh for one region only"
+      ],
+      "correct_index": 2,
+      "explanation": "Slicers are on-canvas filters that change the filter context of visuals without modifying the underlying data.",
+      "points": 2
+    },
+    {
+      "key": "bi-dashboards-q5",
+      "difficulty": "advanced",
+      "question": "Which DAX expression returns total sales ignoring any filter applied to the Product table, e.g. for a percent-of-total calculation?",
+      "options": [
+        "SUM(Sales[Amount])",
+        "CALCULATE(SUM(Sales[Amount]), ALL(Product))",
+        "FILTER(Sales, Sales[Amount] > 0)",
+        "SUMX(Product, Product[Price])"
+      ],
+      "correct_index": 1,
+      "explanation": "CALCULATE modifies the filter context, and ALL(Product) removes filters on the Product table, giving the grand total across products.",
+      "points": 3
+    },
+    {
+      "key": "bi-dashboards-q6",
+      "difficulty": "advanced",
+      "question": "What is row-level security (RLS) in a BI tool used for?",
+      "options": [
+        "Encrypting the dataset file on disk",
+        "Speeding up visuals by caching rows",
+        "Preventing users from exporting a report to PDF",
+        "Restricting which rows of data each user or role can see in the same report"
+      ],
+      "correct_index": 3,
+      "explanation": "RLS applies filters based on the viewer's identity or role, so e.g. a regional manager sees only their region's rows.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "bi-dashboards-p1",
+    "title": "Write a percent-of-total DAX measure",
+    "difficulty": "intermediate",
+    "instructions": "A Power BI model has a Sales table with an Amount column and a Product table. Write a DAX measure named 'Sales % of Total' that divides the current total sales by total sales across all products. Use DIVIDE to avoid divide-by-zero errors.",
+    "expected_output": "Sales % of Total = DIVIDE(SUM(Sales[Amount]), CALCULATE(SUM(Sales[Amount]), ALL(Product)))",
+    "rubric": [
+      { "key": "c1", "description": "Uses DIVIDE for safe division", "points": 3,
+        "patterns": ["\\bdivide\\s*\\("],
+        "hint": "Use DIVIDE(numerator, denominator) rather than the / operator to handle zero safely." },
+      { "key": "c2", "description": "Aggregates the Amount column", "points": 2,
+        "patterns": ["\\bsum\\s*\\(\\s*'?sales'?\\s*\\[\\s*amount\\s*\\]", "\\bsumx\\s*\\(", "\\[\\s*total\\s*sales\\s*\\]"],
+        "hint": "Aggregate Sales[Amount] with SUM (or reference a total sales measure)." },
+      { "key": "c3", "description": "Uses CALCULATE to change filter context", "points": 3,
+        "patterns": ["\\bcalculate\\s*\\("],
+        "hint": "The denominator needs CALCULATE to modify the filter context." },
+      { "key": "c4", "description": "Removes Product filters with ALL/REMOVEFILTERS", "points": 2,
+        "patterns": ["\\b(all|removefilters|allselected)\\s*\\(\\s*'?product"],
+        "hint": "Use ALL(Product) or REMOVEFILTERS(Product) inside CALCULATE to get the grand total." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "bi-dashboards-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn the Power BI basics",
+      "description": "Work through Microsoft's Power BI getting-started documentation. Learn how to connect to a data source, use Power Query to shape data, and build your first report visuals.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Can explain the difference between Power BI Desktop, the Power BI service, datasets and reports.",
+      "resource_url": "https://learn.microsoft.com/en-us/power-bi/"
+    },
+    {
+      "key": "bi-dashboards-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Build a one-page sales report",
+      "description": "Import a sample sales CSV into Power BI or Tableau. Create a KPI card for total sales, a bar chart by category, a line chart over time and a region slicer.",
+      "estimated_minutes": 90,
+      "completion_criteria": "Report contains at least 4 visuals and a working slicer that filters all of them.",
+      "resource_url": "https://learn.microsoft.com/en-us/power-bi/"
+    },
+    {
+      "key": "bi-dashboards-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Model a star schema and write DAX measures",
+      "description": "Split a flat dataset into a fact table and date, product and customer dimensions with relationships. Write measures for total sales, year-over-year growth and percent of total.",
+      "estimated_minutes": 150,
+      "completion_criteria": "Model has 1 fact and at least 3 dimension tables, and 3 working DAX measures used in visuals.",
+      "resource_url": "https://learn.microsoft.com/en-us/dax/"
+    },
+    {
+      "key": "bi-dashboards-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Publish an executive dashboard",
+      "description": "Design a multi-page dashboard for a public dataset answering three business questions, with drill-through, tooltips and row-level security for at least one role. Publish it and gather feedback from a peer.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Published dashboard with at least 2 pages, drill-through, an RLS role and a written summary of peer feedback.",
+      "resource_url": "https://learn.microsoft.com/en-us/power-bi/"
+    }
+  ]
+}

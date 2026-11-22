@@ -1,0 +1,158 @@
+{
+  "slug": "cryptography",
+  "name": "Cryptography",
+  "description": "Applied cryptography: symmetric and asymmetric encryption, hashing, digital signatures, TLS and secure password storage.",
+  "category": "Cybersecurity",
+  "prerequisites": ["cybersecurity-fundamentals"],
+  "resources": [
+    { "title": "OWASP Cryptographic Storage Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html", "kind": "docs" },
+    { "title": "OWASP Password Storage Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html", "kind": "docs" },
+    { "title": "NIST Cryptographic Standards and Guidelines", "url": "https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines", "kind": "docs" },
+    { "title": "Khan Academy: Cryptography", "url": "https://www.khanacademy.org/computing/computer-science/cryptography", "kind": "course" }
+  ],
+  "questions": [
+    {
+      "key": "cryptography-q1",
+      "difficulty": "beginner",
+      "question": "Which of the following is a symmetric encryption algorithm?",
+      "options": ["RSA", "ECDSA", "AES", "Diffie-Hellman"],
+      "correct_index": 2,
+      "explanation": "AES uses the same secret key to encrypt and decrypt. RSA and ECDSA are asymmetric, and Diffie-Hellman is a key-exchange protocol.",
+      "points": 1
+    },
+    {
+      "key": "cryptography-q2",
+      "difficulty": "beginner",
+      "question": "Which statement about a cryptographic hash function such as SHA-256 is true?",
+      "options": [
+        "The same input always produces the same fixed-length output, and the input cannot practically be recovered from it",
+        "It can be decrypted with the right key",
+        "Its output length grows with the size of the input",
+        "Two different inputs always produce the same output"
+      ],
+      "correct_index": 0,
+      "explanation": "Hash functions are deterministic, produce a fixed-length digest, and are one-way (preimage resistant); they are not encryption and have no key.",
+      "points": 1
+    },
+    {
+      "key": "cryptography-q3",
+      "difficulty": "intermediate",
+      "question": "Why should a unique random salt be added to each password before hashing?",
+      "options": [
+        "It makes the hash reversible for password recovery",
+        "It shortens the hash so it uses less storage",
+        "It replaces the need for a slow hashing algorithm",
+        "It ensures identical passwords produce different hashes and defeats precomputed rainbow tables"
+      ],
+      "correct_index": 3,
+      "explanation": "Salts make each hash unique, so attackers cannot use precomputed tables or spot users sharing a password. A slow algorithm is still needed.",
+      "points": 2
+    },
+    {
+      "key": "cryptography-q4",
+      "difficulty": "intermediate",
+      "question": "In a typical TLS connection, how are asymmetric and symmetric cryptography used?",
+      "options": [
+        "All application data is encrypted with the server's RSA public key",
+        "Asymmetric cryptography authenticates the server and establishes shared keys; symmetric ciphers then encrypt the bulk data",
+        "Symmetric keys are sent in plaintext and then used for signatures",
+        "Only hashing is used, so no encryption keys are needed"
+      ],
+      "correct_index": 1,
+      "explanation": "TLS uses certificates/signatures and key exchange (e.g. ECDHE) to authenticate and agree on session keys, then fast symmetric ciphers like AES-GCM for data.",
+      "points": 2
+    },
+    {
+      "key": "cryptography-q5",
+      "difficulty": "advanced",
+      "question": "Why is ECB mode considered insecure for encrypting most data with a block cipher?",
+      "options": [
+        "It requires a key longer than 512 bits",
+        "It cannot be decrypted without the initialization vector",
+        "Identical plaintext blocks produce identical ciphertext blocks, leaking patterns in the data",
+        "It only works with asymmetric algorithms"
+      ],
+      "correct_index": 2,
+      "explanation": "ECB encrypts each block independently with no IV, so repeated plaintext blocks are visible as repeated ciphertext blocks. Modes like GCM avoid this.",
+      "points": 3
+    },
+    {
+      "key": "cryptography-q6",
+      "difficulty": "advanced",
+      "question": "Which approach is the best choice for storing user passwords in a new application?",
+      "options": [
+        "SHA-256 with no salt",
+        "AES-256 encryption with the key stored in the application config",
+        "MD5 with a per-user salt",
+        "Argon2id with a unique per-user salt and tuned cost parameters"
+      ],
+      "correct_index": 3,
+      "explanation": "Passwords should be hashed with a slow, memory-hard password hashing function like Argon2id (or bcrypt/scrypt). Fast hashes are easy to brute force and encryption is reversible.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "cryptography-p1",
+    "title": "Explain secure password storage",
+    "difficulty": "intermediate",
+    "instructions": "A teammate proposes encrypting user passwords with AES so they can be decrypted later. In 3-5 sentences, explain why passwords should be hashed instead of encrypted, and describe how they should be hashed (name a suitable algorithm and the role of a salt).",
+    "expected_output": "Explains that hashing is one-way while encryption is reversible and depends on protecting a key; recommends a slow password-hashing algorithm such as Argon2id, bcrypt, scrypt or PBKDF2 with a unique per-user salt to defeat rainbow tables and slow brute force.",
+    "rubric": [
+      { "key": "c1", "description": "States that hashing is one-way", "points": 3,
+        "patterns": ["one[-\\s]*way", "irreversib", "not\\s+reversible", "cannot\\s+be\\s+(reversed|decrypted|undone)", "can'?not\\s+(be\\s+)?recover"],
+        "hint": "Explain that a hash is one-way: the original password cannot be recovered from it." },
+      { "key": "c2", "description": "Explains the risk of reversible encryption / key exposure", "points": 2,
+        "patterns": ["reversible", "decrypt", "\\bkey\\b"],
+        "hint": "Encryption can be reversed by anyone who obtains the key, so a key leak exposes every password." },
+      { "key": "c3", "description": "Names a slow password-hashing algorithm", "points": 3,
+        "patterns": ["argon2", "bcrypt", "scrypt", "pbkdf2"],
+        "hint": "Use a deliberately slow password hashing function such as Argon2id, bcrypt, scrypt or PBKDF2." },
+      { "key": "c4", "description": "Describes the use of a salt", "points": 2,
+        "patterns": ["salt"],
+        "hint": "Mention a unique random salt per password to defeat rainbow tables." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "cryptography-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn the building blocks of cryptography",
+      "description": "Work through the Khan Academy cryptography unit covering ciphers, keys and modern public-key ideas. Write short definitions of symmetric encryption, asymmetric encryption, hashing and digital signatures.",
+      "estimated_minutes": 90,
+      "completion_criteria": "Notes with a correct one-paragraph definition and example use for each of the four primitives.",
+      "resource_url": "https://www.khanacademy.org/computing/computer-science/cryptography"
+    },
+    {
+      "key": "cryptography-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Hash and compare files",
+      "description": "Create two text files that differ by one character and compute their SHA-256 hashes with sha256sum or PowerShell Get-FileHash. Observe how a tiny change produces a completely different digest.",
+      "estimated_minutes": 30,
+      "completion_criteria": "Screenshot or notes showing both hashes and a sentence explaining the avalanche effect.",
+      "resource_url": "https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines"
+    },
+    {
+      "key": "cryptography-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Implement secure password hashing",
+      "description": "In a small script, hash and verify passwords using a library for Argon2id or bcrypt, following the OWASP Password Storage Cheat Sheet. Confirm that hashing the same password twice yields different stored values.",
+      "estimated_minutes": 90,
+      "completion_criteria": "A working script with hash and verify functions plus a test showing correct and incorrect passwords are handled properly.",
+      "resource_url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html"
+    },
+    {
+      "key": "cryptography-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Audit an application's cryptographic choices",
+      "description": "Review one of your own projects (or an open-source app) against the OWASP Cryptographic Storage Cheat Sheet. Document how secrets, passwords, data at rest and data in transit are protected and propose fixes for weak choices.",
+      "estimated_minutes": 180,
+      "completion_criteria": "A written review covering at least four areas with findings and concrete remediation recommendations.",
+      "resource_url": "https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "slug": "siem-monitoring",
+  "name": "SIEM & Security Monitoring",
+  "description": "Collecting, normalizing and correlating security logs in a SIEM to write detections and triage alerts.",
+  "category": "Cybersecurity",
+  "prerequisites": ["cybersecurity-fundamentals"],
+  "resources": [
+    { "title": "MITRE ATT&CK", "url": "https://attack.mitre.org/", "kind": "docs" },
+    { "title": "Sigma generic detection rules", "url": "https://github.com/SigmaHQ/sigma", "kind": "docs" },
+    { "title": "Splunk Documentation", "url": "https://docs.splunk.com/Documentation", "kind": "docs" },
+    { "title": "TryHackMe SOC labs", "url": "https://tryhackme.com/", "kind": "interactive" }
+  ],
+  "questions": [
+    {
+      "key": "siem-monitoring-q1",
+      "difficulty": "beginner",
+      "question": "What is the primary function of a SIEM?",
+      "options": [
+        "Blocking malicious packets at the network edge",
+        "Encrypting data stored in databases",
+        "Scanning hosts for missing patches",
+        "Collecting and correlating logs from many sources to detect and alert on security events"
+      ],
+      "correct_index": 3,
+      "explanation": "A Security Information and Event Management system centralizes logs, normalizes them and applies correlation rules to raise alerts and support investigations.",
+      "points": 1
+    },
+    {
+      "key": "siem-monitoring-q2",
+      "difficulty": "beginner",
+      "question": "Which Windows Security Event ID records a failed logon attempt?",
+      "options": ["4624", "4625", "4688", "7045"],
+      "correct_index": 1,
+      "explanation": "4625 is 'An account failed to log on'. 4624 is a successful logon, 4688 is process creation and 7045 is a new service installed.",
+      "points": 1
+    },
+    {
+      "key": "siem-monitoring-q3",
+      "difficulty": "intermediate",
+      "question": "What does log normalization in a SIEM accomplish?",
+      "options": [
+        "Mapping fields from different log sources into a common schema so they can be searched and correlated together",
+        "Deleting old logs to save storage",
+        "Encrypting logs in transit",
+        "Converting all timestamps to the local time zone of the analyst"
+      ],
+      "correct_index": 0,
+      "explanation": "Normalization parses heterogeneous logs (firewall, Windows, web) into consistent fields like src_ip and user so rules work across sources.",
+      "points": 2
+    },
+    {
+      "key": "siem-monitoring-q4",
+      "difficulty": "intermediate",
+      "question": "In alert triage, what is a false positive?",
+      "options": [
+        "A real attack that generated no alert",
+        "A real attack that was correctly alerted on",
+        "An alert triggered by benign activity that is not actually malicious",
+        "An alert that was closed without review"
+      ],
+      "correct_index": 2,
+      "explanation": "A false positive fires on legitimate activity. A real attack with no alert is a false negative.",
+      "points": 2
+    },
+    {
+      "key": "siem-monitoring-q5",
+      "difficulty": "advanced",
+      "question": "Which correlation logic best detects a likely successful password-guessing attack?",
+      "options": [
+        "Any single failed logon for any account",
+        "Any successful logon during business hours",
+        "More than 5 process creation events on a server per day",
+        "Many failed logons (4625) from one source within a short window, followed by a successful logon (4624) from the same source"
+      ],
+      "correct_index": 3,
+      "explanation": "Correlating a burst of failures with a subsequent success from the same source indicates the attacker likely guessed valid credentials.",
+      "points": 3
+    },
+    {
+      "key": "siem-monitoring-q6",
+      "difficulty": "advanced",
+      "question": "How is MITRE ATT&CK typically used in a security operations center?",
+      "options": [
+        "As a scoring system to prioritize vulnerability patches",
+        "As a knowledge base of adversary tactics and techniques used to map detections and find coverage gaps",
+        "As a log format that every SIEM must ingest",
+        "As a compliance standard that defines log retention periods"
+      ],
+      "correct_index": 1,
+      "explanation": "ATT&CK catalogs real-world adversary behaviors; SOCs map their detection rules to techniques to see which behaviors they can and cannot detect.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "siem-monitoring-p1",
+    "title": "Write a brute-force detection rule",
+    "difficulty": "intermediate",
+    "instructions": "Write a detection rule or query (Splunk SPL, KQL, Elastic, Sigma, or clear pseudo-logic) that alerts when a single source IP generates 10 or more failed Windows logons (Event ID 4625) within 5 minutes.",
+    "expected_output": "A query filtering EventCode/EventID 4625, grouping/counting by source IP (e.g. IpAddress/src_ip) over a 5-minute window, and alerting where count >= 10. Example SPL: index=wineventlog EventCode=4625 | bin _time span=5m | stats count by _time, src_ip | where count >= 10",
+    "rubric": [
+      { "key": "c1", "description": "Filters failed logon events", "points": 3,
+        "patterns": ["4625", "fail(ed|ure)?\\s*(log\\s*on|login|logon|auth)"],
+        "hint": "Filter on Event ID 4625 (failed logon)." },
+      { "key": "c2", "description": "Groups or counts by source IP", "points": 2,
+        "patterns": ["src_?ip", "source_?ip", "ip_?address", "ipaddress", "client_?ip", "by\\s+\\w*ip\\b", "source\\s+ip"],
+        "hint": "Aggregate by the source IP field (e.g. src_ip or IpAddress)." },
+      { "key": "c3", "description": "Applies a threshold of 10", "points": 3,
+        "patterns": [">\\s*=\\s*10\\b", ">\\s*9\\b", "\\b10\\s*(or\\s+more|\\+)", "\\bcount[\\s\\S]{0,20}\\b10\\b", "\\b10\\b[\\s\\S]{0,20}(fail|attempt|event)"],
+        "hint": "Alert when the count is at least 10." },
+      { "key": "c4", "description": "Uses a 5-minute time window", "points": 2,
+        "patterns": ["\\b5\\s*(m|min|mins|minutes?)\\b", "300\\s*s", "span\\s*=\\s*5", "bin\\s*\\([^)]*5\\s*m", "timeframe\\s*:\\s*5m"],
+        "hint": "Limit the count to a 5-minute window (e.g. span=5m, bin(TimeGenerated, 5m), timeframe: 5m)." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "siem-monitoring-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Understand log sources and key event IDs",
+      "description": "Study the main log sources a SIEM ingests (Windows Security, Linux auth, firewall, web proxy) and list the most important Windows event IDs for authentication and process activity. Browse the related ATT&CK techniques.",
+      "estimated_minutes": 60,
+      "completion_criteria": "A reference sheet of at least 10 event IDs or log types with what each indicates and a related ATT&CK technique.",
+      "resource_url": "https://attack.mitre.org/"
+    },
+    {
+      "key": "siem-monitoring-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Complete a beginner SOC/SIEM lab",
+      "description": "Work through an introductory SIEM or SOC analyst room on TryHackMe, running searches over sample logs to answer investigation questions.",
+      "estimated_minutes": 120,
+      "completion_criteria": "At least one SIEM-focused room completed with saved queries for each question.",
+      "resource_url": "https://tryhackme.com/"
+    },
+    {
+      "key": "siem-monitoring-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Write and test Sigma detection rules",
+      "description": "Read several community Sigma rules, then write three of your own for behaviors like brute force, new service installation and suspicious PowerShell. Test them against sample logs in a lab SIEM.",
+      "estimated_minutes": 150,
+      "completion_criteria": "Three valid Sigma rules, each mapped to an ATT&CK technique and shown firing on test data.",
+      "resource_url": "https://github.com/SigmaHQ/sigma"
+    },
+    {
+      "key": "siem-monitoring-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build a home-lab SIEM with dashboards",
+      "description": "Deploy a free SIEM (e.g. Splunk Free, Elastic or Wazuh) in a lab, forward logs from at least two machines you own, and build a dashboard plus alerts for authentication anomalies. Simulate benign test events to validate alerts and tune false positives.",
+      "estimated_minutes": 240,
+      "completion_criteria": "A working lab ingesting two or more sources, a dashboard, and at least three alerts with documented tuning decisions.",
+      "resource_url": "https://docs.splunk.com/Documentation"
+    }
+  ]
+}

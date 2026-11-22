@@ -1,0 +1,125 @@
+{
+  "slug": "sql-databases",
+  "name": "SQL & Relational Databases",
+  "description": "Designing relational schemas and querying, joining and aggregating data with SQL.",
+  "category": "Data",
+  "prerequisites": [],
+  "resources": [
+    { "title": "PostgreSQL Tutorial (official)", "url": "https://www.postgresql.org/docs/current/tutorial.html", "kind": "docs" },
+    { "title": "SQLBolt interactive lessons", "url": "https://sqlbolt.com/", "kind": "interactive" },
+    { "title": "Khan Academy: Intro to SQL", "url": "https://www.khanacademy.org/computing/computer-programming/sql", "kind": "course" }
+  ],
+  "questions": [
+    {
+      "key": "sql-databases-q1",
+      "difficulty": "beginner",
+      "question": "Which clause filters individual rows before any grouping happens?",
+      "options": ["WHERE", "HAVING", "ORDER BY", "GROUP BY"],
+      "correct_index": 0,
+      "explanation": "WHERE filters rows before GROUP BY; HAVING filters groups after aggregation.",
+      "points": 1
+    },
+    {
+      "key": "sql-databases-q2",
+      "difficulty": "beginner",
+      "question": "Which SQL statement changes values in existing rows?",
+      "options": ["INSERT", "ALTER", "UPDATE", "SELECT"],
+      "correct_index": 2,
+      "explanation": "UPDATE modifies existing rows; ALTER changes table structure and INSERT adds new rows.",
+      "points": 1
+    },
+    {
+      "key": "sql-databases-q3",
+      "difficulty": "intermediate",
+      "question": "What does a LEFT JOIN return?",
+      "options": ["Only rows that match in both tables", "All rows from the right table only", "Every combination of rows from both tables", "All rows from the left table plus matching rows from the right, with NULLs where there is no match"],
+      "correct_index": 3,
+      "explanation": "A LEFT (OUTER) JOIN keeps every left-table row; unmatched right-side columns are NULL.",
+      "points": 2
+    },
+    {
+      "key": "sql-databases-q4",
+      "difficulty": "intermediate",
+      "question": "How does COUNT(column) differ from COUNT(*)?",
+      "options": ["There is no difference", "COUNT(column) ignores rows where that column is NULL; COUNT(*) counts all rows", "COUNT(*) ignores NULL rows; COUNT(column) counts all rows", "COUNT(column) counts distinct values only"],
+      "correct_index": 1,
+      "explanation": "Aggregate functions on a column skip NULLs, while COUNT(*) counts rows regardless of content.",
+      "points": 2
+    },
+    {
+      "key": "sql-databases-q5",
+      "difficulty": "advanced",
+      "question": "What is a 'dirty read' in transaction isolation?",
+      "options": ["Reading data written by another transaction that has not yet committed", "Reading the same row twice and getting different committed values", "A new row appearing when a range query is repeated", "Reading from a corrupted index"],
+      "correct_index": 0,
+      "explanation": "Dirty reads see uncommitted changes; the other options describe non-repeatable reads, phantom reads and corruption.",
+      "points": 3
+    },
+    {
+      "key": "sql-databases-q6",
+      "difficulty": "advanced",
+      "question": "A table is in 2NF, but a non-key column depends on another non-key column (a transitive dependency). Which normal form does it fail?",
+      "options": ["First normal form (1NF)", "Second normal form (2NF)", "Third normal form (3NF)", "None; it is fully normalised"],
+      "correct_index": 2,
+      "explanation": "3NF requires that non-key attributes depend only on the key, with no transitive dependencies.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "sql-databases-p1",
+    "title": "Top customers by spend",
+    "difficulty": "intermediate",
+    "instructions": "Tables: customers(id, name) and orders(id, customer_id, amount). Write one SQL query that returns each customer's name and total order amount, only for customers whose total exceeds 1000, sorted by total descending.",
+    "expected_output": "SELECT c.name, SUM(o.amount) AS total FROM customers c JOIN orders o ON o.customer_id = c.id GROUP BY c.id, c.name HAVING SUM(o.amount) > 1000 ORDER BY total DESC;",
+    "rubric": [
+      { "key": "c1", "description": "Aggregates amount with SUM", "points": 2, "patterns": ["sum\\s*\\(\\s*(\\w+\\.)?amount\\s*\\)"], "hint": "Use SUM(amount) to total each customer's orders." },
+      { "key": "c2", "description": "Joins customers and orders", "points": 2, "patterns": ["\\bjoin\\s+(orders|customers)\\b[\\s\\S]*\\bon\\b", "from\\s+(customers|orders)\\s*(as\\s+)?\\w*\\s*,\\s*(orders|customers)"], "hint": "JOIN orders ON orders.customer_id = customers.id." },
+      { "key": "c3", "description": "Groups by customer", "points": 2, "patterns": ["group\\s+by"], "hint": "Aggregates per customer require GROUP BY." },
+      { "key": "c4", "description": "Filters totals above 1000 with HAVING", "points": 2, "patterns": ["having\\s+[\\s\\S]*>\\s*1000"], "hint": "Filter aggregated totals with HAVING SUM(amount) > 1000, not WHERE." },
+      { "key": "c5", "description": "Sorts descending", "points": 2, "patterns": ["order\\s+by\\s+[\\s\\S]*\\bdesc\\b"], "hint": "Add ORDER BY total DESC." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "sql-databases-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn SELECT, WHERE and ORDER BY",
+      "description": "Work through the first part of the PostgreSQL tutorial (creating tables, populating them, querying). Install PostgreSQL or use an online sandbox and run every example.",
+      "estimated_minutes": 90,
+      "completion_criteria": "You can create a table, insert rows and filter/sort them without notes.",
+      "resource_url": "https://www.postgresql.org/docs/current/tutorial.html"
+    },
+    {
+      "key": "sql-databases-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Complete SQLBolt lessons 1-12",
+      "description": "Complete the interactive SQLBolt lessons through joins and aggregates. Rewrite two of your answers in a different but equivalent way.",
+      "estimated_minutes": 90,
+      "completion_criteria": "Lessons 1-12 completed with all exercises solved.",
+      "resource_url": "https://sqlbolt.com/"
+    },
+    {
+      "key": "sql-databases-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Design and query a normalised schema",
+      "description": "Design a schema for a small school (students, courses, enrolments) in 3NF with primary and foreign keys. Write 10 queries using joins, GROUP BY/HAVING and subqueries.",
+      "estimated_minutes": 150,
+      "completion_criteria": "Schema SQL file plus 10 working queries with expected results noted.",
+      "resource_url": "https://www.postgresql.org/docs/current/tutorial.html"
+    },
+    {
+      "key": "sql-databases-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build and tune a reporting database",
+      "description": "Load a public dataset of at least 100k rows into PostgreSQL, write analytical queries with window functions, and use EXPLAIN ANALYZE to add indexes that speed up the slowest query.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Before/after EXPLAIN ANALYZE output showing a measurable speedup from an index.",
+      "resource_url": "https://www.postgresql.org/docs/current/"
+    }
+  ]
+}

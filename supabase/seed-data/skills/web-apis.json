@@ -1,0 +1,125 @@
+{
+  "slug": "web-apis",
+  "name": "REST APIs & HTTP",
+  "description": "Understanding HTTP and designing, calling and debugging RESTful web APIs.",
+  "category": "Web",
+  "prerequisites": ["computer-networking"],
+  "resources": [
+    { "title": "MDN: HTTP", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP", "kind": "docs" },
+    { "title": "MDN: HTTP response status codes", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status", "kind": "docs" },
+    { "title": "API Design Roadmap", "url": "https://roadmap.sh/api-design", "kind": "interactive" }
+  ],
+  "questions": [
+    {
+      "key": "web-apis-q1",
+      "difficulty": "beginner",
+      "question": "Which HTTP method is normally used to retrieve a resource without modifying it?",
+      "options": ["POST", "GET", "PUT", "DELETE"],
+      "correct_index": 1,
+      "explanation": "GET is a safe method intended only for retrieval.",
+      "points": 1
+    },
+    {
+      "key": "web-apis-q2",
+      "difficulty": "beginner",
+      "question": "What does HTTP status code 404 mean?",
+      "options": ["Internal server error", "Unauthorized", "Created", "Not Found"],
+      "correct_index": 3,
+      "explanation": "404 Not Found means the server cannot find the requested resource.",
+      "points": 1
+    },
+    {
+      "key": "web-apis-q3",
+      "difficulty": "intermediate",
+      "question": "Which set of methods is idempotent according to HTTP semantics?",
+      "options": ["GET, PUT and DELETE", "POST and PATCH", "Only POST", "POST, PUT and PATCH"],
+      "correct_index": 0,
+      "explanation": "Repeating GET, PUT or DELETE leaves the server in the same state as doing it once; POST is not idempotent and PATCH is not guaranteed to be.",
+      "points": 2
+    },
+    {
+      "key": "web-apis-q4",
+      "difficulty": "intermediate",
+      "question": "What is the difference between 401 and 403 responses?",
+      "options": ["They are interchangeable", "401 means the server is down; 403 means the URL is wrong", "401 means authentication is missing or invalid; 403 means the client is identified but not allowed", "403 means rate limited; 401 means bad JSON"],
+      "correct_index": 2,
+      "explanation": "401 Unauthorized asks for valid credentials; 403 Forbidden refuses access even though the identity may be known.",
+      "points": 2
+    },
+    {
+      "key": "web-apis-q5",
+      "difficulty": "advanced",
+      "question": "A page on https://a.com calls fetch('https://api.b.com/data') and the browser blocks reading the response unless b.com sends an Access-Control-Allow-Origin header. Which mechanism is this?",
+      "options": ["Content Security Policy", "HTTP Strict Transport Security", "The same-origin policy, relaxed via CORS", "The cookie SameSite attribute"],
+      "correct_index": 2,
+      "explanation": "Browsers enforce the same-origin policy; Cross-Origin Resource Sharing headers let a server opt in to cross-origin reads.",
+      "points": 3
+    },
+    {
+      "key": "web-apis-q6",
+      "difficulty": "advanced",
+      "question": "What is the most appropriate response to a successful POST that creates a new resource?",
+      "options": ["200 OK with an empty body", "204 No Content", "301 Moved Permanently", "201 Created with a Location header pointing to the new resource"],
+      "correct_index": 3,
+      "explanation": "201 Created signals creation, and the Location header tells the client where the new resource lives.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "web-apis-p1",
+    "title": "Create a user with curl",
+    "difficulty": "beginner",
+    "instructions": "Write a curl command that sends a POST request to https://api.example.com/users with the JSON body {\"name\": \"Asha\"} and the header Content-Type: application/json. Then state in one sentence which status code you expect on successful creation.",
+    "expected_output": "curl -X POST https://api.example.com/users -H \"Content-Type: application/json\" -d '{\"name\": \"Asha\"}' and a note that 201 Created is expected.",
+    "rubric": [
+      { "key": "c1", "description": "Uses curl to send a POST", "points": 3, "patterns": ["curl\\b[\\s\\S]*(-X\\s*['\"]?POST|--request\\s+['\"]?POST|\\s-d\\b|--data|--json)"], "hint": "Use curl -X POST (or -d, which implies POST)." },
+      { "key": "c2", "description": "Targets the users endpoint", "points": 2, "patterns": ["api\\.example\\.com/users"], "hint": "The URL is https://api.example.com/users." },
+      { "key": "c3", "description": "Sets the JSON content type", "points": 2, "patterns": ["content-type\\s*:\\s*application/json", "--json"], "hint": "Add -H \"Content-Type: application/json\"." },
+      { "key": "c4", "description": "Sends the name in the body", "points": 1, "patterns": ["name\\W+asha"], "hint": "Send -d '{\"name\": \"Asha\"}'." },
+      { "key": "c5", "description": "Expects 201 Created", "points": 2, "patterns": ["\\b201\\b", "created"], "hint": "Successful resource creation should return 201 Created." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "web-apis-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Learn how HTTP works",
+      "description": "Read the MDN HTTP overview and the pages on methods, headers and status codes. Use your browser's developer tools Network tab to inspect requests made by a real website.",
+      "estimated_minutes": 90,
+      "completion_criteria": "You can explain request/response structure and the meaning of 2xx, 3xx, 4xx and 5xx codes.",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+    },
+    {
+      "key": "web-apis-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Call public APIs with curl",
+      "description": "Use curl to make GET and POST requests against a public test API, adding headers and query parameters. Inspect response headers with -i and verbose output with -v.",
+      "estimated_minutes": 60,
+      "completion_criteria": "A notes file with 5 working curl commands and what each response showed.",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"
+    },
+    {
+      "key": "web-apis-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Design a REST API",
+      "description": "Design resource URLs, methods, status codes and JSON shapes for a simple bookstore API including pagination and error responses. Write it up as an OpenAPI or markdown spec.",
+      "estimated_minutes": 120,
+      "completion_criteria": "A spec covering at least 6 endpoints with correct methods and status codes.",
+      "resource_url": "https://roadmap.sh/api-design"
+    },
+    {
+      "key": "web-apis-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Build and document a REST API",
+      "description": "Implement the bookstore API with a framework of your choice, backed by a database, with input validation, authentication and proper error codes. Test it with automated tests and curl.",
+      "estimated_minutes": 240,
+      "completion_criteria": "Running API with CRUD endpoints, authentication, validation errors returning 4xx, and passing tests.",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+    }
+  ]
+}

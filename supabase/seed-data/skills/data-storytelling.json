@@ -1,0 +1,162 @@
+{
+  "slug": "data-storytelling",
+  "name": "Data Storytelling & Business Communication",
+  "description": "Turning analysis into clear, audience-focused narratives and recommendations that drive business decisions.",
+  "category": "Data & Analytics",
+  "prerequisites": ["data-visualization"],
+  "resources": [
+    { "title": "Storytelling with Data (blog and resources)", "url": "https://www.storytellingwithdata.com/", "kind": "article" },
+    { "title": "Kaggle Learn: Data Visualization", "url": "https://www.kaggle.com/learn/data-visualization", "kind": "interactive" },
+    { "title": "Coursera: data storytelling courses", "url": "https://www.coursera.org/search?query=data%20storytelling", "kind": "course" }
+  ],
+  "questions": [
+    {
+      "key": "data-storytelling-q1",
+      "difficulty": "beginner",
+      "question": "Before designing any chart for a presentation, what should you clarify first?",
+      "options": [
+        "Which color palette to use",
+        "Which charting library is fastest",
+        "Who the audience is and what you want them to know or do",
+        "How many slides the deck should have"
+      ],
+      "correct_index": 2,
+      "explanation": "Effective data stories start from the audience and the desired action; design choices follow from that.",
+      "points": 1
+    },
+    {
+      "key": "data-storytelling-q2",
+      "difficulty": "beginner",
+      "question": "Which slide title communicates an insight rather than just a topic?",
+      "options": [
+        "Q3 Revenue",
+        "Revenue by Region",
+        "Sales Data Overview",
+        "Q3 revenue grew 12%, driven by the North region"
+      ],
+      "correct_index": 3,
+      "explanation": "An action/insight title states the takeaway, so the audience knows what the chart is meant to show.",
+      "points": 1
+    },
+    {
+      "key": "data-storytelling-q3",
+      "difficulty": "intermediate",
+      "question": "You want to draw attention to one line among six on a line chart. Which technique is most effective?",
+      "options": [
+        "Color the key line in a strong color and gray out the others",
+        "Give each line a different bright color",
+        "Add a 3D effect to the chart",
+        "Increase the number of gridlines"
+      ],
+      "correct_index": 0,
+      "explanation": "Using preattentive attributes such as color contrast against muted gray directs the viewer's eye to what matters.",
+      "points": 2
+    },
+    {
+      "key": "data-storytelling-q4",
+      "difficulty": "intermediate",
+      "question": "In an executive summary for busy stakeholders, where should the main recommendation usually appear?",
+      "options": [
+        "In an appendix",
+        "At the beginning, before supporting detail",
+        "Only at the very end after all analysis",
+        "It should be left implicit for the audience to infer"
+      ],
+      "correct_index": 1,
+      "explanation": "The 'bottom line up front' (pyramid principle) approach leads with the conclusion and then supports it.",
+      "points": 2
+    },
+    {
+      "key": "data-storytelling-q5",
+      "difficulty": "advanced",
+      "question": "A bar chart's y-axis starts at 95 instead of 0, making a 2% difference look like a 3x difference. What is the main problem?",
+      "options": [
+        "Bar charts cannot display percentages",
+        "The chart has too few categories",
+        "The colors are not accessible",
+        "Truncating the baseline of a bar chart exaggerates differences because bar length encodes value"
+      ],
+      "correct_index": 3,
+      "explanation": "Bar length is read as magnitude, so bars should start at zero; truncated axes mislead.",
+      "points": 3
+    },
+    {
+      "key": "data-storytelling-q6",
+      "difficulty": "advanced",
+      "question": "Your analysis shows stores with more staff have higher sales, and a manager wants to hire more staff everywhere. What is the most responsible way to communicate this?",
+      "options": [
+        "State that the data shows a correlation, note possible confounders such as store size, and suggest a controlled test",
+        "Confirm that hiring more staff will increase sales",
+        "Omit the finding because it might be misinterpreted",
+        "Present only the stores that support the conclusion"
+      ],
+      "correct_index": 0,
+      "explanation": "Correlation does not prove causation; a good communicator states limitations and proposes how to validate the causal claim.",
+      "points": 3
+    }
+  ],
+  "practical": {
+    "key": "data-storytelling-p1",
+    "title": "Write an insight summary for a manager",
+    "difficulty": "intermediate",
+    "instructions": "Monthly churn rose from 3% in January to 5% in March. Most of the increase came from customers on the Basic plan after a price increase in February. Write 2-4 sentences for a non-technical manager that state the key insight with numbers, explain the likely cause, and give a clear recommendation.",
+    "expected_output": "A short summary such as: 'Churn rose from 3% to 5% between January and March, mostly among Basic plan customers after the February price increase. We recommend testing a discount or a lower-priced tier for Basic customers and monitoring churn over the next month.'",
+    "rubric": [
+      { "key": "c1", "description": "Quantifies the change with the numbers", "points": 3,
+        "patterns": ["3\\s*%[\\s\\S]*5\\s*%", "5\\s*%[\\s\\S]*3\\s*%", "(2|two)\\s*(percentage\\s*)?(points|pp)"],
+        "hint": "Include the actual figures (3% to 5%) so the change is concrete." },
+      { "key": "c2", "description": "Identifies the Basic plan segment", "points": 2,
+        "patterns": ["\\bbasic\\b"],
+        "hint": "Name the segment driving the change (Basic plan customers)." },
+      { "key": "c3", "description": "Links the change to the price increase", "points": 2,
+        "patterns": ["price\\s*(increase|rise|hike|change)", "(rais|increas)\\w*\\s+(the\\s+)?price", "pric(e|ing)"],
+        "hint": "Explain the likely cause: the February price increase." },
+      { "key": "c4", "description": "Gives a clear recommendation", "points": 3,
+        "patterns": ["\\b(recommend|suggest|propose|should|next\\s*step|we\\s*(will|can)|consider)\\w*"],
+        "hint": "End with an actionable recommendation for the manager." }
+    ],
+    "max_points": 10
+  },
+  "tasks": [
+    {
+      "key": "data-storytelling-t1",
+      "level": 1,
+      "type": "learn",
+      "title": "Study storytelling with data principles",
+      "description": "Read several articles on the Storytelling with Data site about context, decluttering and focusing attention. Note the main principles you will apply.",
+      "estimated_minutes": 60,
+      "completion_criteria": "Written list of at least 5 principles with one example each.",
+      "resource_url": "https://www.storytellingwithdata.com/"
+    },
+    {
+      "key": "data-storytelling-t2",
+      "level": 1,
+      "type": "practice",
+      "title": "Rewrite chart titles as insights",
+      "description": "Take five charts from a public report or your own work and rewrite each topic title as a one-sentence insight title. Declutter one chart by removing unnecessary gridlines, borders and legends.",
+      "estimated_minutes": 60,
+      "completion_criteria": "Five before/after title pairs and one decluttered chart.",
+      "resource_url": "https://www.storytellingwithdata.com/"
+    },
+    {
+      "key": "data-storytelling-t3",
+      "level": 2,
+      "type": "practice",
+      "title": "Build a three-slide data narrative",
+      "description": "Analyze a Kaggle dataset and produce three slides: context, key insight with a focused chart, and recommendation. Use color only to highlight the main point.",
+      "estimated_minutes": 120,
+      "completion_criteria": "Three slides with insight titles and a recommendation, reviewed by one peer.",
+      "resource_url": "https://www.kaggle.com/learn/data-visualization"
+    },
+    {
+      "key": "data-storytelling-t4",
+      "level": 3,
+      "type": "project",
+      "title": "Present an end-to-end analysis to stakeholders",
+      "description": "Run an analysis on a realistic business question, write a one-page executive memo with the recommendation up front, and deliver a 10-minute presentation. Address limitations and next steps.",
+      "estimated_minutes": 240,
+      "completion_criteria": "One-page memo, slide deck and recorded or live presentation with documented audience questions.",
+      "resource_url": "https://www.coursera.org/search?query=data%20storytelling"
+    }
+  ]
+}
